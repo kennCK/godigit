@@ -55,39 +55,12 @@ export default{
       }
     },
     {
-      path: '/test',
-      name: 'test',
-      component: resolve => require(['modules/test/Test.vue'], resolve),
-      beforeEnter: beforeEnter
-    },
-    {
-      path: '/order_confirmed',
-      name: 'orderConfirmed',
-      component: resolve => require(['modules/home/OrderConfirmed.vue'], resolve),
-      beforeEnter: beforeEnter
-    },
-    {
-      path: '/about',
-      name: 'aboutUs',
-      component: resolve => require(['modules/others/AboutUs.vue'], resolve),
-      beforeEnter: beforeEnter
-    },
-    {
-      path: '/product_management',
-      name: 'productManagement',
-      component: resolve => require(['modules/product/ProductManagement.vue'], resolve),
+      path: '/test1',
+      name: 'employeeManagement',
+      component: resolve => require(['modules/test/Test1.vue'], resolve),
       beforeEnter: beforeEnter,
       meta: {
-        tokenRequired: true
-      }
-    },
-    {
-      path: '/product_order_management',
-      name: 'productOrderManagement',
-      component: resolve => require(['modules/product_order/ProductOrderManagement.vue'], resolve),
-      beforeEnter: beforeEnter,
-      meta: {
-        tokenRequired: true
+        tokenRequired: false
       }
     }
   ]

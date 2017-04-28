@@ -48,30 +48,11 @@
       </div>
     </div>
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row text-left">
-                    <div class="footer-col col-md-4">
-                        <h3>OUR NEA KITCHEN ADDRESS</h3>
-                        <p class="text-left">
-                          6 Tebing Lane<br>
-                          #01-05<br>
-                          Singapore 828835
-                        </p>
-                    </div>
-                    <div class="footer-col col-md-7 col-md-offset-1">
-                        <h3>About Us</h3>
-                        <p class="">Finegrabz is a food delivery service dedicated on serving healthy and exciting lunches.
-                          <router-link to="/about">About Finegrabz!</router-link>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright © Finegrabz 2017
+                        Copyright © GoDigit 2017
                     </div>
                 </div>
             </div>
