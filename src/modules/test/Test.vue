@@ -25,7 +25,7 @@
     },
     data(){
       return {
-        message: 'Hello nanananna'
+        message: 'Hello nanananna...clap3x'
       }
     },
     props: {
