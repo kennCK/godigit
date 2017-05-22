@@ -55,9 +55,9 @@ export default{
       }
     },
     {
-      path: '/test1',
-      name: 'employeeManagement',
-      component: resolve => require(['modules/test/Test1.vue'], resolve),
+      path: '/test',
+      name: 'Test',
+      component: resolve => require(['modules/test/InputCell.vue'], resolve),
       beforeEnter: beforeEnter,
       meta: {
         tokenRequired: false
