@@ -5,15 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MenuSettings extends Model
+class MenuSettings extends APIModel
 {
   use SoftDeletes;
   protected $primaryKey = 'id';
   protected $table = 'menu_settings';
   protected $fillable = array(
+      'parent_id',
       'module',
       'title',
-      'icon',
+      'left_icon',
+      'right_icon',
       'method',
       'rank'
   );

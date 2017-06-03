@@ -12,9 +12,7 @@ class MenuSettingsController extends APIController
     $this->model = new MenuSettings();
   }
 
-  public function create(){
-  }
-  public function update(){
-    
+  public function index(){
+    return "Welcome to Menu Settings";
   }
 }
