@@ -20,9 +20,10 @@ class CreateMenuSettingsTable extends Migration
             $table->char('title',100);
             $table->char('left_icon',100);
             $table->char('right_icon',100);
-            $table->char('methd',100);
+            $table->char('method',100);
             $table->integer('rank');
-            $table->timestamps();
+            $table->timestamps(); 
+            $table->softDeletes();
         });
     }
 
@@ -33,6 +34,6 @@ class CreateMenuSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_settings');
+        //Schema::dropIfExists('menu_settings');
     }
 }

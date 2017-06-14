@@ -11,10 +11,4 @@ class MenuSettingsController extends APIController
   function __construct(){
     $this->model = new MenuSettings();
   }
-
-  public function create(){
-  }
-  public function update(){
-    
-  }
 }
