@@ -11,9 +11,11 @@ class MenuSettings extends Model
   protected $primaryKey = 'id';
   protected $table = 'menu_settings';
   protected $fillable = array(
+      'parent_id',
       'module',
       'title',
-      'icon',
+      'left_icon',
+      'right_icon',
       'method',
       'rank'
   );
