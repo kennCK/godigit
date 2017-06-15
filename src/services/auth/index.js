@@ -78,17 +78,9 @@ export default {
       }, (response) => {
         this.setToken(null)
         this.tokenData.verifyingToken = false
-        console.log(this.currentPath)
-        if(this.currentPath === '/admin'){
-          console.log('hey')
-          ROUTER.push({
-            path: this.currentPath
-          })
-        }else{
-          ROUTER.push({
-            path: '/'
-          })
-        }
+        ROUTER.push({
+          path: this.currentPath
+        })
 
       })
       return true

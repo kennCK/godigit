@@ -6,4 +6,11 @@ test/unit/coverage
 test/e2e/reports
 selenium-debug.log
 api/vendor/
+api/composer.lock
 
+
+api/composer.lock
+api/routes/api_routes.php
+api/app/Department.php
+src/modules/test/Casera.vue
+src/modules/test/Plenos.vue

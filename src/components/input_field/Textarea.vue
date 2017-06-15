@@ -1,6 +1,7 @@
 <template>
   <div>
-    "This is a new module"
+    <textarea>
+    </textarea>
   </div>
 </template>
 <script>

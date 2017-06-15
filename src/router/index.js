@@ -6,13 +6,15 @@ import AUTH from 'services/auth/index'
 import ModuleRoutes from './module_routes'
 import Helpers from './helpers'
 import Services from './services'
+global.Tether = require('tether')
 global.jQuery = require('jquery')
 global.$ = global.jQuery
-require('bootstrap/dist/css/bootstrap.min.css')
-require('bootstrap')
+// require('bootstrap/dist/css/bootstrap.min.css')
+// require('bootstrap')
 // require('font-awesome/css/font-awesome.css')
+require('assets/style/bootstrap.min.css')
+require('assets/js/min/bootstrap.min.js')
 import 'font-awesome/css/font-awesome.css'
-require('assets/style/freelancer.min.css')
 AUTH.checkAuthentication()
 Vue.use(Router)
 export default new Router({

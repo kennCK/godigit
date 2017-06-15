@@ -1,11 +1,13 @@
 <template>
   <div>
-    "This is a new module"
+    <api-table></api-table>
   </div>
 </template>
 <script>
   export default{
-    name: 'Compensation Management',
+    components: {
+      'api-table': require('components/table/TableComponent.vue')
+    },
     create(){
 
     },
