@@ -25,9 +25,11 @@ Vue.mixin({
         data: formData,
         async: false,
         success: (response) => {
+          console.log('shit')
           this.APISuccessRequestHandler(response, callback)
         },
         error: (jqXHR) => {
+          console.log(jqXHR)
           this.APIFailRequestHandler(link, jqXHR, errorCallback)
         },
         cache: false,
@@ -45,7 +47,7 @@ Vue.mixin({
         case 401: // Unauthorized
           if(link === 'authenticate' || 'authenticate/user'){ // if error occured during authentication request
             if(errorCallback){
-              errorCallback(jqXHR.responseJSON, jqXHR.status)
+              errorCallback(jqXHR.responseJSON, jqXHR.status * 1)
             }
           }else{
             ROUTER.push('login')
@@ -53,7 +55,7 @@ Vue.mixin({
           break
         default:
           if(errorCallback){
-            errorCallback(jqXHR.responseJSON, jqXHR.status)
+            errorCallback(jqXHR.responseJSON, jqXHR.status * 1)
           }
       }
     }
