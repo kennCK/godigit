@@ -2,15 +2,15 @@
   <div id="app">
     <div v-bind:style="(globalVariables.showModal) ? 'overflow-y:hidden; height:'+deviceHeight+'px!important': ''">
       <div v-if="!tokenData.verifyingToken" style="">
-       <godigit-header></godigit-header>
-       <godigit-sidebar></godigit-sidebar>
-       <godigit-content></godigit-content> 
+       <system-header></system-header>
+       <system-sidebar></system-sidebar>
+       <system-content></system-content> 
       </div>
       <div v-else>
         Loading please wait. {{tokenData.verifyingToken}}
       </div>
     </div>
-    <godigit-footer></godigit-footer>
+    <system-footer></system-footer>
   </div>
 </template>
 
@@ -43,10 +43,10 @@ export default {
     }
   },
   components: {
-    'godigit-header': () => import('modules/Header.vue'),
-    'godigit-sidebar': () => import('modules/Sidebar.vue'),
-    'godigit-content': () => import('modules/Content.vue'),
-    'godigit-footer': () => import('modules/Footer.vue')
+    'system-header': () => import('modules/frame/Header.vue'),
+    'system-sidebar': () => import('modules/frame/Sidebar.vue'),
+    'system-content': () => import('modules/frame/Content.vue'),
+    'system-footer': () => import('modules/frame/Footer.vue')
   }
 }
 </script>
