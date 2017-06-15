@@ -194,10 +194,10 @@ export default {
     text-align: center;
   }
    .sidebar-collapse{
-    display: none;
+    display: block;
   }
   .sidebar-menu .header span{
-    display: none;
+    display: block;
   }
 }
 
