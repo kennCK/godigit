@@ -168,7 +168,7 @@ export default {
   }
 }
 
-/* meduim screen*/
+/* meduim screen  */
 @media screen (min-width: 992px), screen and (max-width: 1199px){
   .main-sidebar{
     width: 25%;
