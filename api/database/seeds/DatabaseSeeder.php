@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UserTypeSeeder::class);
+        $this->call(MenuSettingsTableSeeder::class);
         Model::unguard();
 
         DB::table('users')->delete();
