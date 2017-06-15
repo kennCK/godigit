@@ -1,19 +1,18 @@
 <template>
   <div>
-    Page content goes here.
+    <api-table></api-table>
   </div>
 </template>
 <script>
-  import Vue from 'vue'
   export default{
-    name: '',
+    components: {
+      'api-table': require('components/table/TableComponent.vue')
+    },
     create(){
 
     },
-    components: {
-      'modal': require('../../components/modal/Modal.vue')
-    },
     mounted(){
+
     },
     data(){
       return {
@@ -28,9 +27,5 @@
   }
 </script>
 <style scoped>
-.half-rule {
-  margin-left: 0;
-  text-align: left;
-  width: 50%;
-}
+
 </style>

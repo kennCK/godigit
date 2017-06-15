@@ -25,11 +25,9 @@ Vue.mixin({
         data: formData,
         async: false,
         success: (response) => {
-          console.log('shit')
           this.APISuccessRequestHandler(response, callback)
         },
         error: (jqXHR) => {
-          console.log(jqXHR)
           this.APIFailRequestHandler(link, jqXHR, errorCallback)
         },
         cache: false,

@@ -42,6 +42,7 @@
     name: '',
     components: {
       'radio-button': require('./RadioButton.vue'),
+      'check-box': require('./CheckList.vue'),
       'check-list': require('./CheckList.vue'),
       'select-input': require('./Select.vue'),
       'textarea-input': require('./Textarea.vue')
@@ -58,6 +59,7 @@
       label: String,
       label_style: Object,
       label_colspan: Number,
+      input_value: Object,
       input_type: String,
       input_setting: Object,
       input_style: Object,
