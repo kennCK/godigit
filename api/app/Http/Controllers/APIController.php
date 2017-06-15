@@ -122,19 +122,20 @@ class APIController extends Controller
 
           if($action == "update"){
             if( strpos( $validationValue, "unique" ) !== false ) { //check if rule has unique
-                $rules = explode("|", $this->validation[$validationKey]);
-                foreach($rules as $ruleKey => $ruleValue){ //find the unique rule
-                  if(strpos( $ruleValue, "unique" ) !== false){
-                    $rules[$ruleKey] = Rule::unique(str_replace("unique:", "", $ruleValue), $validationKey)->ignore($request["id"], "id");
-                  }
+              $rules = explode("|", $this->validation[$validationKey]);
+              foreach($rules as $ruleKey => $ruleValue){ //find the unique rule
+                if(strpos( $ruleValue, "unique" ) !== false){
+                  $rules[$ruleKey] = Rule::unique(str_replace("unique:", "", $ruleValue), $validationKey)->ignore($request["id"], "id");
                 }
-                $this->validation[$validationKey] = $rules;
-
+              }
+              $this->validation[$validationKey] = $rules;
             }
           }
           if(strpos( $validationKey, "_id" ) !== false){
             $table = explode(".", str_plural(str_replace("_id", "", $validationKey)));
+
             $table = (count($table) > 1) ? $table[1] : $table[0];
+            $table = $table == 'parents' ? $this->model->getTable() : $table;
             $this->validation[$validationKey] = $this->validation[$validationKey]."|exists:".$table.",id";
 
           }

@@ -46,18 +46,36 @@ export default{
       }
     },
     {
-      path: '/employeeManagement',
-      name: 'employeeManagement',
-      component: resolve => require(['modules/employee/EmployeeManagement.vue'], resolve),
+      path: '/canales',
+      name: 'Test',
+      component: resolve => require(['modules/test/Canales.vue'], resolve),
       beforeEnter: beforeEnter,
       meta: {
-        tokenRequired: true
+        tokenRequired: false
       }
     },
     {
-      path: '/test',
+      path: '/plenos',
       name: 'Test',
-      component: resolve => require(['modules/test/InputCell.vue'], resolve),
+      component: resolve => require(['modules/test/Plenos.vue'], resolve),
+      beforeEnter: beforeEnter,
+      meta: {
+        tokenRequired: false
+      }
+    },
+    {
+      path: '/casera',
+      name: 'Test',
+      component: resolve => require(['modules/test/Casera.vue'], resolve),
+      beforeEnter: beforeEnter,
+      meta: {
+        tokenRequired: false
+      }
+    },
+    {
+      path: '/salise',
+      name: 'Test',
+      component: resolve => require(['modules/test/Salise.vue'], resolve),
       beforeEnter: beforeEnter,
       meta: {
         tokenRequired: false

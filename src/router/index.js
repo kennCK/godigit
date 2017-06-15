@@ -18,6 +18,5 @@ import 'font-awesome/css/font-awesome.css'
 AUTH.checkAuthentication()
 Vue.use(Router)
 export default new Router({
-  routes: ModuleRoutes.routes,
-  mode: 'history'
+  routes: ModuleRoutes.routes
 })
