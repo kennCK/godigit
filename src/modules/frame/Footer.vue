@@ -25,16 +25,4 @@ footer {
    padding: 10px 0 10px 0;
    font-size: 12px;
 }
-@media (min-width: 1200px){
-  .footer-below{
-    text-align: left;
-  }
-}
-
-/* meduim screen*/
-@media screen (max-width: 1199px){
-    .footer-below{
-        text-align: center;
-    }
-}
 </style>
