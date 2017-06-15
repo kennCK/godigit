@@ -1,3 +1,7 @@
+<!--
+  Author: Kennette
+  Filename: Sidebar.vue
+-->
 <template>
    <div class="main-sidebar navbar-collapse sidebar-collapse " v-bind:class="hide" id="godigitSidebar" >
     <div class="sidebar">
