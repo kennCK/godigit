@@ -9,8 +9,8 @@
           </li>
           <li v-for="(item,index) in menu" v-if="item.parent_id == 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
               <a v-on:click="navigateTo(item.method)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
-                <i v-bind:class="item.right_icon" v-if="toggleSidebarFlag != false"></i>
-                <span v-bind:class="'sm-title'" v-if="toggleSidebarFlag != false">{{item.title}}
+                <i v-bind:class="item.right_icon"></i>
+                <span v-bind:class="'sm-title'" >{{item.title}}
                 </span>
                 <span v-bind:class="'pull-right-container'">  
                   <i v-bind:class="item.left_icon + ' pull-right'"></i>
@@ -22,7 +22,7 @@
                     <span v-bind:class="'pull-right-container'">
                       <i v-bind:class="subItem.left_icon  + ' pull-right'"></i>
                     </span>
-                    <span v-bind:class="'sm-title'" v-if="toggleSidebarFlag != false">{{subItem.title}}</span>
+                    <span v-bind:class="'sm-title'" >{{subItem.title}}</span>
                   </a>
                 </li>
               </ul>
@@ -96,7 +96,7 @@ export default {
   transition: all 1s ease 0s;
 }
 .main-sidebar.hidden{
-  margin-left: -15%;
+  margin-left: -16%;
   transition: all 1s ease 0s;
 }
 .main-sidebar i{
