@@ -9,7 +9,7 @@ function api_resource($apiReource){
     Route::get($apiResourceValue."/",$pascalCase."@index");
     Route::get($apiResourceValue."/test",$pascalCase."@test");
     Route::post($apiResourceValue."/create",$pascalCase."@create");
-    Route::post($apiResourceValue."/retrieve",$pascalCase."@retrieve");
+    Route::get($apiResourceValue."/retrieve",$pascalCase."@retrieve");
     Route::post($apiResourceValue."/update",$pascalCase."@update");
     Route::post($apiResourceValue."/delete",$pascalCase."@delete");
   }
