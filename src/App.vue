@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-bind:style="(globalVariables.showModal) ? 'overflow-y:hidden; height:'+deviceHeight+'px!important': ''">
-      <div v-if="!tokenData.verifyingToken" style="">
+      <div v-if="!tokenData.verifyingToken">
        <system-header></system-header>
        <system-sidebar></system-sidebar>
        <system-content></system-content> 
