@@ -5,7 +5,8 @@ $apiResources = [
   "product_order",
   "user",
   "user_type",
-  'menu_settings'
+  'menu_settings',
+  "department"
 ];
 api_resource($apiResources);
 
