@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MenuSettings extends APIModel
 {
-  //use SoftDeletes;
+  use SoftDeletes;
   protected $primaryKey = 'id';
   protected $table = 'menu_settings';
-  /*protected $fillable = array(
+  protected $fillable = array(
       'parent_id',
       'module',
       'title',
@@ -24,5 +24,5 @@ class MenuSettings extends APIModel
   public function menu()
   {
     return $this->belongsTo('\App\MenuSettings');
-  }*/
+  }
 }
