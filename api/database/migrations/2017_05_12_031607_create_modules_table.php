@@ -34,6 +34,6 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('menu_settings');
+        //Schema::dropIfExists('modules');
     }
 }
