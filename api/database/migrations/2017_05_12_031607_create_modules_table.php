@@ -18,9 +18,8 @@ class CreateModulesTable extends Migration
             $table->integer('parent_id');
             $table->char('module',100);
             $table->char('title',100);
-            $table->char('left_icon',100);
-            $table->char('right_icon',100);
-            $table->char('method',100);
+            $table->char('icon',100);
+            $table->char('path',100);
             $table->integer('rank');
             $table->timestamps(); 
             $table->softDeletes();

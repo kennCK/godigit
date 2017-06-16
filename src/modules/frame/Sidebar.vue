@@ -13,18 +13,18 @@
           </li>
           <li v-for="(item,index) in menu" v-if="item.parent_id == 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
               <a v-on:click="navigateTo(item.method)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
-                <i v-bind:class="item.right_icon"></i>
+                <i class="fa fa-chevron-down" v-if="item.id == menu[index+1].parent_id"></i>
                 <span v-bind:class="'sm-title'" >{{item.title}}
                 </span>
                 <span v-bind:class="'pull-right-container'">  
-                  <i v-bind:class="item.left_icon + ' pull-right'"></i>
+                  <i v-bind:class="item.icon + ' pull-right'"></i>
                 </span>
               </a>
               <ul class="collapse" v-if="item.id == menu[index+1].parent_id" :id="item.id">
                 <li v-for="subItem in menu" v-if="subItem.parent_id != 0 && item.id == subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
                   <a v-on:click="navigateTo(item.method + '/' + subItem.method)" v-bind:class="hide">
                     <span v-bind:class="'pull-right-container'">
-                      <i v-bind:class="subItem.left_icon  + ' pull-right'"></i>
+                      <i v-bind:class="subItem.icon  + ' pull-right'"></i>
                     </span>
                     <span v-bind:class="'sm-title'" >{{subItem.title}}</span>
                   </a>
@@ -58,7 +58,7 @@ export default {
           'id': 'asc'
         }
       }
-      this.APIRequest('menu_settings/retrieve', conditionEntry).then(response => {
+      this.APIRequest('modules/retrieve', conditionEntry).then(response => {
         this.menu = response.data
       })
     },
