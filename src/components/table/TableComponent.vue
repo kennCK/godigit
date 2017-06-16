@@ -36,6 +36,9 @@
       }
     },
     props: {
+      api: String,
+      filter_setting: Object,
+      column_setting: Object
     },
     methods: {
     }

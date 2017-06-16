@@ -12,5 +12,3 @@ api/composer.lock
 api/composer.lock
 api/routes/api_routes.php
 api/app/Department.php
-src/modules/test/Casera.vue
-src/modules/test/Plenos.vue
