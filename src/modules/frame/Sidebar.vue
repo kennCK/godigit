@@ -140,7 +140,7 @@ export default {
   padding: 0;
 }
 .sidebar-menu  li > a{
-  padding: 15px 2% 15px 2%;
+  padding: 15px 2% 15px 5%;
   display: block;
 }
 .sidebar-menu  ul li > a{
