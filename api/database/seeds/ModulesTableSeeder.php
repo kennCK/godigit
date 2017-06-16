@@ -12,7 +12,7 @@ class ModulesTableSeeder extends Seeder
      */
     public function run()
     {
-       DB:: table('menu_settings') -> insert(array(
+       DB:: table('modules') -> insert(array(
         //Dashboard
         array('id' => 1, 'parent_id' => 0, 'module' => 'primary_menu', 'title'=>'Dashboard', 'left_icon' => 'fa fa-tachometer', 'right_icon' =>'fa fa-chevron-down', 'method' => 'dashboard', 'rank' => 1),
         array('id' => 2, 'parent_id' => 1, 'module' => 'primary_menu', 'title'=>'Analytics', 'left_icon' => 'fa fa-line-chart', 'right_icon' =>'', 'method' => 'analytics', 'rank' => 1),
