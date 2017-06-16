@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Modules extends APIModel
 {
   protected $primaryKey = 'id';
-  protected $table = 'menu_settings';
+  protected $table = 'modules';
 }
