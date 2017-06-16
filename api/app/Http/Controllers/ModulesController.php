@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\MenuSettings;
 use DB;
 
-class MenuSettingsController extends APIController
+class ModulesController extends APIController
 {
   function __construct(){
     $this->model = new MenuSettings();
