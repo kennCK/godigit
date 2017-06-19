@@ -14,15 +14,12 @@
 </template>
 <style type="text/css">
 footer {
-   width:100%;
-   height:40px;   /* Height of the footer */
-   float: left;
-   margin-top: 10px;
-   bottom:0;
-   left: 0;
-   position: fixed;
-   background: #fff;
-   padding: 10px 0 10px 0;
-   font-size: 12px;
+  width:100%;
+  height:40px;   /* Height of the footer */
+  float: left;
+  margin-top: 100px;
+  background: #fff;
+  padding: 10px 0 10px 0;
+  font-size: 12px;
 }
 </style>
