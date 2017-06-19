@@ -20,7 +20,15 @@
       }
       let columnSetting = {
         parent_id: {},
-        module: {}
+        module: {},
+        title: {},
+        left_icon: {
+          sort: -1
+        },
+        right_icon: {},
+        method: {},
+        rank: {
+        }
       }
       return {
         api: 'menu_settings',
