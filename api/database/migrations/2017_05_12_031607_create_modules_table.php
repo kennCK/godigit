@@ -16,8 +16,7 @@ class CreateModulesTable extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id');
-            $table->char('module',100);
-            $table->char('title',100);
+            $table->char('description',100);
             $table->char('icon',100);
             $table->char('path',100);
             $table->integer('rank');
@@ -33,6 +32,6 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('modules');
+        Schema::dropIfExists('modules');
     }
 }
