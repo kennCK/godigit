@@ -38,11 +38,18 @@ class ModulesTableSeeder extends Seeder
         //Payroll
         array('id' => 40, 'parent_id' => 0,  'description'=>'Payroll', 'icon' => 'fa fa-credit-card',  'path' => 'paryroll', 'rank' => 5),
 
+        //My Portal
+        array('id' => 50, 'parent_id' => 0,  'description'=>'My Account', 'icon' => 'fa fa-user',  'path' => 'my_account', 'rank' => 6), 
+        array('id' => 51, 'parent_id' => 50,  'description'=>'My Profile', 'icon' => 'fa fa-info',  'path' => 'my_profile', 'rank' => 1),  
+        array('id' => 52, 'parent_id' => 50,  'description'=>'My Schedule', 'icon' => 'fa fa-clock-o',  'path' => 'my_schedule', 'rank' => 2),    
+        array('id' => 53, 'parent_id' => 50,  'description'=>'My DTR', 'icon' => 'fa fa-calendar',  'path' => 'my_dtr', 'rank' => 3),    
+        array('id' => 54, 'parent_id' => 50,  'description'=>'My PaySlip', 'icon' => 'fa fa-credit-card',  'path' => 'my_payslip', 'rank' => 4),    
+
         //Settings
-         array('id' => 50, 'parent_id' => 0,  'description'=>'Settings', 'icon' => 'fa fa-cog',  'path' => 'settings', 'rank' => 6),
-         array('id' => 51, 'parent_id' => 50,  'description'=>'Account Management', 'icon' => 'fa fa-shield',  'path' => 'account_management', 'rank' => 1),
-         array('id' => 52, 'parent_id' => 50,  'description'=>'Users Handbook', 'icon' => 'fa fa-book',  'path' => 'user_guide', 'rank' => 2),
-         array('id' => 53, 'parent_id' => 50,  'description'=>'Video Tutorials', 'icon' => 'fa fa-video-camera',  'path' => 'video_tutorials', 'rank' => 3),
+        array('id' => 100, 'parent_id' => 0,  'description'=>'Settings', 'icon' => 'fa fa-cog',  'path' => 'settings', 'rank' => 11),
+        array('id' => 101, 'parent_id' => 100,  'description'=>'Account Management', 'icon' => 'fa fa-shield',  'path' => 'account_management', 'rank' => 1),
+        array('id' => 102, 'parent_id' => 100,  'description'=>'Users Handbook', 'icon' => 'fa fa-book',  'path' => 'user_guide', 'rank' => 2),
+        array('id' => 103, 'parent_id' => 100,  'description'=>'Video Tutorials', 'icon' => 'fa fa-video-camera',  'path' => 'video_tutorials', 'rank' => 3),
 
       ));
     }
