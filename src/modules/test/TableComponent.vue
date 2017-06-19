@@ -1,6 +1,6 @@
 <template>
   <div>
-    <api-table></api-table>
+    <api-table :api="api" :filter_setting="filterSetting" :column_setting="columnSetting"></api-table>
   </div>
 </template>
 <script>
@@ -15,8 +15,25 @@
 
     },
     data(){
-      return {
+      let filterSetting = {
 
+      }
+      let columnSetting = {
+        parent_id: {},
+        module: {},
+        title: {},
+        left_icon: {
+          sort: -1
+        },
+        right_icon: {},
+        method: {},
+        rank: {
+        }
+      }
+      return {
+        api: 'menu_settings',
+        filterSetting: filterSetting,
+        columnSetting: columnSetting
       }
     },
     props: {

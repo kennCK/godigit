@@ -10,7 +10,7 @@ export default{
   },
   {
     path: '/dev_table_component',
-    name: 'plenos',
+    name: 'dev_table_component',
     component: resolve => require(['modules/test/TableComponent.vue'], resolve),
     meta: {
       tokenRequired: false

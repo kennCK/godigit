@@ -9,7 +9,6 @@ api/vendor/
 api/composer.lock
 
 
-api/composer.lock
 src/modules/test/Casera.vue
 src/modules/test/Plenos.vue
-api/composer.lock
+api/app/Department.php

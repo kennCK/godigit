@@ -8,6 +8,7 @@ Vue.mixin({
       return string.toLowerCase().replace(/ /g, '_')
     },
     StringUnderscoreToPhrase(str){
+      str = str.replace('_', ' ')
       return str.replace(/\w\S*/g, function(txt){
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
       })
