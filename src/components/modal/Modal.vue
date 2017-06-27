@@ -1,13 +1,13 @@
 <template>
   <div>
     <transition name="modal">
-      <div  v-if="showModal" >
-        <div class="modal-mask" @click="showModal = false">
+      <div  v-bind:class="modalShown ? '' : 'closedModal'" >
+        <div class="modal-mask" @click="modalShown = false">
           <div class="modal-dialog">
             <div class="modal-content" @click.stop>
-              <div class="modal-header">
+              <div class="modal-header bg-primary">
                 <slot name="header">
-                  default header
+                  
                 </slot>
               </div>
               <div class="modal-body">
@@ -15,17 +15,15 @@
                   default body
                 </slot>
               </div>
-              <div class="modal-footer">
+              <!-- <div class="modal-footer">
                 <slot name="footer">
                 </slot>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
     </transition>
-
-
   </div>
 </template>
 <script>
@@ -36,18 +34,16 @@
 
     },
     mounted(){
-
     },
     data(){
       return {
-        showModal: false
+        modalShown: false
       }
     },
     props: {
-      show_modal: false
     },
     watch: {
-      showModal: function(value){
+      modalShown: function(value){
         if(value){
           this.modal('show')
         }else{
@@ -57,10 +53,16 @@
         global.hasShownModal = value
       },
       show_modal: function(value){
-        this.showModal = value
+        this.modalShown = value
       }
     },
     methods: {
+      showModal(){
+        this.modalShown = true
+      },
+      closeModal(){
+        this.modalShown = false
+      }
     }
 
   }
@@ -101,7 +103,7 @@
 }
 
 .modal-body {
-  margin: 20px 0;
+  /*margin: 20px 0;*/
 }
 
 .modal-default-button {
@@ -130,5 +132,8 @@
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.closedModal{
+  display:none
 }
 </style>

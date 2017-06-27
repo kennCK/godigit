@@ -1,78 +1,77 @@
 <template>
-  <div class="row">
-    <div class="col-sm-6  col-sm-offset-6 margin-bottom-20" >
-      <form-component :id="formEntryID"
-          v-on:entry-updated="entryUpdated"
-          v-on:entry-created="entryCreated"
-          v-on:entry-deleted="entryDeleted"
-          :form_setting="form_setting"
-          :form_input_setting="form_input_setting"
-          :api="api">
-      </form-component>
+  <div>
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button @click="createEntry" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Create</button>
+      </div>
     </div>
-    <div class="col-sm-12" >
-      <table-component ref="tableComponent"
-          v-on:row-clicked="viewEntry"
-          :table_setting="table_setting"
-          :column_setting="column_setting"
-          :filter_setting="filter_setting"
-          :api="api">
-      </table-component>
-    </div>
+    <api-table ref="apiTable" v-on:row_clicked="rowClicked" :api="api" :filter_setting="table_setting.filterSetting" :column_setting="table_setting.columnSetting"></api-table>
+    <modal ref="modal" >
+      <div slot="header">
+        {{modalTitle}}
+      </div>
+      <div slot="body">
+        <common-form ref="commonForm" :api="api" :inputs="form_setting.inputs" v-on:form_close="formClose" v-on:form_deleted="formDeleted" v-on:form_updated="formUpdated"></common-form>
+      </div>
+    </modal>
   </div>
 </template>
 <script>
   export default{
     name: '',
     components: {
-      'table-component': require('../table/TableComponent.vue'),
-      'form-component': require('../form/FormComponent.vue')
+      'api-table': require('components/table/TableComponent.vue'),
+      'modal': require('components/modal/Modal.vue'),
+      'common-form': require('components/form/CommonForm.vue')
     },
     create(){
 
     },
     mounted(){
+      this.initializeSettings()
     },
     data(){
       return {
-        formEntryID: -1,
-        currentRowValue: -1
+        modalTitle: '',
+        currentIndex: -1
       }
     },
     props: {
       api: String,
       table_setting: Object,
-      filter_setting: Array,
-      column_setting: Array,
-      form_setting: Object,
-      form_input_setting: Object
+      form_setting: Object
     },
     methods: {
-      viewEntry(entryID, rowIndex){
-        this.formEntryID = -1
-        this.currentRowValue = rowIndex
-        setTimeout(() => {
-          this.formEntryID = entryID
-        }, 50)
+      initializeSettings(){
+        if(typeof this.form_setting.form_title === 'undefined'){
+          this.modalTitle = this.StringUnderscoreToPhrase(this.api) + ' Details'
+        }else{
+          this.modalTitle = this.form_setting.form_title
+        }
       },
-      entryDeleted(entryID){
-        this.$refs.tableComponent.deleteRow(entryID)
+      createEntry(){
+        this.currentIndex = -1
+        this.$refs.modal.showModal()
+        this.$refs.commonForm.resetForm()
       },
-      entryUpdated(entryID){
-        this.$refs.tableComponent.updateRow(this.currentRowValue, entryID * 1)
+      formClose(){
+        this.$refs.modal.closeModal()
       },
-      entryCreated(entryID){
-        this.$refs.tableComponent.createRow(entryID)
+      formUpdated(id){
+        this.$refs.apiTable.updateRow(this.currentIndex, id)
       },
-      changeEntry(direction){
-        this.$refs.tableComponent.changeRow(direction)
+      formDeleted(){
+        this.$refs.apiTable.deleteRow(this.currentIndex)
+      },
+      rowClicked(index, id){
+        this.currentIndex = index
+        this.$refs.commonForm.viewForm(id)
+        this.$refs.modal.showModal()
       }
     }
 
   }
 </script>
 <style scoped>
-  .margin-bottom-20{
-    margin-bottom: 20px
-  }
+
 </style>

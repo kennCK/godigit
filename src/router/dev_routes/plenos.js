@@ -15,5 +15,13 @@ export default{
     meta: {
       tokenRequired: false
     }
+  },
+  {
+    path: '/dev_common_module',
+    name: 'dev_common_module',
+    component: resolve => require(['modules/test/CommonModule.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
   }]
 }

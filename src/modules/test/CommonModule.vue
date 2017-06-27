@@ -1,12 +1,13 @@
 <template>
   <div>
-    <api-table :api="api" :filter_setting="filterSetting" :column_setting="columnSetting"></api-table>
+    <module :api="api" :table_setting="table_setting" :form_setting="form_setting"></module>
   </div>
 </template>
 <script>
   export default{
+    name: '',
     components: {
-      'api-table': require('components/table/TableComponent.vue')
+      'module': require('components/common_module/CommonModule.vue')
     },
     create(){
 
@@ -16,11 +17,16 @@
     },
     data(){
       let filterSetting = {
-
+        parent_id: {
+          label_colspan: 5
+        },
+        description: {
+          label_colspan: 5,
+          clause: 'like'
+        }
       }
       let columnSetting = {
         parent_id: {
-          type: 'check'
         },
         description: {},
         icon: {
@@ -34,10 +40,23 @@
           type: 'number'
         }
       }
-      return {
-        api: 'modules',
+      let tableSetting = {
         filterSetting: filterSetting,
         columnSetting: columnSetting
+      }
+      let formSetting = {
+        inputs: {
+          parent_id: {},
+          description: {},
+          icon: {},
+          path: {},
+          rank: {}
+        }
+      }
+      return {
+        api: 'modules',
+        table_setting: tableSetting,
+        form_setting: formSetting
       }
     },
     props: {

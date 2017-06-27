@@ -65,10 +65,8 @@ class APIController extends Controller
     public function update(Request $request){
       if ($request->hasFile('image_file'))
       {
-        $this->response['debug'][] = $request->image_file->store('images');
       }
       else{
-        $this->response['debug'][] = "file not present";
       }
       $this->updateEntry($request->all());
 
@@ -119,7 +117,6 @@ class APIController extends Controller
       }
       if(count($this->validation)){
         foreach($this->validation as $validationKey => $validationValue){
-
           if($action == "update"){
             if( strpos( $validationValue, "unique" ) !== false ) { //check if rule has unique
                 $rules = explode("|", $this->validation[$validationKey]);
@@ -135,8 +132,10 @@ class APIController extends Controller
           if(strpos( $validationKey, "_id" ) !== false){
             $table = explode(".", str_plural(str_replace("_id", "", $validationKey)));
             $table = (count($table) > 1) ? $table[1] : $table[0];
+            if(strpos( $validationKey, "parent" ) !== false){
+              $table = $this->model->getTable();
+            }
             $this->validation[$validationKey] = $this->validation[$validationKey]."|exists:".$table.",id";
-
           }
         }
         $validator = Validator::make($request, $this->validation);
@@ -271,8 +270,6 @@ class APIController extends Controller
       if($result && $this->editableForeignTable){
         $childID = array();
         foreach($this->editableForeignTable as $childTable => $childTableValue){
-
-
           if(is_string($childTableValue)){
             $childTable = $childTableValue;
           }
@@ -330,12 +327,10 @@ class APIController extends Controller
     public function deleteEntry($request){
       $validator = Validator::make($request, ["id" => "required"]);
       if ($validator->fails()) {
-        $this->response['debug'] = $request["id"]."asdasd";
-          $this->response["error"]["status"] = 101;
-          $this->response["error"]["message"] = $validator->errors()->toArray();
-          return false;
+        $this->response["error"]["status"] = 101;
+        $this->response["error"]["message"] = $validator->errors()->toArray();
+        return false;
       }
-      $this->response['debug'] = $request["id"];
       $this->response["data"] = $this->model->destroy($request["id"]);
     }
     public function addCondition($conditions){
