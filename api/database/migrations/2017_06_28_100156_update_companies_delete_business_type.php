@@ -15,10 +15,10 @@ class UpdateCompaniesDeleteBusinessType extends Migration
     {
         Schema::dropIfExists('business_type');
         Schema::table('companies', function(Blueprint $table){
-            $table->longText('vision')->nullable();
-            $table->longText('mission')->nullable();
-            $table->longText('core_values')->nullable();
-            $table->longText('social_responsibilities')->nullable();
+            //$table->longText('vision')->nullable();
+            //$table->longText('mission')->nullable();
+            //$table->longText('core_values')->nullable();
+            //$table->longText('social_responsibilities')->nullable();
         });
     }
 
