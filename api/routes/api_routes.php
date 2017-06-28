@@ -13,7 +13,7 @@ $apiResources = [
   'position_history',
   'api_test_results',
   'account',
-  'account_types'
+  'account_type'
 ];
 api_resource($apiResources);
 
