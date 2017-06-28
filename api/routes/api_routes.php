@@ -8,7 +8,7 @@ $apiResources = [
   'company_branch',
   'company_employee',
   'department',
-  'department_members',
+  'department_member',
   'position',
   'position_history',
   'api_test_results',
