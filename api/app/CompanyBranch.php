@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompanyBranch extends APIModel
 {
-    //
-  use SoftDeletes;
-  protected $primaryKey = 'id';
-  protected $table = 'company_branches';
- 
+
+  protected $fillable = ['name','code','address','contact_number','fax_number','email'];
   public function  company(){
     return $this->belongsTo('App\Company');
   } 
 
-  public function  employees(){
-    return $this->hasMany('App\CompanyEmployees');
+  public function  company_employees(){
+    return $this->hasMany('App\CompanyEmployee');
   }
 }
