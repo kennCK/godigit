@@ -32,6 +32,6 @@ class CreateBusinessTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('business_type');
+        Schema::dropIfExists('business_types');
     }
 }
