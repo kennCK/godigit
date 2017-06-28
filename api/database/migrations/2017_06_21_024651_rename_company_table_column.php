@@ -14,7 +14,7 @@ class RenameCompanyTableColumn extends Migration
     public function up()
     {
         Schema::table('company', function (Blueprint $table) {
-            $table->renameColumn('business_type','business_type_id');
+            //$table->renameColumn('business_type','business_type_id');
         });
     }
 
