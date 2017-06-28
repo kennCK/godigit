@@ -4,7 +4,6 @@
       <div v-if="!tokenData.verifyingToken">
        <system-header></system-header>
        <system-sidebar></system-sidebar>
-       <system-content></system-content> 
       </div>
       <div v-else>
         Loading please wait. {{tokenData.verifyingToken}}
@@ -45,7 +44,6 @@ export default {
   components: {
     'system-header': () => import('modules/frame/Header.vue'),
     'system-sidebar': () => import('modules/frame/Sidebar.vue'),
-    'system-content': () => import('modules/frame/Content.vue'),
     'system-footer': () => import('modules/frame/Footer.vue')
   }
 }

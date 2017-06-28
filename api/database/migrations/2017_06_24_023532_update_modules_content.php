@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserType extends Migration
+class UpdateModulesContent extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class UserType extends Migration
      */
     public function up()
     {
-      Schema::dropIfExists('user_types');
-      Schema::create('user_types', function (Blueprint $table) {
-          $table->increments('id');
-          $table->char('description', 20);
-          $table->timestamps();
-          $table->SoftDeletes();
-      });
+        DB::table('modules')->truncate();
+        Artisan::call('db:seed', array('--class' => 'ModulesTableSeeder'));
     }
 
     /**

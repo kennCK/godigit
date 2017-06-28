@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserType extends Migration
+class UpdateCompanyTableColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class UserType extends Migration
      */
     public function up()
     {
-      Schema::dropIfExists('user_types');
-      Schema::create('user_types', function (Blueprint $table) {
-          $table->increments('id');
-          $table->char('description', 20);
-          $table->timestamps();
-          $table->SoftDeletes();
-      });
+        Schema::table('company', function (Blueprint $table) {
+            $table->dropColumn(['name','code','address','contact_number','fax_number','email']);
+        });
     }
 
     /**
@@ -29,6 +25,8 @@ class UserType extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('company', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesTable extends Migration
+class CreateCompanyEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('modules');
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::dropIfExists('company_employees');
+        Schema::create('company_employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id');
-            $table->char('description',100);
-            $table->char('icon',100);
-            $table->char('path',100);
-            $table->integer('rank');
-            $table->timestamps(); 
+            $table->unsignedInteger('company_branch_id');
+            $table->unsignedInteger('account_id');
+            $table->timestamps();
             $table->softDeletes();
         });
     }
@@ -33,6 +30,6 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('company_employees');
     }
 }
