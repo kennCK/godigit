@@ -16,4 +16,8 @@ class CompanyBranch extends APIModel
   public function  company_employees(){
     return $this->hasMany('App\CompanyEmployee');
   }
+
+  public function positions(){
+    return $this->hasMany('App\Positions');
+  }
 }
