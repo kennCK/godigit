@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends APIModel
 {
-  use SoftDeletes;
-  protected $hidden = array('password');
-  protected  $primaryKey = 'id';
-  protected  $table = 'accounts';
+    protected $hidden = array('password');
+
+    public function account_informations(){
+      return $this->hasOne('App\AccountInformation');
+    }
+
+    public function account_profile_pictures(){
+      return $this->hasOne('App\AccountProfilePicture');
+    }
 }
