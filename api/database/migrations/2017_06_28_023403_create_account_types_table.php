@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesTable extends Migration
+class CreateAccountTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('modules');
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('account_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id');
-            $table->char('description',100);
-            $table->char('icon',100);
-            $table->char('path',100);
-            $table->integer('rank');
-            $table->timestamps(); 
+            $table->string('type',100);
+            $table->longText('description');
+            $table->timestamps();
             $table->softDeletes();
         });
+        Artisan::call('db:seed', array('--class' => 'AccountTypesTableSeeder'));
     }
 
     /**
@@ -33,6 +30,6 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('account_types');
     }
 }

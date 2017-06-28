@@ -12,8 +12,8 @@ class BusinessPositions extends Migration
      * @return void
      */
     public function up()
-    {
-        //
+    {   
+        Schema::dropIfExists('business_positions');
         Schema::create('business_positions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');

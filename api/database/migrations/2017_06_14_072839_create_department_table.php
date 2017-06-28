@@ -13,7 +13,8 @@ class CreateDepartmentTable extends Migration
      */
     public function up()
     {
-        //
+
+        Schema::dropIfExists('department');
         Schema::create('department', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('company_id');

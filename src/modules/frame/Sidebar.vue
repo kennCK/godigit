@@ -3,37 +3,45 @@
   Filename: Sidebar.vue
 -->
 <template>
-   <div class="main-sidebar navbar-collapse sidebar-collapse " v-bind:class="hide" id="godigitSidebar" >
-    <div class="sidebar">
-      <ul class="sidebar-menu">
-          <li class="header"><label v-bind:class="hide">MAIN TASKS</label>
-              <span class="pull-right">
-                <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
-              </span>
-          </li>
-          <li v-for="(item,index) in menu" v-if="item.parent_id == 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
-              <a v-on:click="navigateTo(item.path)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
-                <i class="fa fa-chevron-down" v-if="item.id == menu[index+1].parent_id"></i>
-                <span v-bind:class="'sm-title'" >{{item.description}}
+  <div class="system-body"> 
+     <div class="main-sidebar navbar-collapse sidebar-collapse " v-bind:class="hide" id="godigitSidebar" >
+      <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="header"><label v-bind:class="hide">MAIN TASKS</label>
+                <span class="pull-right">
+                  <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
                 </span>
-                <span v-bind:class="'pull-right-container'">  
-                  <i v-bind:class="item.icon + ' pull-right'"></i>
-                </span>
-              </a>
-              <ul class="collapse" v-if="item.id == menu[index+1].parent_id" :id="item.id">
-                <li v-for="subItem in menu" v-if="subItem.parent_id != 0 && item.id == subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
-                  <a v-on:click="navigateTo(item.path + '/' + subItem.path)" v-bind:class="hide">
-                    <span v-bind:class="'pull-right-container'">
-                      <i v-bind:class="subItem.icon  + ' pull-right'"></i>
-                    </span>
-                    <span v-bind:class="'sm-title'" >{{subItem.description}}</span>
-                  </a>
-                </li>
-              </ul>
             </li>
-        </ul>
+            <li v-for="(item,index) in menu" v-if="item.parent_id == 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
+                <a v-on:click="navigateTo(item.path)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
+                  <i class="fa fa-chevron-down" v-if="item.id == menu[index+1].parent_id"></i>
+                  <span v-bind:class="'sm-title'" >{{item.description}}
+                  </span>
+                  <span v-bind:class="'pull-right-container'">  
+                    <i v-bind:class="item.icon + ' pull-right'"></i>
+                  </span>
+                </a>
+                <ul class="collapse" v-if="item.id == menu[index+1].parent_id" :id="item.id">
+                  <li v-for="subItem in menu" v-if="subItem.parent_id != 0 && item.id == subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
+                    <a v-on:click="navigateTo(item.path + '/' + subItem.path)" v-bind:class="hide">
+                      <span v-bind:class="'pull-right-container'">
+                        <i v-bind:class="subItem.icon  + ' pull-right'"></i>
+                      </span>
+                      <span v-bind:class="'sm-title'" >{{subItem.description}}</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+        </div>
       </div>
-    </div>  
+      <div class="content-holder" v-bind:class="hide">
+        <transition >
+          <router-view ></router-view>
+        </transition>
+      </div>
+    </div>
+  </div>  
 </template>
 <script>
 export default {
@@ -92,15 +100,11 @@ export default {
 }
 </script>
 <style>
-.main-sidebar{  
+.main-sidebar, .content-holder{  
   min-height: 100%;
   float: left;
   overflow: hidden;
   margin-bottom: 50px;
-  transition: all 1s ease 0s;
-}
-.main-sidebar.hidden{
-  margin-left: -16%;
   transition: all 1s ease 0s;
 }
 .main-sidebar i{
@@ -170,6 +174,17 @@ export default {
   .sidebar-menu .header span{
     display: block;
   }
+  .content-holder{
+    width: 80%;
+  }
+  /*  Change with Menu Toggled */
+  .main-sidebar.hidden{
+    margin-left: -16%;
+  }
+  .content-holder.hidden{
+    width: 94%;
+    margin: 0 1% 0 1%;
+  }
 }
 
 /* meduim screen  */
@@ -178,6 +193,9 @@ export default {
     width: 25%;
     font-size: 13px;
   }
+  .content-holder{
+    width: 75%;
+  }
   .main-sidebar.active{
     padding-left:15%;
   }
@@ -185,8 +203,17 @@ export default {
     display: block;
   }
   .sidebar-menu .header span{
-  display: block;
-}
+    display: block;
+  }
+
+  /*  Change with Menu Toggled */
+  .main-sidebar.hidden{
+    margin-left: -20%;
+  }
+  .content-holder.hidden{
+    width: 92%;
+    margin: 0 2% 0 2%;
+  }
 }
 /* small screen*/
 @media screen (min-width: 768px), screen and (max-width: 991px){
@@ -202,6 +229,9 @@ export default {
   }
   .sidebar-menu .header span{
     display: block;
+  }
+  .content-holder{
+    width: 100%;
   }
 }
 
@@ -219,6 +249,9 @@ export default {
   }
   .sidebar-menu .header span{
     display: none;
+  }
+  .content-holder{
+    width: 100%;
   }
 }
 @media (max-width: 239px){
@@ -239,6 +272,9 @@ export default {
   }
   .sidebar-menu .header span{
     display: none;
+  }
+  .content-holder{
+    width: 100%;
   }
 }
 </style>
