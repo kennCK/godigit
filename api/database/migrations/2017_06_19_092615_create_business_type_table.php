@@ -13,8 +13,8 @@ class CreateBusinessTypeTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('business_type');
-        Schema::create('business_type', function (Blueprint $table) {
+        Schema::dropIfExists('business_types');
+        Schema::create('business_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
             $table->longText('description');

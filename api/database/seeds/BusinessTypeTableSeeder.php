@@ -11,7 +11,7 @@ class BusinessTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB:: table('business_type') -> insert(array(
+        DB:: table('business_types') -> insert(array(
           array("id" => "1","type" => "Call Center", "description" => "This is a Sample"),
         ));
     }
