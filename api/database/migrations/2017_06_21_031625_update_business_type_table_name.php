@@ -13,7 +13,7 @@ class UpdateBusinessTypeTableName extends Migration
      */
     public function up()
     {
-        Schema::rename('business_type','business_types');
+        //Schema::rename('business_type','business_types');
     }
 
     /**
