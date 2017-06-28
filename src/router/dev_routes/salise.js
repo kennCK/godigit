@@ -1,7 +1,7 @@
 
 export default{
   routes: [{
-    path: '/salise',
+    path: '/testing/salise',
     name: 'salise',
     component: resolve => require(['modules/test/Salise.vue'], resolve),
     meta: {
