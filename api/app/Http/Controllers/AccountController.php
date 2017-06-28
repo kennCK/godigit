@@ -8,7 +8,7 @@ use DB;
 
 class AccountController extends APIController
 {
-     function __construct(){
+     function __construct(){  
         $this->model = new Account();
         $this->validation = array(  
           "email" => "unique: accounts",

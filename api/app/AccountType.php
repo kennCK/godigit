@@ -10,4 +10,5 @@ class AccountType extends APIModel
   use SoftDeletes;
   protected  $primaryKey= 'id';
   protected  $table = 'account_types';
+
 }
