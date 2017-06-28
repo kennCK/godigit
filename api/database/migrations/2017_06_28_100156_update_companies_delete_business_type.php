@@ -8,7 +8,7 @@ class UpdateCompaniesDeleteBusinessType extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * For Pull Request
      * @return void
      */
     public function up()
