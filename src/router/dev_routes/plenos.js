@@ -15,5 +15,21 @@ export default{
     meta: {
       tokenRequired: false
     }
+  },
+  {
+    path: '/dev_common_module',
+    name: 'dev_common_module',
+    component: resolve => require(['modules/test/CommonModule.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
+  },
+  {
+    path: '/department_management',
+    name: 'departmentManagement',
+    component: resolve => require(['modules/department/DepartmentManagement.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
   }]
 }

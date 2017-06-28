@@ -14,6 +14,7 @@ global.$ = global.jQuery
 // require('font-awesome/css/font-awesome.css')
 require('assets/style/bootstrap.min.css')
 require('assets/js/min/bootstrap.min.js')
+require('assets/style/theme.css')
 import 'font-awesome/css/font-awesome.css'
 AUTH.checkAuthentication()
 Vue.use(Router)

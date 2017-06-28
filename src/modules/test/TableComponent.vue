@@ -19,19 +19,23 @@
 
       }
       let columnSetting = {
-        parent_id: {},
-        module: {},
-        title: {},
-        left_icon: {
-          sort: -1
+        parent_id: {
+          type: 'check'
         },
-        right_icon: {},
-        method: {},
+        description: {},
+        icon: {
+          type: 'html',
+          value_function: (entry) => {
+            return '<i class="' + entry['icon'] + '" aria-hidden="true"></i>'
+          }
+        },
+        path: {},
         rank: {
+          type: 'number'
         }
       }
       return {
-        api: 'menu_settings',
+        api: 'modules',
         filterSetting: filterSetting,
         columnSetting: columnSetting
       }

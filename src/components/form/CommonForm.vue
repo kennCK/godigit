@@ -8,7 +8,6 @@
     </div>
     <form v-if="inputInitialized" ref="form" slot="body" enctype="multipart/form-data" role="form" method="POST">
       <template v-for="input in inputList">
-        {{input['label_colspan']}}
         <input-cell
           :name="input['name']"
           :db_name="input['db_name']"
@@ -17,23 +16,35 @@
           :input_style="input['input_style']"
           :label_colspan="input['label_colspan']"
           :placeholder="input['placeholder']"
+          :default_value="input['default_value']"
           :feedback_message="input['feedback_message']"
           :feedback_status="input['feedback_status']"
           :muted_text="input['muted_text']"
           v-on:value_changed="valueChanged"
+          :form_data="formData"
+          :form_data_updated="formDataUpdated"
+          :form_status="formStatus"
         >
         </input-cell>
       </template>
     </form>
     <div class="row">
-      <div class="col-sm-6">
-      </div>
-      <div class="col-sm-6 text-right">
-        <label v-if="formStatus === 'loading'" class="text-primary">Please wait...</label>
-        <label v-else-if="formStatus === 'success'" class="text-success">Success!</label>
-        <label v-else-if="formStatus === 'failed'" class="text-danger">Failed!</label>
-        <button @click="submitForm" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-primary">Save</button>
-        <button type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Cancel</button>
+      <div class="col-sm-12 text-right">
+        <template v-if="formStatus === 'delete_confirmation'">
+          <label class="float-left form-label"><strong>Are you sure?</strong></label>
+          <button @click="deleteForm" class="btn btn-danger">Yes, delete</button>
+          <button @click="formStatus = 'editing'" class="btn btn-default">No</button>
+        </template>
+        <template v-else>
+          <button @click="formStatus = 'delete_confirmation'" v-if="formStatus === 'editing'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-danger pull-left"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+          <label v-if="formStatus === 'loading'" class="text-primary">Please wait...</label>
+          <label v-else-if="formStatus === 'success'" class="text-success">Success!</label>
+          <label v-else-if="formStatus === 'failed'" class="text-danger">Failed!</label>
+          <button v-if="formStatus === 'editing' || formData['id'] === 0" @click="submitForm" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-success"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
+          <button v-if="formStatus === 'editing'" @click="viewForm(formData['id'])" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Cancel</button>
+          <button v-if="formData['id'] !== 0 && formStatus === 'view'" @click="formStatus = 'editing'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
+          <button v-if="formStatus === 'view' || formData['id'] === 0" @click="$emit('form_close')" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Close</button>
+        </template>
       </div>
     </div>
   </div>
@@ -63,13 +74,13 @@
         messageList: [],
         /*
           formStatus (String) the status of the form
-          normal
+          view
           loading
           success
           failed
           closed
         */
-        formStatus: 'normal',
+        formStatus: 'view',
         links: {
           create: '',
           retrieve: '',
@@ -78,7 +89,11 @@
         },
         inputList: {
         },
-        inputInitialized: false
+        inputInitialized: false,
+        formData: {},
+        valueFunctionList: {},
+        valueChangedList: {},
+        formDataUpdated: false
       }
     },
     props: {
@@ -93,8 +108,9 @@
       submitForm(){
         this.formStatus = 'loading'
         this.messageList = []
-        let link = (this.entry_id) ? this.links.update : this.links.create
+        let link = (this.formData['id']) ? this.links.update : this.links.create
         this.APIFormRequest(link, this.$refs.form, (response) => {
+          console.log(response)
           if(response['error']['status'] * 1 === 100){
             for(let field in response['error']['message']){
               let label = field
@@ -102,26 +118,76 @@
                 this.inputList[field]['feedback_status'] = 2
                 this.inputList[field]['feedback_message'] = response['error']['message'][field][0]
                 label = this.inputList[field]['name']
+              }else{
+                this.messageList.push({
+                  label: label,
+                  message: response['error']['message'][field][0]
+                })
               }
-              this.messageList.push({
-                label: label,
-                message: response['error']['message'][field][0]
-              })
             }
+            this.formStatus = 'failed'
+          }else{
+
+            this.formStatus = 'success'
+            setTimeout(() => {
+              this.formStatus = 'view'
+              this.viewForm(this.formData['id'] ? this.formData['id'] : response['data'])
+            }, 1500)
+            this.$emit('form_updated', response['data'])
           }
-          this.formStatus = 'normal'
+
         }, (response, status) => {
-          this.formStatus = 'normal'
+          this.formStatus = 'failed'
+        })
+      },
+      viewForm(id){
+        this.formStatus = 'loading'
+        let requestOption = {
+          id: id
+        }
+        this.formDataUpdated = false
+        this.APIRequest(this.links.retrieve, requestOption, (response) => {
+          if(response['data']){
+            this.formData = response['data']
+            for(let x in this.valueFunctionList){
+              this.valueFunctionList[x]['value_function'](this.formData)
+            }
+            this.formDataUpdated = true
+          }
+          this.formStatus = 'view'
+        })
+      },
+      deleteForm(){
+        let requestOption = {
+          id: this.formData['id']
+        }
+        this.APIRequest(this.links.delete, requestOption, (response) => {
+          if(response['data']){
+            this.$emit('form_deleted', this.formData['id'])
+            this.$emit('form_close')
+          }else{
+          }
         })
       },
       initializeInput(){
         this.inputList = {}
+        Vue.set(this.inputList, 'id', {
+          db_name: 'id',
+          input_type: 'hidden'
+        })
         for(let key in this.inputs){
           Vue.set(this.inputList, key, this.inputs[key])
           typeof this.inputList[key]['name'] === 'undefined' ? Vue.set(this.inputList[key], 'name', this.StringUnderscoreToPhrase(key)) : ''
+          typeof this.inputList[key]['default_value'] === 'undefined' ? Vue.set(this.inputList[key], 'default_value', null) : ''
           Vue.set(this.inputList[key], 'db_name', key)
           Vue.set(this.inputList[key], 'feedback_status', 0)
           Vue.set(this.inputList[key], 'feedback_message', '')
+          if(typeof this.inputList[key]['value_function'] !== 'undefined'){
+            this.valueFunctionList[key] = this.inputList[key]
+          }
+          if(typeof this.inputList[key]['value_changed'] !== 'undefined'){
+            this.valueChangedList[key] = this.inputList[key]
+          }
         }
         this.inputInitialized = true
       },
@@ -143,6 +209,18 @@
           this.inputList[fieldName]['feedback_status'] = 0
           this.inputList[fieldName]['feedback_message'] = ''
         }
+        this.formData[fieldName] = $(e.target).val()
+        if(typeof this.valueChangedList[fieldName] !== 'undefined'){
+          console.log(this.valueChanged)
+          this.valueChangedList[fieldName](this.formData)
+        }
+      },
+      resetForm(){
+        $(this.$refs.form).trigger('reset')
+        this.formData = {
+          id: 0
+        }
+        this.formStatus = 'normal'
       }
     }
   }

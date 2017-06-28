@@ -1,38 +1,65 @@
 <template>
   <div class="form-group row" v-bind:class="[feedback_status ? 'has-feedback' :'', feedbackStatusClass]">
-    <input v-if="inputType === 'hidden'" type="hidden">
+    <input v-if="inputType === 'hidden'" type="hidden"
+      v-bind:name="dbName"
+      v-bind:value="form_data[dbName]"
+    >
     <template v-else>
       <label class="col-form-label" v-bind:class="'col-sm-' + labelColspan">{{labelText}} :</label>
       <div v-bind:class="'col-sm-' + (12 - (labelColspan !== 12 ? labelColspan : 0))">
         <radio-button
           v-if="inputType === 'radio'"
           :input_setting="input_setting"
+          :db_name="dbName"
           >
         </radio-button>
         <check-list
-          v-if="inputType === 'checklist'"
+          v-else-if="inputType === 'checklist'"
           :input_setting="input_setting"
+          :db_name="dbName"
           >
         </check-list>
         <select-input
-          v-if="inputType === 'select'"
+          v-else-if="inputType === 'select'"
           :input_setting="input_setting"
+          :db_name="dbName"
+          :form_data="form_data"
+          :form_status="form_status"
+          v-on:change="valueChanged"
+
           >
         </select-input>
-        <textarea-input
-          v-if="inputType === 'textarea'"
+        <single-image
+          v-else-if="inputType === 'single_image'"
           :input_setting="input_setting"
+          :db_name="dbName"
+          :form_data="form_data"
+          :form_status="form_status"
+          v-on:change="valueChanged"
+
+          >
+        </single-image>
+        <textarea-input
+          v-else-if="inputType === 'textarea'"
+          :input_setting="input_setting"
+          :name="dbName",
+
           >
         </textarea-input>
-        <input v-else
-          v-bind:name="dbName"
-          v-bind:placeholder="inputPlaceholder"
-          v-bind:type="inputType"
-          class="form-control"
-          v-on:change="valueChanged"
-          >
-          <div v-if="feedback_message" class="form-control-feedback">{{feedback_message}}</div>
-          <small v-if="muted_text" class="form-text text-muted">{{muted_text}}</small>
+        <template v-else>
+          <input
+            v-if="form_status !== 'view'"
+            v-bind:name="dbName"
+            v-bind:placeholder="inputPlaceholder"
+            v-bind:type="inputType"
+            class="form-control"
+            v-on:change="valueChanged"
+            v-bind:value="form_data[dbName]"
+            >
+          <span v-else class="form-control">{{form_data[dbName]}}</span>
+        </template>
+        <div v-if="feedback_message" class="form-control-feedback">{{feedback_message}}</div>
+        <small v-if="muted_text" class="form-text text-muted">{{muted_text}}</small>
       </div>
     </template>
   </div>
@@ -45,7 +72,8 @@
       'check-box': require('./CheckList.vue'),
       'check-list': require('./CheckList.vue'),
       'select-input': require('./Select.vue'),
-      'textarea-input': require('./Textarea.vue')
+      'textarea-input': require('./Textarea.vue'),
+      'single-image': require('./SingleImage.vue')
     },
     create(){
 
@@ -59,14 +87,22 @@
       label: String,
       label_style: Object,
       label_colspan: Number,
-      input_value: Object,
+      form_data: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      },
       input_type: String,
       input_setting: Object,
       input_style: Object,
       placeholder: String,
       muted_text: String,
       feedback_message: String,
-      feedback_status: Number // 0 - none, 1 - success, 2 - danger, 3 - warning
+      feedback_status: Number, // 0 - none, 1 - success, 2 - danger, 3 - warning
+      form_data_updated: Boolean,
+      form_status: String,
+      default_value: String
     },
     data(){
       return {
