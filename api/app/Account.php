@@ -16,4 +16,8 @@ class Account extends APIModel
     public function account_profile_pictures(){
       return $this->hasOne('App\AccountProfilePicture');
     }
+
+    public function position_histories(){
+      return $this->hasMany('App\PositionHistory');
+    }
 }

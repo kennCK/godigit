@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PositionHistory;
-use DB;
 
 class PositionHistoryController extends APIController
 {

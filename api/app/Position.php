@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Position extends APIModel
 {
-  use SoftDeletes;
-  protected $primaryKey = 'id';
-  protected $table = 'position';
+  public function  company_branch(){
+    return $this->belongsTo('App\CompanyBranch');
+  }
+
+  public function position_histories(){
+    return $this->hasMany('App\PositionHistory');
+  }
 }
