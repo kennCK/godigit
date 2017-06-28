@@ -13,6 +13,7 @@ class AccountInformation extends Migration
      */
     public function up()
     {
+      Schema::dropIfExists('user_information');
       Schema::create('user_information', function (Blueprint $table) {
           $table->increments('id');
           $table->unsignedInteger('user_id');

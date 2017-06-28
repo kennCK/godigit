@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePositionTable extends Migration
+class RenameCompanyBranchTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreatePositionTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('position');
-        Schema::create('position', function (Blueprint $table) {
+        Schema::dropIfExists('company_branch');
+        Schema::create('company_branch', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('company_id');
-            $table->string('title', 100);
-            $table->boolean('position_status');
-            $table->string('description',200);
+            $table->string('name');
+            $table->string('address');
+            $table->string('contact_number',20);
+            $table->string('fax_number',20);
+            $table->string('email',100);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +34,6 @@ class CreatePositionTable extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('position');
+        Schema::dropIfExists('company_branch');
     }
 }

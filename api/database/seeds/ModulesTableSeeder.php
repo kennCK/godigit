@@ -51,6 +51,16 @@ class ModulesTableSeeder extends Seeder
         array('id' => 102, 'parent_id' => 100,  'description'=>'Users Handbook', 'icon' => 'fa fa-book',  'path' => 'user_guide', 'rank' => 2),
         array('id' => 103, 'parent_id' => 100,  'description'=>'Video Tutorials', 'icon' => 'fa fa-video-camera',  'path' => 'video_tutorials', 'rank' => 3),
 
+
+
+        //Testing
+
+         array('id' => 1000, 'parent_id' => 0,  'description'=>'Testing Results', 'icon' => 'fa fa-cog',  'path' => 'testing', 'rank' => 101),
+          array('id' => 1001, 'parent_id' => 1000,  'description'=>'Canales', 'icon' => 'fa fa-user',  'path' => 'canales', 'rank' => 1),
+          array('id' => 1002, 'parent_id' => 1000,  'description'=>'Casera', 'icon' => 'fa fa-user',  'path' => 'casera', 'rank' => 2),
+          array('id' => 1003, 'parent_id' => 1000,  'description'=>'Plenos', 'icon' => 'fa fa-user',  'path' => 'plenos', 'rank' => 3),
+          array('id' => 1004, 'parent_id' => 1000,  'description'=>'Salise', 'icon' => 'fa fa-user',  'path' => 'salise', 'rank' => 4),
+
       ));
     }
 }

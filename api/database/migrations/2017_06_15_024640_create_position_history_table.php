@@ -13,6 +13,7 @@ class CreatePositionHistoryTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('position_history');
         Schema::create('position_history', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('position_id');
