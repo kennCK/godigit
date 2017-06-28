@@ -16,7 +16,7 @@ class CreateCompanyTable extends Migration
         Schema::dropIfExists('company');
         Schema::create('company', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('business_type');
+            $table->unsignedInteger('business_type_id');
             $table->string('name');
             $table->string('code',15);
             $table->string('address');
