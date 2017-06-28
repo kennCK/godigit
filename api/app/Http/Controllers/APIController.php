@@ -174,8 +174,6 @@ class APIController extends Controller
               if(!isset($childID[$childTable])){
                 $childID[$childTable] = array();
               }
-
-              $this->printR($child);
               $result = $this->model->find($this->model->id)->$childTable()->create($child);
               $childID[$childTable] = $result["id"];
             }else{
@@ -207,6 +205,20 @@ class APIController extends Controller
         }
       }
 
+    }
+    public function singleImageFileUpload($id, $request, $inputName, $path, $dbColumn){
+      if($id){
+        if ($request->hasFile($inputName) && $request->file($inputName)->isValid()){
+          $imagePath = $request->image->store($path);
+          $this->updateEntry(array(
+            'id' => $id,
+            $dbColumn => str_replace($path.'/', '', $imagePath)
+          ));
+          $this->response['data'] = $id;
+          return true;
+        }
+      }
+      return false;
     }
     public function retrieveEntry($request){
       if(isset($request["id"])){
@@ -286,7 +298,6 @@ class APIController extends Controller
                 echo str_singular($this->model->getTable()).'_id';
                 $result = $this->model->find($this->model->id)->$childTable()->where('id', $pk)->where(str_singular($this->model->getTable()).'_id', $request["id"])->update($child);
               }else if(!isset($childTableValue['no_create_on_update'])){
-                $this->printR($childTableValue);
                 $result = $this->model->find($this->model->id)->$childTable()->create($child)->id;
               }
               $childID[$childTable] = $result;

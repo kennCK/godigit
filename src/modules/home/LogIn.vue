@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3">
         <div class="panel panel-primary">
-          <div class="panel-heading">Welcome to FineGrabz Admin Page!</div>
+          <div class="panel-heading">Welcome to Admin Page!</div>
           <div class="panel-body">
             <div v-if="errorMessage !== '' && !isLoading" class="alert alert-danger">
               <strong>Failed!</strong> {{errorMessage}}
@@ -56,8 +56,8 @@ export default {
   },
   data(){
     return {
-      username: 'finegrabz',
-      password: 'F1n3gr@bz',
+      username: 'ryan',
+      password: 'secret',
       isLoading: false,
       errorMessage: ''
     }

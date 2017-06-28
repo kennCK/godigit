@@ -23,5 +23,13 @@ export default{
     meta: {
       tokenRequired: false
     }
+  },
+  {
+    path: '/department_management',
+    name: 'departmentManagement',
+    component: resolve => require(['modules/department/DepartmentManagement.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
   }]
 }

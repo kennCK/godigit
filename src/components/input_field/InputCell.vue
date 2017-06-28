@@ -14,21 +14,36 @@
           >
         </radio-button>
         <check-list
-          v-if="inputType === 'checklist'"
+          v-else-if="inputType === 'checklist'"
           :input_setting="input_setting"
           :db_name="dbName"
           >
         </check-list>
         <select-input
-          v-if="inputType === 'select'"
+          v-else-if="inputType === 'select'"
           :input_setting="input_setting"
           :db_name="dbName"
+          :form_data="form_data"
+          :form_status="form_status"
+          v-on:change="valueChanged"
+
           >
         </select-input>
-        <textarea-input
-          v-if="inputType === 'textarea'"
+        <single-image
+          v-else-if="inputType === 'single_image'"
           :input_setting="input_setting"
-          :name="dbName"
+          :db_name="dbName"
+          :form_data="form_data"
+          :form_status="form_status"
+          v-on:change="valueChanged"
+
+          >
+        </single-image>
+        <textarea-input
+          v-else-if="inputType === 'textarea'"
+          :input_setting="input_setting"
+          :name="dbName",
+
           >
         </textarea-input>
         <template v-else>
@@ -57,7 +72,8 @@
       'check-box': require('./CheckList.vue'),
       'check-list': require('./CheckList.vue'),
       'select-input': require('./Select.vue'),
-      'textarea-input': require('./Textarea.vue')
+      'textarea-input': require('./Textarea.vue'),
+      'single-image': require('./SingleImage.vue')
     },
     create(){
 
@@ -85,7 +101,8 @@
       feedback_message: String,
       feedback_status: Number, // 0 - none, 1 - success, 2 - danger, 3 - warning
       form_data_updated: Boolean,
-      form_status: String
+      form_status: String,
+      default_value: String
     },
     data(){
       return {

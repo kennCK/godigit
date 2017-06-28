@@ -16,6 +16,7 @@
           :input_style="input['input_style']"
           :label_colspan="input['label_colspan']"
           :placeholder="input['placeholder']"
+          :default_value="input['default_value']"
           :feedback_message="input['feedback_message']"
           :feedback_status="input['feedback_status']"
           :muted_text="input['muted_text']"
@@ -42,7 +43,7 @@
           <button v-if="formStatus === 'editing' || formData['id'] === 0" @click="submitForm" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-success"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
           <button v-if="formStatus === 'editing'" @click="viewForm(formData['id'])" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Cancel</button>
           <button v-if="formData['id'] !== 0 && formStatus === 'view'" @click="formStatus = 'editing'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
-          <button v-if="formStatus === 'view'" @click="$emit('form_close')" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Close</button>
+          <button v-if="formStatus === 'view' || formData['id'] === 0" @click="$emit('form_close')" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Close</button>
         </template>
       </div>
     </div>
@@ -91,7 +92,7 @@
         inputInitialized: false,
         formData: {},
         valueFunctionList: {},
-        valueCangedList: {},
+        valueChangedList: {},
         formDataUpdated: false
       }
     },
@@ -109,6 +110,7 @@
         this.messageList = []
         let link = (this.formData['id']) ? this.links.update : this.links.create
         this.APIFormRequest(link, this.$refs.form, (response) => {
+          console.log(response)
           if(response['error']['status'] * 1 === 100){
             for(let field in response['error']['message']){
               let label = field
@@ -164,7 +166,6 @@
             this.$emit('form_deleted', this.formData['id'])
             this.$emit('form_close')
           }else{
-
           }
         })
       },
@@ -177,6 +178,7 @@
         for(let key in this.inputs){
           Vue.set(this.inputList, key, this.inputs[key])
           typeof this.inputList[key]['name'] === 'undefined' ? Vue.set(this.inputList[key], 'name', this.StringUnderscoreToPhrase(key)) : ''
+          typeof this.inputList[key]['default_value'] === 'undefined' ? Vue.set(this.inputList[key], 'default_value', null) : ''
           Vue.set(this.inputList[key], 'db_name', key)
           Vue.set(this.inputList[key], 'feedback_status', 0)
           Vue.set(this.inputList[key], 'feedback_message', '')
@@ -184,7 +186,7 @@
             this.valueFunctionList[key] = this.inputList[key]
           }
           if(typeof this.inputList[key]['value_changed'] !== 'undefined'){
-            this.valueCangedList[key] = this.inputList[key]
+            this.valueChangedList[key] = this.inputList[key]
           }
         }
         this.inputInitialized = true
@@ -208,8 +210,9 @@
           this.inputList[fieldName]['feedback_message'] = ''
         }
         this.formData[fieldName] = $(e.target).val()
-        if(typeof this.valueChanged[fieldName] !== 'undefined'){
-          this.valueChanged[fieldName](this.formData)
+        if(typeof this.valueChangedList[fieldName] !== 'undefined'){
+          console.log(this.valueChanged)
+          this.valueChangedList[fieldName](this.formData)
         }
       },
       resetForm(){

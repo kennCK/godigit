@@ -50,7 +50,37 @@
           description: {},
           icon: {},
           path: {},
-          rank: {}
+          rank: {
+            input_type: 'select',
+            input_setting: {
+              options: [
+                {
+                  value: null,
+                  label: 'Select Rank'
+                },
+                {
+                  value: 1,
+                  label: 'One'
+                },
+                {
+                  value: 2,
+                  label: 'Two'
+                },
+                {
+                  value: 3,
+                  label: 'Three'
+                },
+                {
+                  value: 4,
+                  label: 'Four'
+                },
+                {
+                  value: 5,
+                  label: 'Five'
+                }
+              ]
+            }
+          }
         }
       }
       return {
