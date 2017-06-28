@@ -13,7 +13,7 @@ class UpdateDepartmetnsTable extends Migration
      */
     public function up()
     {
-        //Schema::rename('department','departments');
+        Schema::rename('department','departments');
 
         Schema::table('departments', function(Blueprint $table){
             $table->string('logo')->after('code')->nullable();
