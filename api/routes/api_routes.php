@@ -11,7 +11,9 @@ $apiResources = [
   'department_members',
   'position',
   'position_history',
-  'api_test_results'
+  'api_test_results',
+  'account',
+  'account_types'
 ];
 api_resource($apiResources);
 
