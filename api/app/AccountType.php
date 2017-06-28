@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AccountType extends APIModel
 {
-  use SoftDeletes;
-  protected  $primaryKey= 'id';
-  protected  $table = 'account_types';
+  public function  account_information(){
+    return $this->hasManny('App\AccountInformation');
+  }
 }
