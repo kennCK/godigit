@@ -11,15 +11,15 @@ class Company extends APIModel
   protected $primaryKey = 'id';
   protected $table = 'companies';
 
-  public function businessType(){
-    return $this->belongsTo('App\businessType');
+  public function business_type(){
+    return $this->belongsTo('App\BusinessType');
   }
 
-  public function logo(){
+  public function company_logo(){
     return $this->hasOne('App\CompanyLogo');
   }
 
-  public function branches(){
+  public function company_branches(){
     return $this->hasMany('App\CompanyBranch');
   }
 }

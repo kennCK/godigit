@@ -5,13 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CompanyEmployees extends APIModel
+class CompanyEmployee extends APIModel
 {
-  use SoftDeletes;
-  protected  = 'id';
-  protected  = 'company_employees';
-
-  public function  branch(){
+ 
+  public function  company_branch(){
     return $this->belongsTo('App\CompanyBranch');
   }
 }
