@@ -11,7 +11,7 @@ class CompanyBranchController extends APIController
     function __construct(){
         $this->model = new CompanyBranch();
         $this->validation = array(  
-          "email" => "unique: company_branches"
+          "email" => "unique:company_branches"
         );
     }
 }
