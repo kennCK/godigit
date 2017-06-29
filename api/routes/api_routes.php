@@ -6,7 +6,7 @@ $apiResources = [
   'company',
   'company_logo',
   'company_branch',
-  'company_employee',
+  'company_branch_employee',
   'department',
   'department_member',
   'position',
