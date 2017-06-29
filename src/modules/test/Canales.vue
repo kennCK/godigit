@@ -35,8 +35,8 @@
             </tr>
             <tr v-for="item in testsResult">
               <td class="col-xs-2">{{item.path}}</td>
-              <td class="col-xs-6">{{item.test_data}}</td>
-              <td class="col-xs-2">{{item.results}}</td>
+              <td class="col-xs-6">{{item.parameter}}</td>
+              <td class="col-xs-2">{{item.result}}</td>
               <td class="col-xs-2">
                 <button type="button" class="btn btn-danger" v-on:click="deleteTest(item.id)"><i class="fa fa-delete"></i> Delete</button>
               </td>
@@ -197,8 +197,8 @@
       saveTest(){
         let parameter = {
           'path': this.path,
-          'test_data': JSON.stringify(this.postData),
-          'results': this.result
+          'parameter': JSON.stringify(this.postData),
+          'result': this.result
         }
         this.requestHandler('api_test_results/create', parameter)
         this.clearFields()

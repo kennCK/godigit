@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends APIModel
 {
-  use SoftDeletes;
-  protected $primaryKey = 'id';
-  protected $table = 'companies';
-
   public function business_type(){
     return $this->belongsTo('App\BusinessType');
   }
