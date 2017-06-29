@@ -14,7 +14,6 @@ class AccountController extends APIController
           "email" => "unique:accounts",
           "username"  => "unique:accounts"
         );
-
     }
 
     public function create(Request $request){
