@@ -1,8 +1,8 @@
 <template>
   <div>
-    {{imageSrc}}
     <img @click="triggerFileInput" v-bind:src="imageSrc" v-bind:style="imgStyle">
-    <input @change="inputFileChanged" ref="fileInput" type="file">
+    <input @change="inputFileChanged" ref="fileInput" type="file" style="display:none">
+    <small>Click the image to select an image file to upload</small>
   </div>
 </template>
 <script>
@@ -43,12 +43,10 @@
       },
       inputFileChanged(e){
         let input = e.target
-        console.log(input.files)
         if (input.files && input.files[0]) {
           var reader = new FileReader()
           reader.onload = (e) => {
             this.imageSrc = e.target.result
-            // console.log(this.imageSrc)
           }
           reader.readAsDataURL(input.files[0])
         }
