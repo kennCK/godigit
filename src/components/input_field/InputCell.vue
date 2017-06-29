@@ -56,7 +56,7 @@
             v-on:change="valueChanged"
             v-bind:value="form_data[dbName]"
             >
-          <span v-else class="form-control">{{form_data[dbName]}}</span>
+          <span v-else class="form-control">{{form_data[dbName]}}&nbsp;</span>
         </template>
         <div v-if="feedback_message" class="form-control-feedback">{{feedback_message}}</div>
         <small v-if="muted_text" class="form-text text-muted">{{muted_text}}</small>

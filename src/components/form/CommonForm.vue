@@ -110,7 +110,6 @@
         this.messageList = []
         let link = (this.formData['id']) ? this.links.update : this.links.create
         this.APIFormRequest(link, this.$refs.form, (response) => {
-          console.log(response)
           if(response['error']['status'] * 1 === 100){
             for(let field in response['error']['message']){
               let label = field
@@ -131,7 +130,7 @@
             this.formStatus = 'success'
             setTimeout(() => {
               this.formStatus = 'view'
-              this.viewForm(this.formData['id'] ? this.formData['id'] : response['data'])
+              this.viewForm(typeof this.formData['id'] !== 'boolean' && this.formData['id'] * 1 ? this.formData['id'] : response['data'])
             }, 1500)
             this.$emit('form_updated', response['data'])
           }
@@ -211,7 +210,6 @@
         }
         this.formData[fieldName] = $(e.target).val()
         if(typeof this.valueChangedList[fieldName] !== 'undefined'){
-          console.log(this.valueChanged)
           this.valueChangedList[fieldName](this.formData)
         }
       },
