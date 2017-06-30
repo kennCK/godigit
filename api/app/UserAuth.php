@@ -9,7 +9,7 @@ class UserAuth extends Authenticatable
 {
     use Notifiable;
     protected $table = 'accounts';
-    /**
+    /**asd
      * The attributes that are mass assignable.
      *
      * @var array
