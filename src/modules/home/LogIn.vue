@@ -92,9 +92,6 @@ export default {
         this.errorMessage = (status === 401) ? 'Username and password mismatched' : 'Cannot log in. Contact us through email: official@godigit.ph, if error exist.'
         this.isLoading = false
       })
-    },
-    loadImage(path){
-      require(path)
     }
   }
 }
