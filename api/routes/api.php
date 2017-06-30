@@ -27,7 +27,6 @@ Route::post('authenticate', 'AuthenticateController@authenticate');
 Route::post('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 Route::post('authenticate/refresh', 'AuthenticateController@refreshToken');
 Route::post('authenticate/invalidate', 'AuthenticateController@deauthenticate');
-Route::get('confirm_order/{confirmation_code}', 'ProductOrderController@confirmOrder');
 /*API Router*/
 require_once 'routes_fn.php';
 require_once 'api_routes.php';

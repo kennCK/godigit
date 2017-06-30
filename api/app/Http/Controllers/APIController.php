@@ -44,14 +44,13 @@ class APIController extends Controller
     protected $foreignTable = array();
 
     public function test(){
-      $user = JWTAuth::parseToken()->authenticate();
-      $this->printR($user->user_type_id);
+      $user = $this->getAuthenticatedUser();
+      echo response()->json($user);
     }
     public function output(){
       $this->response["request_timestamp"] = date("Y-m-d h:i:s");
       return response()->json($this->response);
       // sleep(2);
-
       // echo json_encode($this->response);
     }
     public function create(Request $request){
@@ -63,8 +62,7 @@ class APIController extends Controller
       return $this->output();
     }
     public function update(Request $request){
-      if ($request->hasFile('image_file'))
-      {
+      if ($request->hasFile('image_file')){
       }
       else{
       }
@@ -365,5 +363,22 @@ class APIController extends Controller
       foreach($sort as $column => $order){
         $this->model = $this->model->orderBy($column, $order);
       }
+    }
+    public function getAuthenticatedUser()
+    {
+        try {
+          if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+          }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+          return response()->json(['token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+          return response()->json(['token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+          return response()->json(['token_absent'], $e->getStatusCode());
+        }
+
+        // the token is valid and we have found the user via the sub claim
+        return response()->json($user);
     }
 }
