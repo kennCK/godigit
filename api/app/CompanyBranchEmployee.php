@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CompanyEmployee extends APIModel
+class CompanyBranchEmployee extends APIModel
 {
  
   public function  company_branch(){
