@@ -175,7 +175,8 @@ export default {
     display: block;
   }
   .content-holder{
-    width: 80%;
+    width: 76%;
+    margin: 20px 2% 0 2%;
   }
   /*  Change with Menu Toggled */
   .main-sidebar.hidden{
@@ -194,7 +195,8 @@ export default {
     font-size: 13px;
   }
   .content-holder{
-    width: 75%;
+    width: 71%;
+    margin: 20px 2% 0 2%;
   }
   .main-sidebar.active{
     padding-left:15%;
@@ -231,7 +233,8 @@ export default {
     display: none;
   }
   .content-holder{
-    width: 100%;
+    width: 96%;
+    margin: 20px 2% 0 2%;
   }
 }
 
@@ -251,7 +254,8 @@ export default {
     display: none;
   }
   .content-holder{
-    width: 100%;
+    width: 96%;
+    margin: 20px 2% 0 2%;
   }
 }
 @media (max-width: 239px){
@@ -274,7 +278,8 @@ export default {
     display: none;
   }
   .content-holder{
-    width: 100%;
+    width: 96%;
+    margin: 20px 2% 0 2%;
   }
 }
 </style>
