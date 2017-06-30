@@ -5,7 +5,7 @@ export default{
     name: 'canales',
     component: resolve => require(['modules/test/Canales.vue'], resolve),
     meta: {
-      tokenRequired: false
+      tokenRequired: true
     }
   }
   ]

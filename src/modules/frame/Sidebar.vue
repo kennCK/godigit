@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="system-body"> 
-     <div class="main-sidebar navbar-collapse sidebar-collapse " v-bind:class="hide" id="godigitSidebar" >
+     <div class="main-sidebar navbar-collapse sidebar-collapse" v-bind:class="hide" id="godigitSidebar" >
       <div class="sidebar">
         <ul class="sidebar-menu">
             <li class="header"><label v-bind:class="hide">MAIN TASKS</label>
@@ -225,10 +225,10 @@ export default {
     text-align: center;
   }
    .sidebar-collapse{
-    display: block;
+    display: none;
   }
   .sidebar-menu .header span{
-    display: block;
+    display: none;
   }
   .content-holder{
     width: 100%;

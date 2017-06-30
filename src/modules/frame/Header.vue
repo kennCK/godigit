@@ -32,7 +32,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> Cancel</button>
-            <button type="button" class="btn btn-primary" v-on:click="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</button>
+            <button type="button" class="btn btn-primary" v-on:click="logOut()" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</button>
           </div>
         </div>
       </div>
@@ -88,6 +88,7 @@ export default {
   .header-navbar-nav span span{
     font-size: 16px;
     vertical-align: middle;
+    font-weight: 400;
   }
   .header-navbar-nav i{
     font-size: 40px;
@@ -101,29 +102,60 @@ export default {
     color: #ddd;
   }
   .navbar-menu-toggler-md{
-    width: 4%;
+    width: auto;
     height: 50px;
     float: right;
     color: #fff;
     text-align: center;
     vertical-align: middle;
-    font-size: 100%;
+    font-size: 30px;
     display: none;
     margin-right: 1%;
   }
   .navbar-menu-toggler-md:hover{
     cursor: pointer;
-    background: #fff;
-    color: #006600;
+    color: #ddd;
   }
+
   @media (min-width: 992px){
     .header-navbar-nav{
       width: 28%;
     }
   }
-  @media (max-width: 991px){
+ @media screen (min-width: 768px), screen and (max-width: 991px){
     .navbar-menu-toggler-md{
       display: block;
+    }
+  }
+
+  @media (max-width: 767px){
+    .header-navbar-brand{
+      width: 50%;
+    }
+    .header-navbar-nav{
+      width: 40%;
+    }
+    .navbar-menu-toggler-md{
+      width: 5%;
+      margin-right: 2%;
+      text-align: center;
+    }
+  }
+  /* xs screen*/
+  @media (max-width: 500px){
+    .header-navbar-nav span span, .header-navbar-brand img{
+      display: none;
+    }
+    .header-navbar-brand{
+      width: 50%;
+    }
+    .header-navbar-nav{
+      width: 35%;
+    }
+    .navbar-menu-toggler-md{
+      width: 10%;
+      margin-right: 2%;
+      text-align: center;
     }
   }
 </style>
