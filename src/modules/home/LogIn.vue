@@ -1,45 +1,61 @@
 <template>
-  <div class="container">
-    <br>
+  <div class="container-fluid" v-if="!tokenData.verifyingToken && !tokenData.token">
     <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">Welcome to Admin Page!</div>
-          <div class="panel-body">
-            <div v-if="errorMessage !== '' && !isLoading" class="alert alert-danger">
-              <strong>Failed!</strong> {{errorMessage}}
-            </div>
-            <form class="form-horizontal">
-              <div class="form-group ">
-                <label  class="col-md-2 control-label">Username</label>
-                <div class="col-md-10">
-                  <input v-model="username"
-                      v-bind:disabled="isLoading"
-                      type="text"
-                      class="form-control"
-                      placeholder="Username">
-                </div>
+      <div class="col-sm-12 col-md-8 hide-this">
+        <div class="container-fluid banner">
+          <h2 class="primary-color">
+            Stay connected with your Employees.
+          </h2>
+          <p class="banner-content">
+
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div class="login-wrapper">
+          <div class="text-center app-logo">
+            <span class="app-img">
+              <img src="../../assets/img/godigit.png" height="100%" width="100%">
+            </span>
+            <span class="app-title primary-color">
+              <label><b>Go</b>Digit</label>
+            </span>
+          </div>
+          <div class="login-header">
+            <h1 class="navbar-brand">
+              Log In
+            </h1>
+          </div>
+          <div class="login-message-holder login-spacer" v-if="errorMessage != ''">
+            <span class="text-danger"><b>Oops!</b> {{errorMessage}}</span>
+          </div>
+          <div>
+            <form>
+              <div class="input-group login-spacer">
+                <span class="input-group-addon" id="addon-1"><i class="fa fa-user"></i></span>
+                <input type="text" class="form-control" placeholder="Username or Email" aria-describedby="addon-1" v-model="username">
               </div>
-              <div class="form-group">
-                <label class="col-md-2 control-label">Password</label>
-                <div class="col-md-10">
-                  <input v-model="password"
-                      v-bind:disabled="isLoading"
-                      type="password" class="form-control" placeholder="Password">
-                </div>
+              <div class="input-group login-spacer">
+                <span class="input-group-addon" id="addon-2"><i class="fa fa-key"></i></span>
+                <input type="password" class="form-control" placeholder="********" aria-describedby="addon-2" v-model="password">
               </div>
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <button
-                      @click="signIn"
-                      v-bind:disabled="isLoading"
-                      type="button"
-                      class="btn btn-primary pull-right"
-                      >
-                    {{isLoading ? 'Signing in...' : 'Sign In'}}
-                  </button>
-                </div>
+              <button class="btn btn-primary btn-block login-spacer" v-on:click="logIn()">Login</button>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input">
+                  Keep me logged in
+                </label>
               </div>
+              <div class="container-fluid text-center">
+                  <a class="btn-link" href="#">Forgot Password?</a>
+              </div>
+              <br>
+              <div class="container-fluid separator">
+                  or
+              </div>
+              <br>
+              <button class="btn btn-primary btn-block login-spacer">Create Account</button>
+              <button class="btn btn-primary btn-block login-spacer">Register New Company</button>
             </form>
           </div>
         </div>
@@ -56,14 +72,16 @@ export default {
   },
   data(){
     return {
-      username: 'ryan',
-      password: 'secret',
+      username: '',
+      password: '',
       isLoading: false,
-      errorMessage: ''
+      errorMessage: '',
+      user: AUTH.user,
+      tokenData: AUTH.tokenData
     }
   },
   methods: {
-    signIn(){
+    logIn(){
       this.isLoading = true
       AUTH.authenticate(this.username, this.password, (response) => {
         this.isLoading = false
@@ -71,12 +89,141 @@ export default {
           path: '/'
         })
       }, (response, status) => {
-        this.errorMessage = (status === 401) ? 'Username and password mismatched' : 'Cannot log in. Contact developer if error persist.'
+        this.errorMessage = (status === 401) ? 'Username and password mismatched' : 'Cannot log in. Contact us through email: official@godigit.ph, if error exist.'
         this.isLoading = false
       })
+    },
+    loadImage(path){
+      require(path)
     }
   }
 }
 </script>
 <style>
+/*
+  Designs Rules
+  1. Top to Bottom
+  2. Left to Right
+  3. Common
+  4. Screen Changes
+*/
+.login-wrapper, .banner, .app-logo{
+  margin-top: 30px;
+}/*-- login-wrapper --*/
+
+.app-img{
+  float: left;
+  width: 30%;
+  text-align: right;
+}
+.app-title{
+  float: left;
+  width: 70%;
+  text-align: left;
+}
+.app-img img{
+  height: 50px;
+  width: 50px;
+}
+
+.app-title label{
+  vertical-align: middle;
+  font-size: 30px;
+  left: 0;
+}
+.login-header{
+  height: 40px;
+  color: #006600;
+  width: 100%;
+  float: left;
+}/*-- login-header --*/
+
+.login-message-holder{
+  min-height: 30px;
+  font-size: 12px;
+  float: left;
+  overflow: hidden;
+}
+
+.login-spacer{
+  margin-bottom: 10px;
+}/*-- login-spacer --*/
+
+.btn-primary{
+  background: #006600;
+  border-color: #006600;
+}
+.btn-primary:hover{
+  cursor: pointer;
+  background: #009900;
+  border-color: #009900;
+}
+.form-control, .btn{
+  height: 45px;
+}/*-- form-control --*/
+
+
+/*    Line with text on top  */
+.separator>*{
+  display: inline-block;
+  vertical-align: middle;
+}
+.separator {
+    text-align: center;
+    border: 0;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+.separator:before, .separator:after {
+    content: "";
+    height: 1px;
+    width: 50%;
+    background-color: #ccc;
+    margin: 0 5px 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.separator:before {
+    margin-left: -100%;
+}
+.separator:after {
+    margin-right: -100%;
+}
+
+/*      Colors           */
+.primary-color{
+  color: #006600;
+}
+
+@media (min-width: 1200px){
+  .login-wrapper{
+    width: 80%;
+    margin: 0 5% 0 15%;
+  }
+}
+@media screen (min-width: 992px), screen and (max-width: 1199px){
+  .login-wrapper{
+    width: 80%;
+    margin: 0 5% 0 15%;
+  }
+}
+@media screen (min-width: 768px), screen and (max-width: 991px){
+  .login-wrapper{
+    width: 98%;
+    margin: 0 2% 0 0%;
+  }
+}
+
+@media (max-width: 767px){
+  .hide-this{
+    display: none;
+  }
+  .login-wrapper{
+    width: 80%;
+    margin: 0 10% 0 10%;
+  }
+}
 </style>

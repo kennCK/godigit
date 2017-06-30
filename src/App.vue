@@ -1,18 +1,17 @@
 <template>
   <div id="app">
     <div v-bind:style="(globalVariables.showModal) ? 'overflow-y:hidden; height:'+deviceHeight+'px!important': ''">
-      <div v-if="!tokenData.verifyingToken">
+      <div v-if="!tokenData.verifyingToken && tokenData.token">
        <system-header></system-header>
        <system-sidebar></system-sidebar>
       </div>
       <div v-else>
-        Loading please wait. {{tokenData.verifyingToken}}
+        <login-header></login-header>
       </div>
     </div>
     <system-footer></system-footer>
   </div>
 </template>
-
 <script>
 import ROUTER from './router'
 import AUTH from './services/auth'
@@ -42,6 +41,7 @@ export default {
     }
   },
   components: {
+    'login-header': () => import('modules/frame/LoginHeader.vue'),
     'system-header': () => import('modules/frame/Header.vue'),
     'system-sidebar': () => import('modules/frame/Sidebar.vue'),
     'system-footer': () => import('modules/frame/Footer.vue')
