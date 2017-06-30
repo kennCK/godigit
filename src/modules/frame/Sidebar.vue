@@ -175,7 +175,8 @@ export default {
     display: block;
   }
   .content-holder{
-    width: 80%;
+    width: 76%;
+    margin: 20px 2% 0 2%;
   }
   /*  Change with Menu Toggled */
   .main-sidebar.hidden{
