@@ -20,4 +20,8 @@ class CompanyBranch extends APIModel
   public function positions(){
     return $this->hasMany('App\Positions');
   }
+
+  public function schedules(){
+    return $this->hasMany('App\Schedule');
+  }
 }

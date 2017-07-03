@@ -14,4 +14,8 @@ class Position extends APIModel
   public function position_histories(){
     return $this->hasMany('App\PositionHistory');
   }
+
+  public function schedule(){
+    return $this->hasOne('App\Schedule');
+  }
 }

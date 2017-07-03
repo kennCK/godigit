@@ -15,7 +15,10 @@ $apiResources = [
   'account',
   'account_type',
   'account_information',
-  'account_profile_picture'
+  'account_profile_picture',
+  'account_schedule',
+  'employee_status',
+  'schedule'
 ];
 api_resource($apiResources);
 
