@@ -4,11 +4,30 @@
       <div class="login-navbar-brand">
         <a class="navbar-brand" href="#">
           <img src="../../assets/img/gocentral.png" height="40" width="40">
-          <label><b>Go</b>Central</label>
+          <label>Go<b>Central</b></label>
         </a>
       </div>
       <div class="login-navbar-nav">
-          <a class="login-navbar-link"><i class="fa fa-sitemap"></i></a>
+          <a class="login-navbar-link" data-toggle="modal" data-target="#goCentralApps"><i class="fa fa-sitemap"></i></a>
+      </div>
+        <!-- Modal -->
+      <div class="modal fade" id="goCentralApps" tabindex="-1" role="dialog" aria-labelledby="goCentralAppsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="goCentralAppsLabel">
+                <img src="../../assets/img/gocentral.png" height="40" width="40">
+                <label class="primary-color">Go<b>Central</b></label>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to logout?
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
     <div>

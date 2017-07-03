@@ -4,7 +4,7 @@
       <div class="header-navbar-brand">
         <a class="navbar-brand" href="#">
           <img src="../../assets/img/godigit-white.png" height="40" width="40">
-          <label><b>Go</b>Digit</label>
+          <label>Go<b>Digit</b></label>
         </a>
       </div>
       <div class="header-navbar-nav">
@@ -31,8 +31,8 @@
             Are you sure you want to logout?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> Cancel</button>
-            <button type="button" class="btn btn-primary" v-on:click="logOut()" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</button>
+            <button type="button" class="btn btn-danger-hallow" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> No</button>
+            <button type="button" class="btn btn-primary-hallow" v-on:click="logOut()" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> Yes</button>
           </div>
         </div>
       </div>
@@ -117,11 +117,21 @@ export default {
     color: #ddd;
   }
 
+
+/*---------------------------------------------------------          
+
+                  RESPONSIVE HANDLER
+
+-----------------------------------------------------------*/
+/*-------------- Medium and Large Screens for Tablets and Desktop --------------*/
+
   @media (min-width: 992px){
     .header-navbar-nav{
       width: 28%;
     }
   }
+
+/*-------------- Small Screen for Mobile Phones --------------*/
  @media screen (min-width: 768px), screen and (max-width: 991px){
     .navbar-menu-toggler-md{
       display: block;

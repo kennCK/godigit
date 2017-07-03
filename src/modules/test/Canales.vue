@@ -38,7 +38,7 @@
               <td class="col-xs-6">{{item.parameter}}</td>
               <td class="col-xs-2">{{item.result}}</td>
               <td class="col-xs-2">
-                <button type="button" class="btn btn-danger" v-on:click="deleteTest(item.id)"><i class="fa fa-delete"></i> Delete</button>
+                <button type="button" class="btn btn-danger-hallow" v-on:click="deleteTest(item.id)"><i class="fa fa-ban"></i> Delete</button>
               </td>
             </tr>
           </tbody> 
