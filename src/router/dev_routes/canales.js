@@ -7,6 +7,14 @@ export default{
     meta: {
       tokenRequired: true
     }
+  },
+  {
+    path: '/employee_management',
+    name: 'employee',
+    component: resolve => require(['modules/test/EmployeeManagement.vue'], resolve),
+    meta: {
+      tokenRequired: true
+    }
   }
   ]
 }
