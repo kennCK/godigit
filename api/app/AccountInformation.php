@@ -9,11 +9,16 @@ class AccountInformation extends APIModel
 {
 
   protected $fillable = ['account_type_id'];
+  protected $table = "account_informations";  
   public function  account_type(){
     return $this->belongsTo('App\AccountType');
   }
 
-  public function  account(){
+  public function  accounts(){
     return $this->belongsTo('App\Account');
+  }
+
+  public function company_branch_employees(){
+    return $this->hasMany('App\CompanyBranchEmployee');
   }
 }

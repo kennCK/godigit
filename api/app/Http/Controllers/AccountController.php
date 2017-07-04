@@ -14,7 +14,10 @@ class AccountController extends APIController
           "email" => "unique:accounts",
           "username"  => "unique:accounts"
         );
-    }
+        $this->foreignTable = array(
+          'account_informations'
+        );
+    } 
 
     public function create(Request $request){
      $this->createEntry($this->hashPassword($request));

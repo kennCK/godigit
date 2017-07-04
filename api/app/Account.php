@@ -17,15 +17,15 @@ class Account extends APIModel
       return $this->hasOne('App\AccountProfilePicture');
     }
 
-    public function position_histories(){
-      return $this->hasMany('App\PositionHistory');
+    public function account_positions(){
+      return $this->hasOne('App\AccountPosition');
     }
 
     public function employee_status(){
        return $this->hasOne('App\EmployeeStatus');
     }
 
-    public function account_schedule(){
+    public function account_schedules(){
         return $this->hasOne('App\AccountSchedule');
     }
 }

@@ -24,7 +24,30 @@
               </button>
             </div>
             <div class="modal-body">
-              Are you sure you want to logout?
+              <h5>Check also our other Applications/Services.</h5>
+              <div class="row">
+                <div class="col-sm-12 col-md-4 pull-center">
+                 <img src="../../assets/img/godigit.png" class="img-thumbnail" height="150" width="150">
+                 <label>
+                    <h5>GoDigit</h5>
+                    <b>an Accounting Informations System</b>
+                 </label> 
+                </div>
+                <div class="col-sm-12 col-md-4 text-center">
+                 <img src="../../assets/img/gostore.png" class="img-thumbnail" height="150" width="150">
+                 <label>
+                    <h5>GoStore</h5>
+                    <b>Cebu's Online Store</b>
+                 </label> 
+                </div>
+                <div class="col-sm-12 col-md-4 text-center">
+                 <img src="../../assets/img/goresidence.png" class="img-thumbnail" height="150" width="150">
+                 <label>
+                    <h5>GoResidence</h5>
+                    <b>Your way to get new Properties in Province of Cebu</b>
+                 </label> 
+                </div>
+              </div>
             </div>
           </div>
         </div>

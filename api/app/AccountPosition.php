@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PositionHistory extends APIModel
+class AccountPosition extends APIModel
 {
-  protected $table = 'position_history';
+  protected $table = 'account_positions';
   public function position(){
     return $this->belongsTo('App\Position');
   }
