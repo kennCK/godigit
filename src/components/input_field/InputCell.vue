@@ -1,8 +1,9 @@
 <template>
-  <div class="form-group row" v-bind:class="[feedback_status ? 'has-feedback' :'', feedbackStatusClass]">
-    <input v-if="inputType === 'hidden'" type="hidden"
-      v-bind:name="dbName"
-      v-bind:value="form_data[dbName]"
+  <div class="form-group row" v-bind:class="[feedbackStatus ? 'has-feedback' :'', feedbackStatusClass]">
+    <input v-if="inputType === 'hidden'" type="text"
+    v-bind:name="dbName"
+    v-on:change="valueChanged"
+    v-bind:value="value"
     >
     <template v-else>
       <label class="col-form-label" v-bind:class="'col-sm-' + labelColspan">{{labelText}} :</label>
@@ -42,10 +43,18 @@
         <textarea-input
           v-else-if="inputType === 'textarea'"
           :input_setting="input_setting"
-          :name="dbName",
-
+          :name="dbName"
           >
         </textarea-input>
+        <check-box
+          v-else-if="inputType === 'checkbox'"
+          :input_setting="input_setting"
+          :db_name="dbName"
+          :form_data="form_data"
+          :form_status="form_status"
+          v-on:change="valueChanged"
+          >
+        </check-box>
         <template v-else>
           <input
             v-if="form_status !== 'view'"
@@ -58,7 +67,7 @@
             >
           <span v-else class="form-control">{{form_data[dbName]}}&nbsp;</span>
         </template>
-        <div v-if="feedback_message" class="form-control-feedback">{{feedback_message}}</div>
+        <div v-if="feedbackMessage" class="form-control-feedback">{{feedbackMessage}}</div>
         <small v-if="muted_text" class="form-text text-muted">{{muted_text}}</small>
       </div>
     </template>
@@ -69,7 +78,7 @@
     name: '',
     components: {
       'radio-button': require('./RadioButton.vue'),
-      'check-box': require('./CheckList.vue'),
+      'check-box': require('./Checkbox.vue'),
       'check-list': require('./CheckList.vue'),
       'select-input': require('./Select.vue'),
       'textarea-input': require('./Textarea.vue'),
@@ -98,11 +107,10 @@
       input_style: Object,
       placeholder: String,
       muted_text: String,
-      feedback_message: String,
-      feedback_status: Number, // 0 - none, 1 - success, 2 - danger, 3 - warning
       form_data_updated: Boolean,
       form_status: String,
-      default_value: String
+      default_value: [String, Number],
+      error_list: Object
     },
     data(){
       return {
@@ -115,14 +123,25 @@
         inputStyle: {},
         inputPlaceholder: null,
         feedbackStatusClass: '',
-        feedbackStatus: 0,
-        feedbackMessage: ''
+        feedbackStatus: 0, // 0 - none, 1 - success, 2 - danger, 3 - warning
+        feedbackMessage: '',
+        value: null
+
       }
     },
     watch: {
-      feedback_status(value){
-        this.feedbackStatus = value
-        this.feedbackMessage = this.feedback_message
+      form_data_updated(value){
+        this.feedbackStatus = 0
+        this.feedbackMessage = ''
+      },
+      error_list(value){
+        if(typeof this.error_list[this.db_name] !== 'undefined'){
+          this.feedbackStatus = 2
+          this.feedbackMessage = this.error_list[this.db_name][0]
+        }
+      },
+      feedbackStatus(value){
+        this.feedbackMessage = this.feedbackMessage
         switch(value * 1){
           case 1:
             this.feedbackStatusClass = 'has-success'
@@ -149,7 +168,11 @@
         this.inputStyle = this.input_style
         this.inputPlaceholder = this.placeholder ? this.placeholder : this.name
       },
+      formDataUpdated(){
+      },
       valueChanged(e){
+        this.feedbackStatus = 0
+        this.feedbackMessage = ''
         this.$emit('value_changed', e)
       }
     }
