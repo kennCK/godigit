@@ -33,13 +33,13 @@
             <form>
               <div class="input-group login-spacer">
                 <span class="input-group-addon" id="addon-1"><i class="fa fa-user"></i></span>
-                <input type="text" class="form-control" placeholder="Username or Email" aria-describedby="addon-1" v-model="username">
+                <input type="text" class="form-control form-control-login" placeholder="Username or Email" aria-describedby="addon-1" v-model="username">
               </div>
               <div class="input-group login-spacer">
                 <span class="input-group-addon" id="addon-2"><i class="fa fa-key"></i></span>
-                <input type="password" class="form-control" placeholder="********" aria-describedby="addon-2" v-model="password">
+                <input type="password" class="form-control form-control-login" placeholder="********" aria-describedby="addon-2" v-model="password">
               </div>
-              <button class="btn btn-primary btn-block login-spacer" v-on:click="logIn()">Login</button>
+              <button class="btn btn-primary btn-block btn-login login-spacer" v-on:click="logIn()">Login</button>
               <div class="form-check">
                 <label class="form-check-label">
                   <input type="checkbox" class="form-check-input">
@@ -54,8 +54,8 @@
                   or
               </div>
               <br>
-              <button class="btn btn-primary btn-block login-spacer">Create Account</button>
-              <button class="btn btn-primary btn-block login-spacer">Register New Company</button>
+              <button class="btn btn-primary btn-block btn-login login-spacer">Create Account</button>
+              <button class="btn btn-primary btn-block btn-login login-spacer">Register New Company</button>
             </form>
           </div>
         </div>
@@ -89,12 +89,9 @@ export default {
           path: '/'
         })
       }, (response, status) => {
-        this.errorMessage = (status === 401) ? 'Username and password mismatched' : 'Cannot log in. Contact us through email: official@godigit.ph, if error exist.'
+        this.errorMessage = (status === 401) ? 'Your Username and password didnot matched.' : 'Cannot log in? Contact us through email: official@godigit.ph'
         this.isLoading = false
       })
-    },
-    loadImage(path){
-      require(path)
     }
   }
 }
@@ -107,6 +104,12 @@ export default {
   3. Common
   4. Screen Changes
 */
+
+body{
+  font-size: 13px;
+  font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 400;
+}
 .login-wrapper, .banner, .app-logo{
   margin-top: 30px;
 }/*-- login-wrapper --*/
@@ -149,19 +152,93 @@ export default {
   margin-bottom: 10px;
 }/*-- login-spacer --*/
 
+/*----------------------------------------
+
+            Forms
+
+------------------------------------------*/
+.form-control{
+  height: 35px;
+  font-size: 12px;
+}
+.form-control-login{
+  height: 45px;
+}
+
+
+/*----------------------------------------
+
+            Buttons
+
+------------------------------------------*/
+.btn-login{
+  height: 45px;
+}/*-- form-control --*/
+
+.btn{
+  font-size: 12px;
+}
+.btn:hover{
+  cursor: pointer;
+}
+
+
+/*
+        SOLID
+*/
 .btn-primary{
   background: #006600;
   border-color: #006600;
 }
+
 .btn-primary:hover{
-  cursor: pointer;
   background: #009900;
   border-color: #009900;
 }
-.form-control, .btn{
-  height: 45px;
-}/*-- form-control --*/
 
+.btn-danger{
+  background: #aa0000;
+}
+
+.btn-danger:hover{
+  background: #ff0000;
+  border-color: #ff0000;
+}
+
+/*
+      HALLOW
+    
+*/
+
+.btn-primary-hallow{
+  border-color: #006600;
+  color: #006600;
+  background: #fff;
+}
+.btn-primary-hallow:hover{
+  color: #009900;
+  border-color: #009900;
+}
+.btn-danger-hallow{
+  border-color: #aa0000;
+  background: #fff;
+  color: #aa0000;
+}
+.btn-danger-hallow:hover{
+  color: #ff0000;
+  border-color: #ff0000;
+}
+
+
+/*------------------------------------
+  
+          TABLES
+
+--------------------------------------*/
+
+.table{
+  font-size: 12px;
+}
 
 /*    Line with text on top  */
 .separator>*{
@@ -197,19 +274,30 @@ export default {
 .primary-color{
   color: #006600;
 }
+/*---------------------------------------------------------          
 
+                  RESPONSIVE HANDLER
+
+-----------------------------------------------------------*/
+
+/*-------------- Large Screens for Desktop --------------*/
 @media (min-width: 1200px){
   .login-wrapper{
     width: 80%;
     margin: 0 5% 0 15%;
   }
 }
+
+
+/*-------------- Medium Screen for Tablets  --------------*/
 @media screen (min-width: 992px), screen and (max-width: 1199px){
   .login-wrapper{
     width: 80%;
     margin: 0 5% 0 15%;
   }
 }
+
+/*-------------- Small Screen for Mobile Phones  --------------*/
 @media screen (min-width: 768px), screen and (max-width: 991px){
   .login-wrapper{
     width: 98%;
@@ -217,6 +305,7 @@ export default {
   }
 }
 
+/*-------------- Extra Small Screen for Mobile Phones --------------*/
 @media (max-width: 767px){
   .hide-this{
     display: none;

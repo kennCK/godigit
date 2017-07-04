@@ -20,4 +20,12 @@ class Account extends APIModel
     public function position_histories(){
       return $this->hasMany('App\PositionHistory');
     }
+
+    public function employee_status(){
+       return $this->hasOne('App\EmployeeStatus');
+    }
+
+    public function account_schedule(){
+        return $this->hasOne('App\AccountSchedule');
+    }
 }

@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="system-body"> 
-     <div class="main-sidebar navbar-collapse sidebar-collapse " v-bind:class="hide" id="godigitSidebar" >
+     <div class="main-sidebar navbar-collapse sidebar-collapse" v-bind:class="hide + ' ' + toggleOnClick" id="godigitSidebar" >
       <div class="sidebar">
         <ul class="sidebar-menu">
             <li class="header"><label v-bind:class="hide">MAIN TASKS</label>
@@ -12,18 +12,18 @@
                   <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
                 </span>
             </li>
-            <li v-for="(item,index) in menu" v-if="item.parent_id == 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
-                <a v-on:click="navigateTo(item.path)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
-                  <i class="fa fa-chevron-down" v-if="item.id == menu[index+1].parent_id"></i>
+            <li v-for="(item,index) in menu" v-if="item.parent_id === 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
+                <a v-on:click="navigateTo(item.path, (item.id === menu[index+1].parent_id) ? false : true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
+                  <i class="fa fa-chevron-down" v-if="item.id === menu[index+1].parent_id"></i>
                   <span v-bind:class="'sm-title'" >{{item.description}}
                   </span>
                   <span v-bind:class="'pull-right-container'">  
                     <i v-bind:class="item.icon + ' pull-right'"></i>
                   </span>
                 </a>
-                <ul class="collapse" v-if="item.id == menu[index+1].parent_id" :id="item.id">
-                  <li v-for="subItem in menu" v-if="subItem.parent_id != 0 && item.id == subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
-                    <a v-on:click="navigateTo(item.path + '/' + subItem.path)" v-bind:class="hide">
+                <ul class="collapse" v-if="item.id === menu[index+1].parent_id" :id="item.id">
+                  <li v-for="subItem in menu" v-if="subItem.parent_id !== 0 && item.id === subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
+                    <a v-on:click="navigateTo(subItem.path, true)" v-bind:class="hide">
                       <span v-bind:class="'pull-right-container'">
                         <i v-bind:class="subItem.icon  + ' pull-right'"></i>
                       </span>
@@ -56,6 +56,7 @@ export default {
       toggleSidebar: 'fa fa-toggle-on',
       toggleSidebarFlag: true,
       hide: '',
+      toggleOnClick: '',
       alignAtHide: 'pull-right'
     }
   },
@@ -86,8 +87,9 @@ export default {
       this.activeSubItem = menuItem
       this.activeItem = ''
     },
-    navigateTo(method){
+    navigateTo(method, toggleCondition){
       this.$router.push('/' + method)
+      this.toggleOnClick = (toggleCondition === true) ? 'collapse' : ''
     },
     changeToggleSidebarIcon(){
       this.toggleSidebarFlag = !this.toggleSidebarFlag
@@ -123,7 +125,7 @@ export default {
   color: #000;
 }
 .header i{
-  font-size: 30px;
+  font-size: 24px;
   color: #006600;
   }/*-- toggle-sidebar i --*/
 .header i:hover{
@@ -131,11 +133,12 @@ export default {
   color: #009900;
 }/*-- .toggle-sidebar i:hover --*/
 .sidebar-menu li{
-  min-height: 50px;
+  min-height: 40px;
   overflow-x: hidden;
+  vertical-align: middle;
 }
 .sidebar-menu ul li{
-  min-height: 40px;
+  min-height: 30px;
   overflow-x: hidden;
 }
 .sidebar-menu li, .sidebar-menu ul > li {
@@ -143,12 +146,16 @@ export default {
   margin: 0;
   padding: 0;
 }
+
+/*padding: 13px 2% 13px 5%;*/
 .sidebar-menu  li > a{
-  padding: 15px 2% 15px 5%;
   display: block;
+  padding: 13px 2% 13px 2%;
 }
+
+/*padding: 10px 20px 10px 50px;*/
 .sidebar-menu  ul li > a{
-  padding: 10px 20px 10px 50px;
+  padding: 10px 5% 10px 3%;
   display: block;
 }
 .sidebar-menu li > a:hover,.sidebar-menu ul li > a :hover{
@@ -162,10 +169,16 @@ export default {
 .appActive ul{
   background: #f4f4f4;
 }
+
+/*---------------------------------------------------------          
+
+                  RESPONSIVE HANDLER
+
+-----------------------------------------------------------*/
+/*-------------- Large Screens for Desktop --------------*/
 @media (min-width: 1200px){
   .main-sidebar{
-    width:20%;
-    font-size: 14px;
+    width:18%;
     float: left;
   }
   .sidebar-collapse{
@@ -175,26 +188,27 @@ export default {
     display: block;
   }
   .content-holder{
-    width: 80%;
+    width: 79%;
+    margin: 20px 1% 0 1%;
   }
   /*  Change with Menu Toggled */
   .main-sidebar.hidden{
-    margin-left: -16%;
+    margin-left: -14%;
   }
   .content-holder.hidden{
     width: 94%;
-    margin: 0 1% 0 1%;
+    margin: 20px 1% 0 1%;
   }
 }
 
-/* meduim screen  */
+/*-------------- Medium Screen for Tablets  --------------*/
 @media screen (min-width: 992px), screen and (max-width: 1199px){
   .main-sidebar{
-    width: 25%;
-    font-size: 13px;
+    width: 23%;
   }
   .content-holder{
-    width: 75%;
+    width: 71%;
+    margin: 20px 2% 0 2%;
   }
   .main-sidebar.active{
     padding-left:15%;
@@ -208,38 +222,40 @@ export default {
 
   /*  Change with Menu Toggled */
   .main-sidebar.hidden{
-    margin-left: -20%;
+    margin-left: -18%;
   }
   .content-holder.hidden{
     width: 92%;
-    margin: 0 2% 0 2%;
+    margin: 20px 2% 0 2%;
   }
 }
-/* small screen*/
+/*-------------- Small Screen for Mobile Phones  --------------*/
 @media screen (min-width: 768px), screen and (max-width: 991px){
   .main-sidebar{
     width: 100%;
-    font-size: 16px;
   }
   .sm-title{
     text-align: center;
   }
    .sidebar-collapse{
-    display: block;
+    display: none;
   }
   .sidebar-menu .header span{
-    display: block;
+    display: none;
   }
   .content-holder{
-    width: 100%;
+    width: 96%;
+    margin: 20px 2% 0 2%;
+  }
+  .main-sidebar.hidden{
+    margin-left: 0%;
   }
 }
 
-/* xs screen*/
+/*-------------- Extra Small Screen for Mobile Phones --------------*/
 @media (max-width: 767px){
   .main-sidebar{
     width: 100%;
-    font-size:16px;
   }
    .sm-title{
     text-align: center;
@@ -251,13 +267,16 @@ export default {
     display: none;
   }
   .content-holder{
-    width: 100%;
+    width: 96%;
+    margin: 20px 2% 0 2%;
+  }
+  .main-sidebar.hidden{
+    margin-left: 0%;
   }
 }
 @media (max-width: 239px){
   .main-sidebar{
     width: 100%;
-    font-size:16px;
   }
   .sm-title,.header{
     display: none;
@@ -274,7 +293,11 @@ export default {
     display: none;
   }
   .content-holder{
-    width: 100%;
+    width: 96%;
+    margin: 20px 2% 0 2%;
+  }
+  .main-sidebar.hidden{
+    margin-left: 0%;
   }
 }
 </style>

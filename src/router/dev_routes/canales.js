@@ -1,11 +1,11 @@
 
 export default{
   routes: [{
-    path: '/testing/canales',
+    path: '/canales',
     name: 'canales',
     component: resolve => require(['modules/test/Canales.vue'], resolve),
     meta: {
-      tokenRequired: false
+      tokenRequired: true
     }
   }
   ]
