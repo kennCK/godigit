@@ -105,7 +105,7 @@ export default {
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
         let route = (response.data.length === 1) ? 'company_selection' : '/'
         console.log(this.user.userID)
-        ROUTER.go(route)
+        ROUTER.push(route)
       })
     }
   }
