@@ -12,7 +12,13 @@ class AccountController extends APIController
         $this->model = new Account();
         $this->validation = array(  
           "email" => "unique:accounts",
-          "username"  => "unique:accounts"
+          "username"  => "unique:accounts",
+          "account_informations.*account_id" => "unique:account_informations",
+          "account_informations.first_name" => "required",
+          "account_informations.last_name" => "required" 
+        );
+        $this->editableForeignTable = array(
+          'account_informations'
         );
         $this->foreignTable = array(
           'account_informations'

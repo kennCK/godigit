@@ -3,7 +3,8 @@
     <div v-bind:style="(globalVariables.showModal) ? 'overflow-y:hidden; height:'+deviceHeight+'px!important': ''">
       <div v-if="!tokenData.verifyingToken && tokenData.token">
        <system-header></system-header>
-       <system-sidebar></system-sidebar>
+       <system-sidebar v-if="user.type === 0"></system-sidebar>
+       <system-content v-else></system-content>
       </div>
       <div v-else>
         <login-header></login-header>
@@ -44,6 +45,7 @@ export default {
     'login-header': () => import('modules/frame/LoginHeader.vue'),
     'system-header': () => import('modules/frame/Header.vue'),
     'system-sidebar': () => import('modules/frame/Sidebar.vue'),
+    'system-content': () => import('modules/frame/Content.vue'),
     'system-footer': () => import('modules/frame/Footer.vue')
   }
 }

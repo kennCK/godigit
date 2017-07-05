@@ -1,0 +1,65 @@
+<template>
+    <div class="container-fluid">
+      <h4></h4>
+      <p><b>Hi {{user.username}}</b>!
+
+      <br/>
+      <br/>
+      <i>Greetings!</i>
+      <br/>
+      <br/>
+      You have multiple Companies or Branches and you can only load one branch or company at a time. 
+
+      <br/><br/>Please select options below and click load.</p>
+      <div class="row">
+          <div class="col-sm-6 col-md-offset-3">
+              <div class="input-group">
+                <select class="form-control">
+                  <option selected hidden>Select a Company or Branches</option>
+                  <option v-for="item in branches">{{item.company_branch_id}}</option>
+                </select>
+              </div>
+              <br>
+              <div>
+                <button class="btn btn-primary btn-lg pull-right">
+                <i class="fa fa-spinner" aria-hidden="true"></i> Load
+                </button>  
+              </div>
+          </div>
+      </div>
+    </div><!-- /row -->
+</template>
+<script>
+import AUTH from '../../services/auth'
+export default {
+  mounted(){
+    this.getBranches()
+  },
+  data(){
+    return{
+      user: AUTH.user,
+      tokenData: AUTH.tokenData,
+      branches: []
+    }
+  },
+  methods: {
+    getBranches (){
+      let parameter = {
+        'condition': [{
+          'column': 'account_id',
+          'value': this.user.userID,
+          'clause': '='
+        }],
+        'with_foreign_table': [
+          'company_branches'
+        ]
+      }
+      this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
+        this.branches = response.data
+      })
+    }
+  }
+}
+</script>
+<style>
+</style>

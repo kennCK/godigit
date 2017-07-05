@@ -15,6 +15,14 @@ export default{
     meta: {
       tokenRequired: true
     }
+  },
+  {
+    path: '/company_selection',
+    name: 'companySelection',
+    component: resolve => require(['modules/home/CompanySelection.vue'], resolve),
+    meta: {
+      tokenRequired: true
+    }
   }
   ]
 }
