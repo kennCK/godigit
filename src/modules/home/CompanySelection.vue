@@ -20,14 +20,14 @@
       <div class="row">
           <div class="col-sm-6 offset-sm-3">
               <div class="input-group">
-                <select class="form-control">
+                <select class="form-control" v-model="selectedBranch">
                   <option selected hidden>Select a Company or Branches</option>
-                  <option v-for="item in branches">{{item.company_branch_id}}</option>
+                  <option v-for="item in branches" v-bind:value="item.company_branch_id">{{item.company_branch_id}}</option>
                 </select>
               </div>
               <br>
               <div>
-                <button class="btn btn-primary btn-lg pull-right">
+                <button class="btn btn-primary btn-lg pull-right" v-on:click="loadSelectedBranch()">
                 <i class="fa fa-spinner" aria-hidden="true"></i> Load
                 </button>  
               </div>
@@ -36,6 +36,7 @@
     </div><!-- /row -->
 </template>
 <script>
+import ROUTER from '../../router'
 import AUTH from '../../services/auth'
 export default {
   mounted(){
@@ -45,7 +46,8 @@ export default {
     return{
       user: AUTH.user,
       tokenData: AUTH.tokenData,
-      branches: []
+      branches: [],
+      selectedBranch: ''
     }
   },
   methods: {
@@ -63,6 +65,10 @@ export default {
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
         this.branches = response.data
       })
+    },
+    loadSelectedBranch(){
+      AUTH.user.type = this.selectedBranch
+      ROUTER.push('/')
     }
   }
 }
