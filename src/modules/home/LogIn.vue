@@ -18,7 +18,7 @@
               <img src="../../assets/img/godigit.png" height="100%" width="100%">
             </span>
             <span class="app-title primary-color">
-              <label><b>Go</b>Digit</label>
+              <label>Go<b>Digit</b></label>
             </span>
           </div>
           <div class="login-header">
@@ -85,12 +85,27 @@ export default {
       this.isLoading = true
       AUTH.authenticate(this.username, this.password, (response) => {
         this.isLoading = false
-        ROUTER.go({
-          path: '/'
-        })
+        this.checkBranch()
       }, (response, status) => {
         this.errorMessage = (status === 401) ? 'Your Username and password didnot matched.' : 'Cannot log in? Contact us through email: official@godigit.ph'
         this.isLoading = false
+      })
+    },
+    checkBranch(){
+      let parameter = {
+        'condition': [{
+          'column': 'account_id',
+          'value': this.user.userID,
+          'clause': '='
+        }],
+        'with_foreign_table': [
+          'company_branches'
+        ]
+      }
+      this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
+        let route = (response.data.length === 1) ? 'company_selection' : '/'
+        console.log(this.user.userID)
+        ROUTER.go(route)
       })
     }
   }

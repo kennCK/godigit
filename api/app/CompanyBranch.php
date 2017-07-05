@@ -13,7 +13,7 @@ class CompanyBranch extends APIModel
     return $this->belongsTo('App\Company');
   } 
 
-  public function  company_branch_employees(){
+  public function company_branch_employees(){
     return $this->hasMany('App\CompanyBranchEmployee');
   }
 
