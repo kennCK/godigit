@@ -1,18 +1,24 @@
-<template>
+<template> 
     <div class="container-fluid">
-      <h4></h4>
-      <p><b>Hi {{user.username}}</b>!
-
-      <br/>
-      <br/>
-      <i>Greetings!</i>
-      <br/>
-      <br/>
-      You have multiple Companies or Branches and you can only load one branch or company at a time. 
-
-      <br/><br/>Please select options below and click load.</p>
+      <br>
+      <br>
       <div class="row">
-          <div class="col-sm-6 col-md-offset-3">
+        <div class="col-sm-6 offset-sm-3">
+          <h4></h4>
+          <p><b>Hi {{user.username}}</b>!
+
+          <br/>
+          <br/>
+          <i>Greetings!</i>
+          <br/>
+          <br/>
+          You have multiple Companies or Branches and you can only load one branch or company at a time. 
+
+          <br/><br/>Please select options below and click load.</p>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-6 offset-sm-3">
               <div class="input-group">
                 <select class="form-control">
                   <option selected hidden>Select a Company or Branches</option>
