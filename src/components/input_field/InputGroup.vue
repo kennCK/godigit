@@ -2,7 +2,18 @@
   <div>
     <div class="row">
       <template v-for="input in inputList">
-        <div class="col-sm-6" v-bind:class="input['input_type'] === 'hidden' ? 'hidden' : ''" >
+        <div v-if="input['input_type'] === 'group'" v-bind:class="'col-sm-' + input['col']">
+          <input-group-recursive
+            :inputs="input['inputs']"
+            :form_data="form_data"
+            :form_data_updated="form_data_updated"
+            :form_status="form_status"
+            :error_list="error_list"
+            v-on:form_data_changed="formGroupDataChanged"
+          >
+          </input-group-recursive>
+        </div>
+        <div v-else v-bind:class="[input['input_type'] === 'hidden' ? 'hidden' : '', 'col-sm-' + input['col']]" >
           <input-cell
             :name="input['name']"
             :db_name="input['db_name']"
@@ -33,8 +44,10 @@
   export default{
     name: '',
     components: {
-      'input-cell': require('../input_field/InputCell.vue'),
-      'input-group': require('../input_field/InputGroup.vue')
+      'input-cell': require('../input_field/InputCell.vue')
+    },
+    beforeCreate: function () {
+      this.$options.components.inputGroupRecursive = require('./InputGroup.vue')
     },
     create(){
 
@@ -66,6 +79,9 @@
       }
     },
     methods: {
+      formGroupDataChanged(fieldname, value){
+        this.$emit('form_data_changed', fieldname, value)
+      },
       valueChanged(e){
         let fieldName = $(e.target).attr('name')
         if(typeof this.valueChangedList[fieldName] !== 'undefined'){
@@ -89,6 +105,7 @@
           Vue.set(this.inputList, key, this.inputs[key])
           typeof this.inputList[key]['name'] === 'undefined' ? Vue.set(this.inputList[key], 'name', this.StringUnderscoreToPhrase(key)) : ''
           typeof this.inputList[key]['input_type'] === 'undefined' ? Vue.set(this.inputList[key], 'input_type', 'text') : ''
+          typeof this.inputList[key]['col'] === 'undefined' ? Vue.set(this.inputList[key], 'col', '12') : ''
           Vue.set(this.inputList[key], 'db_name', key)
           Vue.set(this.inputList[key], 'feedback_status', 0)
           Vue.set(this.inputList[key], 'feedback_message', '')

@@ -8,7 +8,9 @@ export default {
   user: {
     userID: 0,
     username: '',
-    type: 0
+    type: 0,
+    company_id: 0,
+    company_branch_id: 0
   },
   tokenData: {
     token: null,
@@ -25,12 +27,19 @@ export default {
     this.user.username = username
     this.user.type = type * 1
   },
+  setCompany(companyID, companyBranch){
+    if(companyID === null){
+      companyID = null
+      companyBranch = null
+    }
+    this.user.company_id = companyID * 1
+    this.user.company_branch_id = companyBranch
+  },
   setToken(token){
     this.tokenData.token = token
     localStorage.setItem('usertoken', token)
     if(token){
       setTimeout(() => {
-        console.log('hey')
         let vue = new Vue()
         vue.APIRequest('authenticate/refresh', {}, (response) => {
           this.setToken(response['token'])

@@ -18,9 +18,16 @@ class DepartmentController extends APIController
       "fax_number",
       "logo"
     );
+    $this->singleFileUpload = array(
+      array(
+        "name" => 'logo',
+        "path" => 'images/department',
+        "column" => 'logo'
+      )
+    );
   }
 
   public function  department_members(){
     return $this->hasMany('App\DepartmentMember');
-  } 
+  }
 }
