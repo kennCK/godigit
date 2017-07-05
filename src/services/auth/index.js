@@ -2,8 +2,6 @@
 import {router} from '../../router/index'
 import ROUTER from '../../router'
 import Vue from 'vue'
-// URL and endpoint constants
-const API_URL = 'http://localhost:3001/'
 export default {
   user: {
     userID: 0,
