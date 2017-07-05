@@ -23,6 +23,7 @@ class APIController extends Controller
       "debug" => null,
       "request_timestamp" => 0
     );
+    protected $rawRequest = null;
     protected $tableColumns = null;
     protected $notRequired = array();
     protected $defaultValue = array();
@@ -35,7 +36,7 @@ class APIController extends Controller
         "column" => '' column name in the table
       }]
     **/
-    protected $singleFileUpload = array();
+    protected $singleImageFileUpload = array();
     /***
       Array of editable table. The value can be list of table names or associative array of table with its rules
       List:
@@ -65,14 +66,17 @@ class APIController extends Controller
       // echo json_encode($this->response);
     }
     public function create(Request $request){
+      $this->rawRequest = $request;
       $this->createEntry($request->all());
       return $this->output();
     }
     public function retrieve(Request $request){
+      $this->rawRequest = $request;
       $this->retrieveEntry($request->all());
       return $this->output();
     }
     public function update(Request $request){
+      $this->rawRequest = $request;
       if ($request->hasFile('image_file')){
       }
       else{
@@ -175,6 +179,16 @@ class APIController extends Controller
       ;
       $this->model->save();
       $childID = array();
+      if($this->model->id && count($this->singleImageFileUpload)){
+        for($x = 0; $x < count($this->singleImageFileUpload); $x++){
+          $this->uploadSingleImageFile(
+            $this->model->id,
+            $this->singleImageFileUpload[$x]['name'],
+            $this->singleImageFileUpload[$x]['path'],
+            $this->singleImageFileUpload[$x]['column']
+          );
+        }
+      }
       if($this->model->id && $this->editableForeignTable){
         foreach($this->editableForeignTable as $childTable){
           if(isset($request[$childTable]) && $request[$childTable]){
@@ -215,10 +229,12 @@ class APIController extends Controller
       }
 
     }
-    public function singleImageFileUpload($id, $request, $inputName, $path, $dbColumn){
+    public function uploadSingleImageFile($id, $inputName, $path, $dbColumn){
+      $this->response['debug'][] = $this->rawRequest->hasFile($inputName);
       if($id){
-        if ($request->hasFile($inputName) && $request->file($inputName)->isValid()){
-          $imagePath = $request->image->store($path);
+        if ($this->rawRequest->hasFile($inputName) && $this->rawRequest->file($inputName)->isValid()){
+          $imagePath = $this->rawRequest[$inputName]->store($path);
+          $this->response['debug'][] = $imagePath;
           $responseTemp = $this->response;
           $this->updateEntry(array(
             'id' => $id,
@@ -261,7 +277,6 @@ class APIController extends Controller
       if($result){
         $this->response["data"] = $result->toArray();
         if(isset($request["id"])){
-
           $this->response["data"] = $this->response["data"][0];
         }
       }else{

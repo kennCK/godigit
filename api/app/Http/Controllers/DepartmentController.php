@@ -18,7 +18,7 @@ class DepartmentController extends APIController
       "fax_number",
       "logo"
     );
-    $this->singleFileUpload = array(
+    $this->singleImageFileUpload = array(
       array(
         "name" => 'logo',
         "path" => 'images/department',

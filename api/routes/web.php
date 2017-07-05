@@ -18,9 +18,9 @@ Route::get('/', function () {
   Accessing uploaded files
 */
 
-Route::get('image/{filename}', function ($filename)
+Route::get('image/department_logo/{filename}', function ($filename)
 {
-  $path = storage_path('app/images/' . $filename);
+  $path = storage_path('app/images/department/' . $filename);
 
   if (!File::exists($path)) {
       abort(404);
