@@ -67,7 +67,7 @@ export default {
       })
     },
     loadSelectedBranch(){
-      AUTH.user.type = this.selectedBranch
+      AUTH.user.company_branch_id = this.selectedBranch
       ROUTER.push('/')
     }
   }
