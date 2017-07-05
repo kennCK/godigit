@@ -25,7 +25,6 @@
         }
       }
       let columnSetting = {
-        parent_id: {},
         name: {},
         code: {}
       }
@@ -34,16 +33,32 @@
         columnSetting: columnSetting
       }
       let formSetting = {
+        modal_size: 'modal-lg',
         inputs: {
-          parent_id: {},
-          name: {},
-          code: {},
-          location: {},
-          contact_number: {},
-          email_address: {},
-          fax_number: {},
+          company_branch_id: {
+            default_value: 1
+          },
           logo: {
             input_type: 'single_image'
+          },
+          name: {
+            colspan: 6
+          },
+          code: {
+            input_type: 'checkbox',
+            colspan: 6
+          },
+          location: {
+            colspan: 6
+          },
+          contact_number: {
+            colspan: 6
+          },
+          email: {
+            colspan: 6
+          },
+          fax_number: {
+            colspan: 6
           }
         }
       }

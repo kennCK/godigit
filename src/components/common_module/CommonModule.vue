@@ -6,7 +6,7 @@
       </div>
     </div>
     <api-table ref="apiTable" v-on:row_clicked="rowClicked" :api="api" :filter_setting="table_setting.filterSetting" :column_setting="table_setting.columnSetting"></api-table>
-    <modal ref="modal" >
+    <modal :modal_size="modalSize" ref="modal" >
       <div slot="header">
         {{modalTitle}}
       </div>
@@ -33,6 +33,7 @@
     data(){
       return {
         modalTitle: '',
+        modalSize: '',
         currentIndex: -1
       }
     },
@@ -48,11 +49,12 @@
         }else{
           this.modalTitle = this.form_setting.form_title
         }
+        this.modalSize = typeof this.form_setting.modal_size !== 'undefined' ? this.form_setting.modal_size : ''
       },
       createEntry(){
         this.currentIndex = -1
         this.$refs.modal.showModal()
-        this.$refs.commonForm.resetForm()
+        this.$refs.commonForm.viewForm(0)
       },
       formClose(){
         this.$refs.modal.closeModal()
