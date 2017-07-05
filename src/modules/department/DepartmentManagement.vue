@@ -35,30 +35,43 @@
       let formSetting = {
         modal_size: 'modal-lg',
         inputs: {
-          company_branch_id: {
-            default_value: 1
+          logo_input_group: {
+            input_type: 'group',
+            col: 6,
+            inputs: {
+              logo: {
+                input_type: 'single_image',
+                col: 12
+              }
+            }
           },
-          logo: {
-            input_type: 'single_image'
-          },
-          name: {
-            colspan: 6
-          },
-          code: {
-            input_type: 'checkbox',
-            colspan: 6
-          },
-          location: {
-            colspan: 6
-          },
-          contact_number: {
-            colspan: 6
-          },
-          email: {
-            colspan: 6
-          },
-          fax_number: {
-            colspan: 6
+          detail_input_group: {
+            input_type: 'group',
+            col: 6,
+            inputs: {
+              company_branch_id: {
+                default_value: 1
+              },
+              name: {
+                colspan: 6
+              },
+              code: {
+                input_type: 'checkbox',
+                colspan: 6
+              },
+              location: {
+                colspan: 6
+              },
+              contact_number: {
+                colspan: 6
+              },
+              email: {
+                colspan: 6
+              },
+              fax_number: {
+                colspan: 6
+              }
+            }
           }
         }
       }

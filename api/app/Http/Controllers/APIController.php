@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Pluralizer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 
@@ -26,6 +27,15 @@ class APIController extends Controller
     protected $notRequired = array();
     protected $defaultValue = array();
     protected $requiredForeignTable = null;//children that are always retrieve, singular
+    /**
+      Array for single fileupload input.
+      [{
+        "name" => '', Name of the input
+        "path" => '', Path to be saved
+        "column" => '' column name in the table
+      }]
+    **/
+    protected $singleFileUpload = array();
     /***
       Array of editable table. The value can be list of table names or associative array of table with its rules
       List:
@@ -45,7 +55,8 @@ class APIController extends Controller
 
     public function test(){
       $user = $this->getAuthenticatedUser();
-      echo response()->json($user);
+      $this->printR($user->content());
+      // echo response()->json($user);
     }
     public function output(){
       $this->response["request_timestamp"] = date("Y-m-d h:i:s");
@@ -208,11 +219,12 @@ class APIController extends Controller
       if($id){
         if ($request->hasFile($inputName) && $request->file($inputName)->isValid()){
           $imagePath = $request->image->store($path);
+          $responseTemp = $this->response;
           $this->updateEntry(array(
             'id' => $id,
             $dbColumn => str_replace($path.'/', '', $imagePath)
           ));
-          $this->response['data'] = $id;
+          $this->response = $responseTemp;
           return true;
         }
       }
@@ -367,7 +379,7 @@ class APIController extends Controller
     public function getAuthenticatedUser()
     {
         try {
-          if (! $user = JWTAuth::parseToken()->authenticate()) {
+          if (! $userRaw = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['user_not_found'], 404);
           }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -379,6 +391,11 @@ class APIController extends Controller
         }
 
         // the token is valid and we have found the user via the sub claim
-        return response()->json($user);
+        $user = $userRaw->content();
+
+        return $user;
+    }
+    public function getUserCompanyID(){
+
     }
 }
