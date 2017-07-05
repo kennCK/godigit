@@ -26,8 +26,4 @@ class DepartmentController extends APIController
       )
     );
   }
-
-  public function  department_members(){
-    return $this->hasMany('App\DepartmentMember');
-  }
 }
