@@ -67,10 +67,8 @@ export default {
       })
     },
     loadSelectedBranch(){
-      alert(this.selectedBranch)
       AUTH.setCompany(1, this.selectedBranch)
-      console.log(AUTH.user)
-      // ROUTER.push('/')
+      ROUTER.push('/')
     }
   }
 }

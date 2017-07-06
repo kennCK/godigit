@@ -103,7 +103,6 @@ import AUTH from '../../services/auth'
 export default {
   mounted(){
     this.fetchBranches()
-    console.log(JSON.stringify(this.user))
   },
   data(){
     return{
@@ -145,7 +144,7 @@ export default {
       })
     },
     loadBranch(companyID, companyBranchID){
-      alert(companyID + ' ' + companyBranchID)
+      // alert(companyID + ' ' + companyBranchID)
     }
   }
 }
