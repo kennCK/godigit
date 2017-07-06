@@ -22,6 +22,8 @@
       </span>
 
       <div id="myBranches" class="popover-menu collapse">
+        <span></span>
+        <span></span>
         <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
           <img src="../../assets/img/godigit.png" height="40" width="40">
           {{item.company_branches.code}}
@@ -250,6 +252,8 @@ export default {
   margin: 0 !important;
   padding: 0 !important;
   width: 270px;
+  max-height: 200px;
+  overflow-y: scroll;
 }
 .popover-menu{
   width: 100%;
