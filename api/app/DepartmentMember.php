@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DepartmentMember extends APIModel
 {
 
-  public function  department(){
-    return $this->belongsTo('App\Department');
+  public function  departments(){
+    return $this->belongsTo('App\Department', 'id');
   }
 }

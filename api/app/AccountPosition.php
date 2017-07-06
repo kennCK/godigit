@@ -9,11 +9,11 @@ class AccountPosition extends APIModel
 {
   protected $table = 'account_positions';
   public function position(){
-    return $this->belongsTo('App\Position');
+    return $this->belongsTo('App\Position', 'id');
   }
 
   public function account(){
-    return $this->belongsTo('App\Account');
+    return $this->belongsTo('App\Account', 'id');
   }
   
 }

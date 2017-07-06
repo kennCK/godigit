@@ -9,6 +9,6 @@ class EmployeeStatus extends APIModel
 {
   protected $table = 'employee_status';
   public function account(){
-    return $this->belongsTo('App\Account');
+    return $this->belongsTo('App\Account', 'id');
   }
 }
