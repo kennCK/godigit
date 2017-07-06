@@ -10,6 +10,8 @@ class CompanyController extends APIController
   function __construct(){
     $this->model = new Company();
     $this->validation = array(
+      "prefix"  => "unique:companies",
+      "name"    => "unique:companies",
       "company_branches.name"   => "required",
       "company_branches.code"   => "required", 
       "company_branches.address"   => "required", 
@@ -27,6 +29,10 @@ class CompanyController extends APIController
     
     $this->editableForeignTable = array(
       "company_branches"
+    );
+
+    $this->foreignTable = array(
+      'company_branches'
     );
   }
 }

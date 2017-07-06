@@ -14,5 +14,9 @@ class AccountInformationController extends APIController
         $this->validation = array(
           'account_id'  => "unique:acount_informations"
         );
+
+        $this->foreignTable = array(
+          'accounts'
+        );
     }
 }

@@ -11,7 +11,11 @@ class Position extends APIModel
     return $this->belongsTo('App\CompanyBranch');
   }
 
-  public function position_histories(){
-    return $this->hasMany('App\PositionHistory');
+  public function account_positions(){
+    return $this->hasMany('App\AccountPosition');
+  }
+
+  public function schedule(){
+    return $this->hasOne('App\Schedule');
   }
 }

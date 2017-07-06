@@ -1,11 +1,15 @@
 <template>
   <div>
     <img @click="triggerFileInput" v-bind:src="imageSrc" v-bind:style="imgStyle">
-    <input @change="inputFileChanged" ref="fileInput" type="file" style="display:none">
+    <input ref="fileInput" type="file" style="display:none"
+      @change="inputFileChanged"
+      v-bind:name="db_name"
+      >
     <small>Click the image to select an image file to upload</small>
   </div>
 </template>
 <script>
+  import CONFIG from '../../config.js'
   export default{
     name: '',
     create(){
@@ -26,7 +30,19 @@
       default_value: String,
       db_name: String,
       form_data: Object,
-      form_status: String
+      form_status: String,
+      form_data_updated: Boolean
+    },
+    watch: {
+      form_data_updated(value){
+        console.log('hey')
+        if(this.form_data[this.db_name]){
+          console.log('Image: ' + this.form_data[this.db_name])
+          this.imageSrc = CONFIG.IMAGE_URL + 'department_logo/' + this.form_data[this.db_name]
+        }else{
+          this.imageSrc = this.defaultImageSrc
+        }
+      }
     },
     methods: {
       initInputSetting(){

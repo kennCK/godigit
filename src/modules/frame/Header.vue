@@ -1,23 +1,56 @@
  <template>
   <div>
     <nav class="header-navbar">
+      <!--- 
+
+              Header Brand 
+
+      -->
       <div class="header-navbar-brand">
         <a class="navbar-brand" href="#">
           <img src="../../assets/img/godigit-white.png" height="40" width="40">
-          <label>Go<b>Digit</b></label>
+          <label class="navbar-brand">Go<b>Digit</b></label>
         </a>
       </div>
-      <div class="header-navbar-nav">
-          <span class="header-navbar-link"  data-toggle="modal" data-target="#logoutModal">
-            <span>Hi {{user.username}}!</span>
+      <!--- 
+
+              Header icons 
+
+      -->
+      <span class="header-navbar-icons">
+        <i class="fa fa-th-large" aria-hidden="true"></i>
+      </span>
+      <span class="header-navbar-icons">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+      </span>
+      <span class="header-navbar-icons">
+        <i class="fa fa-bell-o" aria-hidden="true"></i>
+      </span>
+      <!--- 
+
+              Header Profile 
+
+      -->
+      <div class="header-navbar-nav" data-toggle="modal" data-target="#logoutModal">
+         <span>
             <i class="fa fa-user-circle" aria-hidden="true"></i>
-          </span>
+            <label>Hi {{user.username}}!</label>
+         </span>  
       </div>
+      <!--- 
+
+              Header Menu Toggler 
+
+      -->
       <span class="navbar-menu-toggler-md" data-toggle="collapse" data-target="#godigitSidebar" aria-controls="godigitSidebar" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </span>
     </nav>
-    <!-- Modal -->
+   <!--- 
+
+              Header Modal
+
+      -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -54,9 +87,7 @@ export default {
   methods: {
     logOut(){
       AUTH.deaunthenticate()
-      ROUTER.push({
-        path: '/'
-      })
+      ROUTER.push('/')
     }
   }
 }
@@ -67,54 +98,83 @@ export default {
     height: 50px;
   }/*-- navbar --*/
   .header-navbar-brand{
-    width: 70%;
     float: left;
     height: 50px;
     margin-left: 1%;
     font-size: 24px;
+    width: 72%;
   }
   .header-navbar .navbar-brand{
     color: #fff;
   }
-  .header-navbar-nav{
-    list-style: none;
-    width: 22%;
+  
+/*---------------------------------------------
+  HEADER ICONS
+      Contents: 
+          *Branch Switcher
+          *Messages
+-----------------------------------------------*/
+  .header-navbar-icons{
     height: 50px;
-    margin-right: 1%;
     float: left;
-    text-align: right;
+    text-align: center;
+    font-size: 16px; 
+    width: 4%;
     color: #fff;
+    padding: 10px 0 15px 0;
   }
-  .header-navbar-nav span span{
-    font-size: 16px;
-    vertical-align: middle;
-    font-weight: 400;
-  }
-  .header-navbar-nav i{
-    font-size: 40px;
-    vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  .header-navbar-icons:hover{
+    cursor: pointer;
+    background: #009900;
   }
 
-  .header-navbar-nav span:hover{
-    cursor: pointer;
-    color: #ddd;
+/*---------------------------------------------
+ 
+
+        HEADER ACCOUNT PROFILE
+
+
+-----------------------------------------------*/
+  .header-navbar-nav{
+      height: 50px;
+      float: left;
+      color: #fff;
+      width: 15%;
   }
-  .navbar-menu-toggler-md{
-    width: auto;
-    height: 50px;
-    float: right;
-    color: #fff;
-    text-align: center;
+  .header-navbar-nav label{
+    font-size: 13px;
+    font-weight: 500;
     vertical-align: middle;
-    font-size: 30px;
+    padding-left: 10px;
+  }
+  .header-navbar-nav i{
+    font-size: 24px;
+     padding: 10px 0 0 5%;
+  }
+
+  .header-navbar-nav:hover{
+    cursor: pointer;
+    background: #009900;
+  }
+/*---------------------------------------------
+ 
+ 
+        HEADER TOGGLER MENU
+
+
+-----------------------------------------------*/
+  .navbar-menu-toggler-md{
+    height: 50px;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 0 15px 0;
     display: none;
-    margin-right: 1%;
   }
   .navbar-menu-toggler-md:hover{
     cursor: pointer;
-    color: #ddd;
+    background: #009900;
   }
 
 
@@ -125,47 +185,56 @@ export default {
 -----------------------------------------------------------*/
 /*-------------- Medium and Large Screens for Tablets and Desktop --------------*/
 
-  @media (min-width: 992px){
+ @media screen (min-width: 992px), screen and (max-width: 1199px){
+    .header-navbar-brand{
+      width: 69%;
+    }
+    .header-navbar-icons{
+      width: 5%
+    }
     .header-navbar-nav{
-      width: 28%;
+      width: 15%;
+    }
+    .navbar-menu-toggler-md{
+      display: none;
     }
   }
 
-/*-------------- Small Screen for Mobile Phones --------------*/
- @media screen (min-width: 768px), screen and (max-width: 991px){
+@media screen (min-width: 768px), screen and (max-width: 991px){
+   .header-navbar-brand{
+      width: 55%;
+    }
+    .header-navbar-icons{
+      width: 6%
+    }
+    .header-navbar-nav{
+      width: 20%;
+    }
     .navbar-menu-toggler-md{
+      width: 6%;
+      text-align: center;
       display: block;
     }
-  }
+ }
 
-  @media (max-width: 767px){
-    .header-navbar-brand{
-      width: 50%;
-    }
-    .header-navbar-nav{
-      width: 40%;
-    }
-    .navbar-menu-toggler-md{
-      width: 5%;
-      margin-right: 2%;
-      text-align: center;
-    }
-  }
-  /* xs screen*/
-  @media (max-width: 500px){
-    .header-navbar-nav span span, .header-navbar-brand img{
+/*-------------- Small Screen for Mobile Phones --------------*/
+ @media (max-width: 767px){
+    .header-navbar-nav span label, .header-navbar-brand img{
       display: none;
     }
     .header-navbar-brand{
-      width: 50%;
+      width: 49%;
+    }
+    .header-navbar-icons, .header-navbar-nav{
+      width: 10%
     }
     .header-navbar-nav{
-      width: 35%;
+      text-align: center;
     }
     .navbar-menu-toggler-md{
       width: 10%;
-      margin-right: 2%;
       text-align: center;
+      display: block;
     }
   }
 </style>
