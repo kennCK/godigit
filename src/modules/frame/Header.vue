@@ -144,7 +144,7 @@ export default {
       })
     },
     loadBranch(companyID, companyBranchID){
-      alert(companyID + ' ' + companyBranchID)
+      // alert(companyID + ' ' + companyBranchID)
     }
   }
 }
