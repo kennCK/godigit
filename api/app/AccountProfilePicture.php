@@ -10,6 +10,6 @@ class AccountProfilePicture extends APIModel
     use SoftDeletes;
 
     public function account(){
-      return $this->belongsTo('App\Acccount');
+      return $this->belongsTo('App\Acccount', 'id');
     }
 }

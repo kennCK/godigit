@@ -22,7 +22,7 @@
               <div class="input-group">
                 <select class="form-control" v-model="selectedBranch">
                   <option value='' selected hidden>Select a Company or Branches</option>
-                  <option v-for="item in branches" v-bind:value="item.company_branch_id">{{item.company_branches.name}}</option>
+                  <option v-for="(item, index) in branches" v-bind:value="item.company_branch_id">{{item.company_branches.name}}</option>
                 </select>
               </div>
               <br>
