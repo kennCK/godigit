@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Company extends APIModel
 {
   public function business_type(){
-    return $this->belongsTo('App\BusinessType');
+    return $this->belongsTo('App\BusinessType', 'id');
   }
 
   public function company_logo(){

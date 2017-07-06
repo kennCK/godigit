@@ -17,15 +17,40 @@
               Header icons 
 
       -->
-      <span class="header-navbar-icons">
+      <span class="header-navbar-icons" data-toggle="popover" title="Company Branches" data-placement="bottom" data-popover-content='#myBranches' v-on:click="fetchBranches(0)">
         <i class="fa fa-th-large" aria-hidden="true"></i>
       </span>
-      <span class="header-navbar-icons">
+
+      <div id="myBranches" class="popover-menu collapse">
+        <span></span>
+        <span></span>
+        <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
+          <img src="../../assets/img/godigit.png" height="40" width="40">
+          {{item.company_branches.code}}
+        </span>
+      </div>
+
+      <span class="header-navbar-icons" data-toggle="popover" title="Messages" data-placement="bottom" data-popover-content='#myMessages' v-on:click="fetchBranches(1)">
         <i class="fa fa-envelope-o" aria-hidden="true"></i>
       </span>
-      <span class="header-navbar-icons">
+
+      <div id="myMessages" class="popover-menu collapse">
+        <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
+          <img src="../../assets/img/godigit.png" height="40" width="40">
+          {{item.company_branches.code}}
+        </span>
+      </div>
+
+      <span class="header-navbar-icons" data-toggle="popover" title="Notifications" data-placement="bottom" data-popover-content='#myNotifications' v-on:click="fetchBranches(2)">
         <i class="fa fa-bell-o" aria-hidden="true"></i>
       </span>
+
+      <div id="myNotifications" class="popover-menu collapse">
+        <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
+          <img src="../../assets/img/godigit.png" height="40" width="40">
+          {{item.company_branches.code}}
+        </span>
+      </div>
       <!--- 
 
               Header Profile 
@@ -77,17 +102,49 @@ import ROUTER from '../../router'
 import AUTH from '../../services/auth'
 export default {
   mounted(){
+    this.fetchBranches()
   },
   data(){
     return{
       user: AUTH.user,
-      tokenData: AUTH.tokenData
+      tokenData: AUTH.tokenData,
+      branches: [],
+      popover: ['myBranches', 'myMessages', 'myNotifications']
     }
   },
   methods: {
     logOut(){
       AUTH.deaunthenticate()
       ROUTER.push('/')
+    },
+    fetchBranches(){
+      this.getBranches()
+      $('[data-toggle="popover"]').popover({
+        container: 'body',
+        html: true,
+        content: function () {
+          let clone = $($(this).data('popover-content')).clone(true).removeClass('collapse')
+          return clone
+        }
+      })
+    },
+    getBranches(){
+      let parameter = {
+        'condition': [{
+          'column': 'account_id',
+          'value': this.user.userID,
+          'clause': '='
+        }],
+        'with_foreign_table': [
+          'company_branches'
+        ]
+      }
+      this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
+        this.branches = response.data
+      })
+    },
+    loadBranch(companyID, companyBranchID){
+      alert(companyID + ' ' + companyBranchID)
     }
   }
 }
@@ -177,7 +234,45 @@ export default {
     background: #009900;
   }
 
+/*---------------------------------------------
+ 
+ 
+        HEADER POPOVER
 
+
+-----------------------------------------------*/
+.popover{
+  background: #fff;
+  max-width: 275px;
+}
+.popover-title{
+  color: #006600;
+}
+.popover-content{
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 270px;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+.popover-menu{
+  width: 100%;
+  background: #fff;
+}
+.popover-menu span{
+  width: 100%;
+  float: left;
+  height: 50px;
+}
+.popover-menu img{
+  height: 40px;
+  width: 40px;
+  margin: 5px 5% 5px 5%;
+}
+.popover-menu span:hover{
+  background: #eee;
+  cursor: pointer;
+}
 /*---------------------------------------------------------          
 
                   RESPONSIVE HANDLER

@@ -8,11 +8,11 @@ class Schedule extends APIModel
 {
     
     public function  company_branch(){
-      return $this->belongsTo('App\CompanyBranch');
+      return $this->belongsTo('App\CompanyBranch', 'id');
     }
 
     public function position(){
-      return $this->belongsTo('App\Position');
+      return $this->belongsTo('App\Position', 'id');
     }
 
     public function account_schedules(){
