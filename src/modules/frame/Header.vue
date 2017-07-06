@@ -103,6 +103,7 @@ import AUTH from '../../services/auth'
 export default {
   mounted(){
     this.fetchBranches()
+    console.log(JSON.stringify(this.user))
   },
   data(){
     return{

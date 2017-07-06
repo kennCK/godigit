@@ -4,7 +4,7 @@
       <div v-if="!tokenData.verifyingToken && tokenData.token">
        <system-header></system-header>
        <system-sidebar v-if="user.company_branch_id > 0"></system-sidebar>
-       <system-content v-else></system-content>
+       <system-content v-if="user.company_branch_id === 0"></system-content>
       </div>
       <div v-else>
         <login-header></login-header>
