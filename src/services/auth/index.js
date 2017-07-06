@@ -32,6 +32,8 @@ export default {
     }
     this.user.company_id = companyID * 1
     this.user.company_branch_id = companyBranch
+    localStorage.setItem('company_id', companyID)
+    localStorage.setItem('company_branch_id', companyBranch)
   },
   setToken(token){
     this.tokenData.token = token
@@ -53,6 +55,7 @@ export default {
       username: username,
       password: password
     }
+
     vue.APIRequest('authenticate', credentials, (response) => {
       this.setToken(response.token)
       vue.APIRequest('authenticate/user', {}, (userInfo) => {
@@ -77,6 +80,8 @@ export default {
       vue.APIRequest('authenticate/user', {}, (userInfo) => {
         this.setUser(userInfo.id, userInfo.username, userInfo.user_type_id)
         this.tokenData.verifyingToken = false
+        this.user.company_id = localStorage.getItem('company_id')
+        this.user.company_branch_id = localStorage.getItem('company_branch_id')
         if(this.currentPath){
           ROUTER.push({
             path: this.currentPath
