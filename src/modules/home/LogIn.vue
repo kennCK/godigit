@@ -55,7 +55,7 @@
               </div>
               <br>
               <button class="btn btn-primary btn-block btn-login login-spacer">Create Account</button>
-              <button class="btn btn-primary btn-block btn-login login-spacer">Register New Company</button>
+              <button class="btn btn-primary btn-block btn-login login-spacer" v-on:click="redirect('registration')">Register New Company</button>
             </form>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default {
     checkBranch(){
       let parameter = {
         'condition': [{
-          'column': 'account_id',
+          'column': 'account_information_id',
           'value': this.user.userID,
           'clause': '='
         }],
@@ -109,6 +109,9 @@ export default {
         }
         ROUTER.push(route)
       })
+    },
+    redirect(parameter){
+      ROUTER.push(parameter)
     }
   }
 }
