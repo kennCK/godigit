@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Input;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +34,8 @@ class APIController extends Controller
       [{
         "name" => '', Name of the input
         "path" => '', Path to be saved
-        "column" => '' column name in the table
+        "column" => '', column name in the table
+        "replace" => Boolean Delete previous file
       }]
     **/
     protected $singleImageFileUpload = array();
@@ -176,7 +178,6 @@ class APIController extends Controller
           $this->model->$columnName = $this->defaultValue[$columnName];
         }
       }
-      ;
       $this->model->save();
       $childID = array();
       if($this->model->id && count($this->singleImageFileUpload)){
@@ -229,17 +230,28 @@ class APIController extends Controller
       }
 
     }
-    public function uploadSingleImageFile($id, $inputName, $path, $dbColumn){
-      $this->response['debug'][] = $this->rawRequest->hasFile($inputName);
+    public function uploadSingleImageFile($id, $inputName, $path, $dbColumn, $replace = false){
       if($id){
         if ($this->rawRequest->hasFile($inputName) && $this->rawRequest->file($inputName)->isValid()){
           $imagePath = $this->rawRequest[$inputName]->store($path);
-          $this->response['debug'][] = $imagePath;
+
+
+          if($replace){
+            $modelTemp = clone $this->model;
+            $this->model->where('id', '=',$id);
+            $entry = $this->retrieveEntry(array(
+              "id" => $id
+            ));
+            if(count($entry) && $entry[0][$dbColumn] != '' && $entry[0][$dbColumn] != null){
+              Storage::delete($path.'/'.$entry[0][$dbColumn]);
+            }
+            $this->model = $modelTemp;
+          }
           $responseTemp = $this->response;
           $this->updateEntry(array(
             'id' => $id,
             $dbColumn => str_replace($path.'/', '', $imagePath)
-          ));
+          ), true);
           $this->response = $responseTemp;
           return true;
         }
@@ -247,17 +259,16 @@ class APIController extends Controller
       return false;
     }
     public function retrieveEntry($request){
-      if(isset($request["id"])){
-         $this->model = $this->model->where("id", "=", $request["id"]);
-      }else{
-        (isset($request['condition'])) ? $this->addCondition($request['condition']) : null;
-        (isset($request['sort'])) ? $this->addOrderBy($request['sort']) : null;
-        (isset($request['offset'])) ? $this->model->offset($request['offset']) : null;
-        (isset($request['limit'])) ? $this->model = $this->model->limit($request['limit']) : null;
-      }
-
+      $tableName = $this->model->getTable();
+      $singularTableName = str_singular($tableName);
+      $tableColumns = $this->model->getTableColumns();
       if($this->requiredForeignTable){
         $this->model = $this->model->with($this->requiredForeignTable);
+        for($x = 0; $x < count($this->requiredForeignTable); $x++){
+          $singularForeignTable = str_singular($this->requiredForeignTable[$x]);
+          $pluralForeignTable = str_plural($this->requiredForeignTable[$x]);
+          $this->model = $this->model->leftJoin($pluralForeignTable, $pluralForeignTable.'.id', '=', $tableName.'.'.$singularForeignTable.'_id');
+        }
       }
       if(isset($request['with_foreign_table'])){
         $foreignTable = array();
@@ -270,10 +281,22 @@ class APIController extends Controller
           $this->model = $this->model->with($foreignTable);
         }
       }
+      if(isset($request["id"])){
+         $this->model = $this->model->where($tableName.".id", "=", $request["id"]);
+      }else{
+        (isset($request['condition'])) ? $this->addCondition($request['condition']) : null;
+        (isset($request['sort'])) ? $this->addOrderBy($request['sort']) : null;
+        (isset($request['offset'])) ? $this->model->offset($request['offset']) : null;
+        (isset($request['limit'])) ? $this->model = $this->model->limit($request['limit']) : null;
+      }
       if(isset($request['with_soft_delete'])){
         $this->model = $this->model->withTrashed();
       }
-      $result = $this->model->get();
+
+      for($x = 0; $x < count($tableColumns); $x++){
+        $tableColumns[$x] = $tableName.'.'.$tableColumns[$x];
+      }
+      $result = $this->model->get($tableColumns);
       if($result){
         $this->response["data"] = $result->toArray();
         if(isset($request["id"])){
@@ -287,7 +310,7 @@ class APIController extends Controller
       }
       return $result;
     }
-    public function updateEntry($request){
+    public function updateEntry($request, $noFile = false){
       $tableColumns = $this->model->getTableColumns();
 
       $this->tableColumns = $tableColumns;
@@ -304,6 +327,18 @@ class APIController extends Controller
       }
 
       $result = $this->model->save();
+      if($result && count($this->singleImageFileUpload) && !$noFile){
+        $id = $this->model->id;
+        for($x = 0; $x < count($this->singleImageFileUpload); $x++){
+          $this->uploadSingleImageFile(
+            $id,
+            $this->singleImageFileUpload[$x]['name'],
+            $this->singleImageFileUpload[$x]['path'],
+            $this->singleImageFileUpload[$x]['column'],
+            $this->singleImageFileUpload[$x]['replace']
+          );
+        }
+      }
       if($result && $this->editableForeignTable){
         $childID = array();
         foreach($this->editableForeignTable as $childTable => $childTableValue){
@@ -320,7 +355,6 @@ class APIController extends Controller
               if(isset($child["id"]) && $child["id"]*1) { // update
                 $pk = $child["id"];
                 unset($child["id"]);
-                echo str_singular($this->model->getTable()).'_id';
                 $result = $this->model->find($this->model->id)->$childTable()->where('id', $pk)->where(str_singular($this->model->getTable()).'_id', $request["id"])->update($child);
               }else if(!isset($childTableValue['no_create_on_update'])){
                 $result = $this->model->find($this->model->id)->$childTable()->create($child)->id;
@@ -373,6 +407,7 @@ class APIController extends Controller
       /*
         column, clause, value
       */
+
       if($conditions){
         foreach($conditions as $condition){
           /*Table.Column, Clause, Value*/

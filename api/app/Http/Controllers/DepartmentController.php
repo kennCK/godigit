@@ -20,9 +20,10 @@ class DepartmentController extends APIController
     );
     $this->singleImageFileUpload = array(
       array(
-        "name" => 'logo',
+        "name" => 'logo_file',
         "path" => 'images/department',
-        "column" => 'logo'
+        "column" => 'logo',
+        "replace" => true
       )
     );
   }
