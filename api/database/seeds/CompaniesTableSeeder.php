@@ -14,8 +14,7 @@ class CompaniesTableSeeder extends Seeder
         DB:: table('companies') -> insert(array(
           array(
             "id"    => "1",
-            "business_type_id" => "1",
-            "prefix" => 'GC-'
+            "business_type_id" => "1"
           ),
         ));
     }

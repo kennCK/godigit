@@ -54,7 +54,7 @@ export default {
     getBranches (){
       let parameter = {
         'condition': [{
-          'column': 'account_id',
+          'column': 'account_information_id',
           'value': this.user.userID,
           'clause': '='
         }],
@@ -67,7 +67,7 @@ export default {
       })
     },
     loadSelectedBranch(){
-      AUTH.user.company_branch_id = this.selectedBranch
+      AUTH.setCompany(1, this.selectedBranch)
       ROUTER.push('/')
     }
   }

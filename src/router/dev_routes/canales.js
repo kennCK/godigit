@@ -23,6 +23,22 @@ export default{
     meta: {
       tokenRequired: true
     }
+  },
+  {
+    path: '/registration',
+    name: 'registration',
+    component: resolve => require(['modules/home/CompanyRegistration.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
+  },
+  {
+    path: '/recover_account',
+    name: 'recoverAccount',
+    component: resolve => require(['modules/home/RecoverAccount.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
   }
   ]
 }
