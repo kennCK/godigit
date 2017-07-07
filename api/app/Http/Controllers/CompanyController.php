@@ -10,8 +10,6 @@ class CompanyController extends APIController
   function __construct(){
     $this->model = new Company();
     $this->validation = array(
-      "prefix"  => "unique:companies",
-      "name"    => "unique:companies",
       "company_branches.name"   => "required",
       "company_branches.code"   => "required", 
       "company_branches.address"   => "required", 

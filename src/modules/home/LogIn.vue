@@ -46,8 +46,8 @@
                   Keep me logged in
                 </label>
               </div>
-              <div class="container-fluid text-center">
-                  <a class="btn-link" href="#">Forgot Password?</a>
+              <div class="container-fluid text-center forgot-password">
+                  <a class="btn-link" v-on:click="redirect('recover_account')">Forgot Password?</a>
               </div>
               <br>
               <div class="container-fluid separator">
@@ -171,6 +171,15 @@ body{
 .login-spacer{
   margin-bottom: 10px;
 }/*-- login-spacer --*/
+
+.forgot-password a{
+  color: #006600 !important;
+}
+.forgot-password a:hover{
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  color: #009900 !important;
+}
 
 /*----------------------------------------
 
