@@ -1,40 +1,35 @@
 <template>
- <div class="container fluid">
-      <div class="row">
-        <div class="col-xs-12 col-sm-12">
-          <table class="table table-stripe table-bordered">
-            <thead class="table-inverse">
-              <tr>
-                <td>Module</td>
-                <td>Test Cases</td>
-                <td>Conditions</td>
-                <td>Resutls</td>
-                <td>Remarks</td>
-              </tr>
-            </thead> 
-            <tbody>
-              <tr>
-                <td>Sidebar</td>
-                <td>Sidebar</td>
-                <td>Sidebar</td>
-                <td>Sidebar</td>
-                <td>Sidebar</td>
-              </tr>
-            </tbody>           
-          </table>
-        </div>
-      </div>
-    </div><!-- /test-files -->
+  <div class="container">
+    <common-form
+      :api="api"
+      :inputs="inputs"
+    >
+    </common-form>
+  </div>
 </template>
 <script>
   export default{
     name: '',
+    components: {
+      'common-form': require('../../components/form/CommonForm.vue')
+    },
     create(){
     },
     mounted(){
     },
     data(){
       return {
+        api: 'department',
+        inputs: {
+          parent_id: {
+            name: 'Parent',
+            muted_text: 'The head',
+            input_type: 'radio'
+          },
+          description: {
+            input_type: 'select'
+          }
+        }
       }
     },
     props: {

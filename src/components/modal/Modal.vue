@@ -3,11 +3,11 @@
     <transition name="modal">
       <div  v-bind:class="modalShown ? '' : 'closedModal'" >
         <div class="modal-mask" @click="modalShown = false">
-          <div class="modal-dialog">
+          <div v-bind:class="modal_size" class="modal-dialog">
             <div class="modal-content" @click.stop>
               <div class="modal-header bg-primary">
                 <slot name="header">
-                  
+
                 </slot>
               </div>
               <div class="modal-body">
@@ -41,6 +41,7 @@
       }
     },
     props: {
+      modal_size: String
     },
     watch: {
       modalShown: function(value){
@@ -132,6 +133,10 @@
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.modal-xl{
+  max-width: 80%;
+  width:100%
 }
 .closedModal{
   display:none

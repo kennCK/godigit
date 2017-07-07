@@ -6,27 +6,17 @@
         {{message['message']}}
       </div>
     </div>
-    <form v-if="inputInitialized" ref="form" slot="body" enctype="multipart/form-data" role="form" method="POST">
-      <template v-for="input in inputList">
-        <input-cell
-          :name="input['name']"
-          :db_name="input['db_name']"
-          :input_setting="input['input_setting']"
-          :input_type="input['input_type']"
-          :input_style="input['input_style']"
-          :label_colspan="input['label_colspan']"
-          :placeholder="input['placeholder']"
-          :default_value="input['default_value']"
-          :feedback_message="input['feedback_message']"
-          :feedback_status="input['feedback_status']"
-          :muted_text="input['muted_text']"
-          v-on:value_changed="valueChanged"
-          :form_data="formData"
-          :form_data_updated="formDataUpdated"
-          :form_status="formStatus"
-        >
-        </input-cell>
-      </template>
+    <form ref="form" slot="body" enctype="multipart/form-data" role="form" method="POST">
+      <input type='hidden' name="id" v-bind:value='entryID' >
+      <input-group
+        :inputs="inputs"
+        :form_data="formData"
+        :form_data_updated="formDataUpdated"
+        :form_status="formStatus"
+        :error_list="errorList"
+        v-on:form_data_changed="valueChanged"
+      >
+      </input-group>
     </form>
     <div class="row">
       <div class="col-sm-12 text-right">
@@ -54,7 +44,7 @@
   export default{
     name: '',
     components: {
-      'input-cell': require('../input_field/InputCell.vue')
+      'input-group': require('../input_field/InputGroup.vue')
     },
     create(){
     },
@@ -72,6 +62,7 @@
           }]
         */
         messageList: [],
+        errorList: {},
         /*
           formStatus (String) the status of the form
           view
@@ -89,11 +80,9 @@
         },
         inputList: {
         },
-        inputInitialized: false,
         formData: {},
-        valueFunctionList: {},
-        valueChangedList: {},
-        formDataUpdated: false
+        formDataUpdated: false,
+        entryID: 0
       }
     },
     props: {
@@ -108,15 +97,16 @@
       submitForm(){
         this.formStatus = 'loading'
         this.messageList = []
-        let link = (this.formData['id']) ? this.links.update : this.links.create
+        let link = (this.formData['id'] * 1) ? this.links.update : this.links.create
         this.APIFormRequest(link, this.$refs.form, (response) => {
           if(response['error']['status'] * 1 === 100){
+            this.errorList = response['error']['message']
             for(let field in response['error']['message']){
               let label = field
               if(typeof this.inputList[field] !== 'undefined'){
-                this.inputList[field]['feedback_status'] = 2
-                this.inputList[field]['feedback_message'] = response['error']['message'][field][0]
-                label = this.inputList[field]['name']
+                // this.inputList[field]['feedback_status'] = 2
+                // this.inputList[field]['feedback_message'] = response['error']['message'][field][0]
+                // label = this.inputList[field]['name']
               }else{
                 this.messageList.push({
                   label: label,
@@ -126,11 +116,12 @@
             }
             this.formStatus = 'failed'
           }else{
-
             this.formStatus = 'success'
             setTimeout(() => {
               this.formStatus = 'view'
-              this.viewForm(typeof this.formData['id'] !== 'boolean' && this.formData['id'] * 1 ? this.formData['id'] : response['data'])
+              this.viewForm(typeof response['data'] === 'boolean' ? this.entryID : response['data'])
+              console.log(response)
+              console.log(this.formData['id'] + '---' + response['data'])
             }, 1500)
             this.$emit('form_updated', response['data'])
           }
@@ -140,25 +131,34 @@
         })
       },
       viewForm(id){
+        this.entryID = id
         this.formStatus = 'loading'
-        let requestOption = {
-          id: id
-        }
-        this.formDataUpdated = false
-        this.APIRequest(this.links.retrieve, requestOption, (response) => {
-          if(response['data']){
-            this.formData = response['data']
-            for(let x in this.valueFunctionList){
-              this.valueFunctionList[x]['value_function'](this.formData)
-            }
-            this.formDataUpdated = true
+        if(id === 0){
+          $(this.$refs.form).trigger('reset')
+          this.formData = {
+            id: 0
           }
-          this.formStatus = 'view'
-        })
+          this.formStatus = 'normal'
+          this.formDataUpdated = !this.formDataUpdated
+        }else{
+          let requestOption = {
+            id: id
+          }
+          this.APIRequest(this.links.retrieve, requestOption, (response) => {
+            if(response['data']){
+              this.formData = response['data']
+              for(let x in this.valueFunctionList){
+                this.valueFunctionList[x]['value_function'](this.formData)
+              }
+              this.formDataUpdated = !this.formDataUpdated
+            }
+            this.formStatus = 'view'
+          })
+        }
       },
       deleteForm(){
         let requestOption = {
-          id: this.formData['id']
+          id: this.entryID
         }
         this.APIRequest(this.links.delete, requestOption, (response) => {
           if(response['data']){
@@ -167,28 +167,6 @@
           }else{
           }
         })
-      },
-      initializeInput(){
-        this.inputList = {}
-        Vue.set(this.inputList, 'id', {
-          db_name: 'id',
-          input_type: 'hidden'
-        })
-        for(let key in this.inputs){
-          Vue.set(this.inputList, key, this.inputs[key])
-          typeof this.inputList[key]['name'] === 'undefined' ? Vue.set(this.inputList[key], 'name', this.StringUnderscoreToPhrase(key)) : ''
-          typeof this.inputList[key]['default_value'] === 'undefined' ? Vue.set(this.inputList[key], 'default_value', null) : ''
-          Vue.set(this.inputList[key], 'db_name', key)
-          Vue.set(this.inputList[key], 'feedback_status', 0)
-          Vue.set(this.inputList[key], 'feedback_message', '')
-          if(typeof this.inputList[key]['value_function'] !== 'undefined'){
-            this.valueFunctionList[key] = this.inputList[key]
-          }
-          if(typeof this.inputList[key]['value_changed'] !== 'undefined'){
-            this.valueChangedList[key] = this.inputList[key]
-          }
-        }
-        this.inputInitialized = true
       },
       initializeLink(){
         if(!this.no_create){
@@ -202,23 +180,20 @@
           this.links.delete = this.api + '/delete'
         }
       },
-      valueChanged(e){
-        let fieldName = $(e.target).attr('name')
-        if(typeof this.inputList[fieldName] !== 'undefined'){
-          this.inputList[fieldName]['feedback_status'] = 0
-          this.inputList[fieldName]['feedback_message'] = ''
-        }
-        this.formData[fieldName] = $(e.target).val()
-        if(typeof this.valueChangedList[fieldName] !== 'undefined'){
-          this.valueChangedList[fieldName](this.formData)
-        }
+      initializeInput(){
+        this.inputList = this.inputs
+        Vue.set(this.inputList, 'id', {
+          db_name: 'id',
+          input_type: 'hidden',
+          data_format: 'number'
+        })
       },
-      resetForm(){
-        $(this.$refs.form).trigger('reset')
-        this.formData = {
-          id: 0
+      valueChanged(fieldName, value){
+        if(typeof this.formData[fieldName] === 'undefined'){
+          Vue.set(this.formData, fieldName, null)
         }
-        this.formStatus = 'normal'
+        Vue.set(this.formData, fieldName, value)
+
       }
     }
   }
