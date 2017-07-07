@@ -103,10 +103,9 @@ export default {
 </script>
 <style>
 .main-sidebar, .content-holder{  
-  min-height: 100%;
+  min-height: 84.5vh;
   float: left;
   overflow: hidden;
-  margin-bottom: 50px;
   transition: all 1s ease 0s;
 }
 .main-sidebar i{

@@ -24,6 +24,8 @@ export default {
     this.user.userID = userID * 1
     this.user.username = username
     this.user.type = type * 1
+
+    console.log(this.user)
   },
   setCompany(companyID, companyBranch){
     if(companyID === null){
@@ -32,6 +34,8 @@ export default {
     }
     this.user.company_id = companyID * 1
     this.user.company_branch_id = companyBranch
+    localStorage.setItem('company_id', companyID)
+    localStorage.setItem('company_branch_id', companyBranch)
   },
   setToken(token){
     this.tokenData.token = token
@@ -53,6 +57,7 @@ export default {
       username: username,
       password: password
     }
+
     vue.APIRequest('authenticate', credentials, (response) => {
       this.setToken(response.token)
       vue.APIRequest('authenticate/user', {}, (userInfo) => {
@@ -71,6 +76,8 @@ export default {
   checkAuthentication(callback){
     this.tokenData.verifyingToken = true
     let token = localStorage.getItem('usertoken')
+    this.user.company_id = localStorage.getItem('company_id')
+    this.user.company_branch_id = localStorage.getItem('company_branch_id')
     if(token){
       this.setToken(token)
       let vue = new Vue()
@@ -96,9 +103,12 @@ export default {
       this.setUser(null)
       return false
     }
+
   },
   deaunthenticate(){
     localStorage.removeItem('usertoken')
+    localStorage.removeItem('company_id')
+    localStorage.removeItem('company_branch_id')
     this.setUser(null)
     let vue = new Vue()
     vue.APIRequest('authenticate/invalidate')

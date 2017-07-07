@@ -21,8 +21,8 @@
           <div class="col-sm-6 offset-sm-3">
               <div class="input-group">
                 <select class="form-control" v-model="selectedBranch">
-                  <option selected hidden>Select a Company or Branches</option>
-                  <option v-for="item in branches" v-bind:value="item.company_branch_id">{{item.company_branch_id}}</option>
+                  <option value='' selected hidden>Select a Company or Branches</option>
+                  <option v-for="(item, index) in branches" v-bind:value="item.company_branch_id">{{item.company_branches.name}}</option>
                 </select>
               </div>
               <br>
@@ -54,7 +54,7 @@ export default {
     getBranches (){
       let parameter = {
         'condition': [{
-          'column': 'account_id',
+          'column': 'account_information_id',
           'value': this.user.userID,
           'clause': '='
         }],
@@ -67,7 +67,7 @@ export default {
       })
     },
     loadSelectedBranch(){
-      AUTH.user.type = this.selectedBranch
+      AUTH.setCompany(1, this.selectedBranch)
       ROUTER.push('/')
     }
   }

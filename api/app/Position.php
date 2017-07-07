@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Position extends APIModel
 {
   public function  company_branch(){
-    return $this->belongsTo('App\CompanyBranch');
+    return $this->belongsTo('App\CompanyBranch', 'id');
   }
 
   public function account_positions(){

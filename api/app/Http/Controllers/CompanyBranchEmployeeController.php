@@ -13,7 +13,7 @@ class CompanyBranchEmployeeController extends APIController
           'company_branches'
         );
         $this->foreignTable = array(
-          'account_informations'
+          'account_informations' 
         );
     }
 }

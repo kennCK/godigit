@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="!tokenData.verifyingToken && !tokenData.token">
+  <div class="container-fluid container-login" v-if="!tokenData.verifyingToken && !tokenData.token">
     <div class="row">
       <div class="col-sm-12 col-md-8 hide-this">
         <div class="container-fluid banner">
@@ -46,8 +46,8 @@
                   Keep me logged in
                 </label>
               </div>
-              <div class="container-fluid text-center">
-                  <a class="btn-link" href="#">Forgot Password?</a>
+              <div class="container-fluid text-center forgot-password">
+                  <a class="btn-link" v-on:click="redirect('recover_account')">Forgot Password?</a>
               </div>
               <br>
               <div class="container-fluid separator">
@@ -55,7 +55,7 @@
               </div>
               <br>
               <button class="btn btn-primary btn-block btn-login login-spacer">Create Account</button>
-              <button class="btn btn-primary btn-block btn-login login-spacer">Register New Company</button>
+              <button class="btn btn-primary btn-block btn-login login-spacer" v-on:click="redirect('registration')">Register New Company</button>
             </form>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default {
     checkBranch(){
       let parameter = {
         'condition': [{
-          'column': 'account_id',
+          'column': 'account_information_id',
           'value': this.user.userID,
           'clause': '='
         }],
@@ -103,9 +103,15 @@ export default {
         ]
       }
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
-        let route = (response.data.length === 1) ? 'company_selection' : '/'
+        let route = (response.data.length > 1) ? 'company_selection' : '/'
+        if(response.data.length === 1){
+          AUTH.setCompany(response.data[0].company_branches.company_id, response.data[0].company_branch_id)
+        }
         ROUTER.push(route)
       })
+    },
+    redirect(parameter){
+      ROUTER.push(parameter)
     }
   }
 }
@@ -123,6 +129,9 @@ body{
   font-size: 13px;
   font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight: 400;
+}
+.container-login{
+  min-height: 87.5vh;
 }
 .login-wrapper, .banner, .app-logo{
   margin-top: 30px;
@@ -165,6 +174,15 @@ body{
 .login-spacer{
   margin-bottom: 10px;
 }/*-- login-spacer --*/
+
+.forgot-password a{
+  color: #006600 !important;
+}
+.forgot-password a:hover{
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  color: #009900 !important;
+}
 
 /*----------------------------------------
 
