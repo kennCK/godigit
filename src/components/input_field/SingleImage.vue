@@ -5,7 +5,7 @@
       @change="inputFileChanged"
       v-bind:name="db_name"
       >
-    <small>Click the image to select an image file to upload</small>
+    <small v-if="form_status !== 'view'">Click the image to select an image file to upload</small>
   </div>
 </template>
 <script>
@@ -29,16 +29,17 @@
       input_setting: Object,
       default_value: String,
       db_name: String,
+      field_name: String,
       form_data: Object,
       form_status: String,
       form_data_updated: Boolean
     },
     watch: {
       form_data_updated(value){
-        console.log('hey')
-        if(this.form_data[this.db_name]){
+        let fileName = (this.db_name).replace('_file', '')
+        if(this.form_data[fileName]){
           console.log('Image: ' + this.form_data[this.db_name])
-          this.imageSrc = CONFIG.IMAGE_URL + 'department_logo/' + this.form_data[this.db_name]
+          this.imageSrc = CONFIG.IMAGE_URL + 'department_logo/' + this.form_data[fileName]
         }else{
           this.imageSrc = this.defaultImageSrc
         }
@@ -55,6 +56,9 @@
         this.imageSrc = this.defaultImageSrc
       },
       triggerFileInput(){
+        if(this.form_status === 'view'){
+          return false
+        }
         $(this.$refs.fileInput).trigger('click')
       },
       inputFileChanged(e){

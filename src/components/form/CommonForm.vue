@@ -25,15 +25,22 @@
           <button @click="deleteForm" class="btn btn-danger">Yes, delete</button>
           <button @click="formStatus = 'editing'" class="btn btn-default">No</button>
         </template>
-        <template v-else>
-          <button @click="formStatus = 'delete_confirmation'" v-if="formStatus === 'editing'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-danger pull-left"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-          <label v-if="formStatus === 'loading'" class="text-primary">Please wait...</label>
-          <label v-else-if="formStatus === 'success'" class="text-success">Success!</label>
-          <label v-else-if="formStatus === 'failed'" class="text-danger">Failed!</label>
-          <button v-if="formStatus === 'editing' || formData['id'] === 0" @click="submitForm" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-success"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
-          <button v-if="formStatus === 'editing'" @click="viewForm(formData['id'])" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Cancel</button>
-          <button v-if="formData['id'] !== 0 && formStatus === 'view'" @click="formStatus = 'editing'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
-          <button v-if="formStatus === 'view' || formData['id'] === 0" @click="$emit('form_close')" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Close</button>
+        <label v-if="formRequestStatus === 'success'" class="text-success">Success!</label>
+        <label v-else-if="formRequestStatus === 'failed'" class="text-danger">Failed!</label>
+        <label v-else-if="formRequestStatus === 'loading'" class="text-primary">Please wait...</label>
+        <template v-if="formStatus === 'view'">
+          <button v-if="formData['id'] !== 0" @click="formStatus = 'editing'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
+          <button @click="$emit('form_close')" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Close</button>
+        </template>
+        <template v-else-if="formStatus === 'editing'">
+
+          <button @click="formStatus = 'delete_confirmation'" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-danger pull-left"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+          <button @click="submitForm" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-success"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
+          <button @click="viewForm(formData['id'])" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Cancel</button>
+        </template>
+        <template v-else-if="formStatus === 'create'">
+          <button v-if="formData['id'] === 0" @click="submitForm" v-bind:disabled="formStatus === 'loading'? true : false" type="button" class="btn btn-outline-success"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
+          <button v-if="formData['id'] === 0" @click="$emit('form_close')" type="button"  v-bind:disabled="formStatus === 'loading'? true : false" class="btn btn-secondary">Close</button>
         </template>
       </div>
     </div>
@@ -72,6 +79,7 @@
           closed
         */
         formStatus: 'view',
+        formRequestStatus: '',
         links: {
           create: '',
           retrieve: '',
@@ -95,7 +103,7 @@
     },
     methods: {
       submitForm(){
-        this.formStatus = 'loading'
+        this.formRequestStatus = 'loading'
         this.messageList = []
         let link = (this.formData['id'] * 1) ? this.links.update : this.links.create
         this.APIFormRequest(link, this.$refs.form, (response) => {
@@ -104,9 +112,6 @@
             for(let field in response['error']['message']){
               let label = field
               if(typeof this.inputList[field] !== 'undefined'){
-                // this.inputList[field]['feedback_status'] = 2
-                // this.inputList[field]['feedback_message'] = response['error']['message'][field][0]
-                // label = this.inputList[field]['name']
               }else{
                 this.messageList.push({
                   label: label,
@@ -114,33 +119,32 @@
                 })
               }
             }
-            this.formStatus = 'failed'
+            this.formRequestStatus = 'failed'
           }else{
-            this.formStatus = 'success'
+            this.formRequestStatus = 'success'
             setTimeout(() => {
               this.formStatus = 'view'
+              this.formRequestStatus = ''
               this.viewForm(typeof response['data'] === 'boolean' ? this.entryID : response['data'])
-              console.log(response)
-              console.log(this.formData['id'] + '---' + response['data'])
             }, 1500)
             this.$emit('form_updated', response['data'])
           }
 
         }, (response, status) => {
-          this.formStatus = 'failed'
+          this.formRequestStatus = 'failed'
         })
       },
       viewForm(id){
         this.entryID = id
-        this.formStatus = 'loading'
         if(id === 0){
           $(this.$refs.form).trigger('reset')
           this.formData = {
             id: 0
           }
-          this.formStatus = 'normal'
+          this.formStatus = 'create'
           this.formDataUpdated = !this.formDataUpdated
         }else{
+          this.formRequestStatus = 'loading'
           let requestOption = {
             id: id
           }
@@ -153,6 +157,7 @@
               this.formDataUpdated = !this.formDataUpdated
             }
             this.formStatus = 'view'
+            this.formRequestStatus = ''
           })
         }
       },
@@ -189,6 +194,7 @@
         })
       },
       valueChanged(fieldName, value){
+        console.log(fieldName + ':' + value)
         if(typeof this.formData[fieldName] === 'undefined'){
           Vue.set(this.formData, fieldName, null)
         }
