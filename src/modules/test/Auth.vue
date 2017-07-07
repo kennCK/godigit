@@ -1,9 +1,11 @@
 <template>
   <div>
-    "This is a new module"
+    Hello
+    <button @click="setCompany">Set</button>
   </div>
 </template>
 <script>
+  import AUTH from '../../services/auth/index.js'
   export default{
     name: '',
     create(){
@@ -20,6 +22,9 @@
     props: {
     },
     methods: {
+      setCompany(){
+        AUTH.setCompany(1, 2)
+      }
     }
 
   }

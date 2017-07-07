@@ -15,7 +15,8 @@
         </div>
         <div v-else v-bind:class="[input['input_type'] === 'hidden' ? 'hidden' : '', 'col-sm-' + input['col']]" >
           <input-cell
-            :name="input['name']"
+            :input_name="input['input_name']"
+            :field_name="input['field_name']"
             :db_name="input['db_name']"
             :input_setting="input['input_setting']"
             :input_type="input['input_type']"
@@ -72,18 +73,21 @@
     },
     watch: {
       form_data_updated(value){
+        // console.log(this.form_data['name'])
         for(let key in this.inputList){
-          let dbName = this.inputList[key]['db_name']
-          this.formDataChanged(dbName, this.form_data[dbName])
+          let fieldName = this.inputList[key]['field_name']
+
+          this.formDataChanged(fieldName, this.form_data[this.inputList[key]['db_name']])
         }
+
       }
     },
     methods: {
       formGroupDataChanged(fieldname, value){
         this.$emit('form_data_changed', fieldname, value)
       },
-      valueChanged(e){
-        let fieldName = $(e.target).attr('name')
+      valueChanged(e, customName){
+        let fieldName = typeof customName !== 'undefined' ? customName : $(e.target).attr('name')
         if(typeof this.valueChangedList[fieldName] !== 'undefined'){
           let newFormData = this.valueChangedList[fieldName](this.formData)
           for(let formKey in newFormData){
@@ -95,18 +99,28 @@
 
       },
       formDataChanged(fieldName, value){
-
-        this.$emit('form_data_changed', fieldName, this.dataFormat(fieldName, value))
+        console.log('here')
+        this.$emit('form_data_changed', this.inputList[fieldName]['db_name'], this.dataFormat(fieldName, value))
       },
       initializeInput(){
         this.inputList = {}
 
         for(let key in this.inputs){
           Vue.set(this.inputList, key, this.inputs[key])
-          typeof this.inputList[key]['name'] === 'undefined' ? Vue.set(this.inputList[key], 'name', this.StringUnderscoreToPhrase(key)) : ''
+          let dbNameTemp = key.split('.')
+          let dbName = key
+          if(dbNameTemp.length > 1){
+            let dbName = dbNameTemp[0]
+            for(let x = 1; x < dbNameTemp.length; x++){
+              dbName += (dbNameTemp[x] === '*' ? '[]' : '[' + dbNameTemp[x] + ']')
+            }
+          }
+          Vue.set(this.inputList[key], 'field_name', key)
+          typeof this.inputList[key]['db_name'] === 'undefined' ? Vue.set(this.inputList[key], 'db_name', dbName) : ''
+          typeof this.inputList[key]['input_name'] === 'undefined' ? Vue.set(this.inputList[key], 'input_name', this.StringUnderscoreToPhrase(key)) : ''
           typeof this.inputList[key]['input_type'] === 'undefined' ? Vue.set(this.inputList[key], 'input_type', 'text') : ''
           typeof this.inputList[key]['col'] === 'undefined' ? Vue.set(this.inputList[key], 'col', '12') : ''
-          Vue.set(this.inputList[key], 'db_name', key)
+
           Vue.set(this.inputList[key], 'feedback_status', 0)
           Vue.set(this.inputList[key], 'feedback_message', '')
           if(typeof this.inputList[key]['default_value'] === 'undefined'){
@@ -120,7 +134,7 @@
             }
             Vue.set(this.inputList[key], 'data_format', defaultDataFormat)
           }
-          this.formDataChanged(this.inputList[key]['db_name'], this.inputList[key]['default_value'])
+          this.formDataChanged(this.inputList[key]['field_name'], this.inputList[key]['default_value'])
           if(typeof this.inputList[key]['value_function'] !== 'undefined'){
             this.valueFunctionList[key] = this.inputList[key]
           }
@@ -130,12 +144,12 @@
         }
         this.inputInitialized = true
       },
-      dataFormat(dbName, value){
-        if(typeof dbName === 'undefined'){
+      dataFormat(fieldName, value){
+        if(typeof fieldName === 'undefined'){
           return null
         }
-        let finalValue = value || this.inputList[dbName]['default_value']
-        switch(this.inputList[dbName]['data_format']){
+        let finalValue = value || this.inputList[fieldName]['default_value']
+        switch(this.inputList[fieldName]['data_format']){
           case 'decimal':
             return (finalValue * 1).toFixed(2)
           case 'number':

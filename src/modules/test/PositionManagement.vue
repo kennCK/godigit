@@ -26,7 +26,7 @@
       }
       let columnSetting = {
         title: {},
-        status: {},
+        position_status: {},
         description: {},
         slot: {}
       }
@@ -37,11 +37,9 @@
       let formSetting = {
         inputs: {
           title: {},
-          status: {},
-          slot: {},
-          logo: {
-            input_type: 'single_image'
-          }
+          position_status: {},
+          description: {},
+          slot: {}
         }
       }
       return {

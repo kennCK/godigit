@@ -31,5 +31,13 @@ export default{
     meta: {
       tokenRequired: false
     }
+  },
+  {
+    path: '/auth',
+    name: 'auth',
+    component: resolve => require(['modules/test/Auth.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
   }]
 }
