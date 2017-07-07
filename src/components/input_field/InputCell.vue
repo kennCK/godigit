@@ -36,6 +36,7 @@
           :db_name="dbName"
           :form_data="form_data"
           :form_status="form_status"
+          :form_data_updated="form_data_updated"
           v-on:change="valueChanged"
 
           >

@@ -10,10 +10,10 @@ class CompanyBranch extends APIModel
 
   protected $fillable = ['name','code','address','contact_number','fax_number','email'];
   public function  company(){
-    return $this->belongsTo('App\Company');
+    return $this->belongsTo('App\Company', 'id');
   } 
 
-  public function  company_branch_employees(){
+  public function company_branch_employees(){
     return $this->hasMany('App\CompanyBranchEmployee');
   }
 

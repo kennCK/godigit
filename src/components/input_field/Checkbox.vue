@@ -2,12 +2,14 @@
   <div>
     <div v-if="form_status !== 'view'" class="form-check">
       <label class="form-check-label">
-        <input class="form-check-input" type="checkbox"
-
+        <input type="text"
         v-bind:name="db_name"
+        v-bind:value="form_data[db_name]"
+        >
+        <input class="form-check-input" type="checkbox"
         v-bind:value="form_data[db_name] ? form_data[db_name] : defaultValue"
         @change="valueChanged"
-        > {{form_data[db_name]}}
+        > {{form_data[db_name] + '-'}}
       </label>
     </div>
     <span v-else class="">
@@ -39,9 +41,9 @@
     },
     methods: {
       valueChanged(e){
-        console.log(e)
-        console.log($(e.target).is(':checked'))
+        console.log('tea')
         $(e.target).val($(e.target).is(':checked'))
+        let eclone = $(e.target).clone()
         this.$emit('value_changed', e)
       }
     }
