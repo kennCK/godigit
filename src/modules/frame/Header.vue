@@ -17,36 +17,36 @@
               Header icons 
 
       -->
-      <span class="header-navbar-icons" data-toggle="popover" title="Company Branches" data-placement="bottom" data-popover-content='#myBranches' v-on:click="fetchBranches(0)">
+      <span class="header-navbar-icons" title="Company Branches" data-toggle="popover" data-placement="bottom" data-popover-content='#myBranches' v-on:click="fetchBranches(0)">
         <i class="fa fa-th-large" aria-hidden="true"></i>
       </span>
 
       <div id="myBranches" class="popover-menu collapse">
         <span></span>
         <span></span>
-        <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
+        <span v-for="item in branches" v-on:click="loadBranch()">
           <img src="../../assets/img/godigit.png" height="40" width="40">
           {{item.company_branches.code}}
         </span>
       </div>
 
-      <span class="header-navbar-icons" data-toggle="popover" title="Messages" data-placement="bottom" data-popover-content='#myMessages' v-on:click="fetchBranches(1)">
+      <span class="header-navbar-icons" title="Messages" data-toggle="popover"data-placement="bottom" data-popover-content='#myMessages' v-on:click="fetchBranches(1)">
         <i class="fa fa-envelope-o" aria-hidden="true"></i>
       </span>
 
       <div id="myMessages" class="popover-menu collapse">
-        <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
+        <span v-for="item in branches" v-on:click="loadBranch()">
           <img src="../../assets/img/godigit.png" height="40" width="40">
           {{item.company_branches.code}}
         </span>
       </div>
 
-      <span class="header-navbar-icons" data-toggle="popover" title="Notifications" data-placement="bottom" data-popover-content='#myNotifications' v-on:click="fetchBranches(2)">
+      <span class="header-navbar-icons" title="Notifications" data-toggle="popover" data-placement="bottom" data-popover-content='#myNotifications' v-on:click="fetchBranches(2)">
         <i class="fa fa-bell-o" aria-hidden="true"></i>
       </span>
 
       <div id="myNotifications" class="popover-menu collapse">
-        <span v-for="item in branches" v-on:click="loadBranch(item.company_branches.company_id, item.company_branch_id)">
+        <span v-for="item in branches" v-on:click="loadBranch()">
           <img src="../../assets/img/godigit.png" height="40" width="40">
           {{item.company_branches.code}}
         </span>
@@ -109,7 +109,12 @@ export default {
       user: AUTH.user,
       tokenData: AUTH.tokenData,
       branches: [],
-      popover: ['myBranches', 'myMessages', 'myNotifications']
+      popover: ['myBranches', 'myMessages', 'myNotifications'],
+      popoverValue: [
+        ['Company Branches'],
+        ['Messages'],
+        ['Notifications']
+      ]
     }
   },
   methods: {
@@ -117,21 +122,26 @@ export default {
       AUTH.deaunthenticate()
       ROUTER.push('/')
     },
-    fetchBranches(){
+    fetchBranches(icons){
       this.getBranches()
+      /*
+      */
       $('[data-toggle="popover"]').popover({
-        container: 'body',
         html: true,
+        container: 'body',
         content: function () {
           let clone = $($(this).data('popover-content')).clone(true).removeClass('collapse')
           return clone
         }
       })
     },
+    loadBranch(){
+      alert('hello')
+    },
     getBranches(){
       let parameter = {
         'condition': [{
-          'column': 'account_id',
+          'column': 'account_information_id',
           'value': this.user.userID,
           'clause': '='
         }],
@@ -142,9 +152,6 @@ export default {
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
         this.branches = response.data
       })
-    },
-    loadBranch(companyID, companyBranchID){
-      // alert(companyID + ' ' + companyBranchID)
     }
   }
 }
@@ -245,15 +252,15 @@ export default {
   background: #fff;
   max-width: 275px;
 }
-.popover-title{
-  color: #006600;
-}
 .popover-content{
   margin: 0 !important;
   padding: 0 !important;
   width: 270px;
   max-height: 200px;
   overflow-y: scroll;
+}
+.popover-title{
+  color:#006600;
 }
 .popover-menu{
   width: 100%;
@@ -273,6 +280,9 @@ export default {
   background: #eee;
   cursor: pointer;
 }
+
+
+
 /*---------------------------------------------------------          
 
                   RESPONSIVE HANDLER

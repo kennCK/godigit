@@ -14,7 +14,7 @@ class AccountInformation extends APIModel
     return $this->belongsTo('App\AccountType','id');
   }
 
-  public function  accounts(){
+  public function accounts(){
     return $this->belongsTo('App\Account', 'id');
   }
 
