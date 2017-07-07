@@ -125,7 +125,7 @@ export default {
 
   */
   .custom-container{
-    height: 65vh;
+    height: 80vh;
     margin-top: 50px;
   }
   .header-title{
