@@ -31,6 +31,14 @@ export default{
     meta: {
       tokenRequired: false
     }
+  },
+  {
+    path: '/recover_account',
+    name: 'recoverAccount',
+    component: resolve => require(['modules/home/RecoverAccount.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
   }
   ]
 }

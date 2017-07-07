@@ -73,6 +73,11 @@ export default {
 }
 </script>
 <style type="text/css">
+  html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
   .login-navbar{
     border-bottom:solid 1px #eee;
     height: 50px;
@@ -106,6 +111,41 @@ export default {
     font-size: 30px;
   }
   .login-navbar-nav a:hover, .login-navbar-brand i:hover, .login-navbar-nav i:hover{
+    color: #009900;
+    cursor: pointer;
+  }
+
+
+
+  /*
+
+
+        CUSTOM CONTAINER
+
+
+  */
+  .custom-container{
+    height: 65vh;
+    margin-top: 50px;
+  }
+  .header-title{
+    height: 50px;
+    width: 100%;
+    vertical-align: middle;
+  }
+  .header-title i{
+    height: 50px;
+    width: 50px;
+    float: left;
+    font-size: 24px;
+    padding: 5px 0 10px 0;
+  }
+  .header-title span{
+    font-size: 24px;
+    font-weight: 600;
+    float: left;
+  }
+  .header-title i:hover{
     color: #009900;
     cursor: pointer;
   }
