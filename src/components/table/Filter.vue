@@ -1,11 +1,15 @@
 <template>
   <div>
     <form v-if="filterInitialized" ref="form" enctype="multipart/form-data" role="form" method="POST">
-      <div class="row">
-        <template v-for="input in filterList">
+
+        <input-group
+          :inputs="filterList"
+        >
+        </input-group>
+        <!-- <template v-for="input in filterList">
           <div class='col-sm-4 float-right'>
             <input-cell
-              :name="input['name']"
+              :input_name="input['input_name']"
               :db_name="input['db_name']"
               :input_setting="input['input_setting']"
               :input_type="input['input_type']"
@@ -18,11 +22,10 @@
             >
             </input-cell>
           </div>
-        </template>
+        </template> -->
         <div class="col-sm-2">
           <button @click="filterForm" type="button" class="btn btn-default" >Filter</button>
         </div>
-      </div>
 
     </form>
   </div>
@@ -32,7 +35,8 @@
   export default{
     name: '',
     components: {
-      'input-cell': require('components/input_field/InputCell.vue')
+      'input-cell': require('components/input_field/InputCell.vue'),
+      'input-group': require('components/input_field/InputGroup.vue')
     },
     create(){
 
@@ -56,6 +60,7 @@
           Vue.set(this.filterList, key, this.filter_setting[key])
           typeof this.filterList[key]['name'] === 'undefined' ? Vue.set(this.filterList[key], 'name', this.StringUnderscoreToPhrase(key)) : ''
           Vue.set(this.filterList[key], 'db_name', key)
+          typeof this.filterList[key]['col'] === 'undefined' ? Vue.set(this.filterList[key], 'col', 4) : ''
         }
         this.filterInitialized = true
       },

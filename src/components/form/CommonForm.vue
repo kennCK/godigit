@@ -194,7 +194,6 @@
         })
       },
       valueChanged(fieldName, value){
-        console.log(fieldName + ':' + value)
         if(typeof this.formData[fieldName] === 'undefined'){
           Vue.set(this.formData, fieldName, null)
         }
