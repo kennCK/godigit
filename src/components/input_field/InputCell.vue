@@ -6,24 +6,28 @@
     v-bind:value="value"
     >
     <template v-else>
-      <label class="col-form-label" v-bind:class="'col-sm-' + labelColspan">{{labelText}} :</label>
+      <label v-if="labelColspan" class="col-form-label" v-bind:class="'col-sm-' + labelColspan">{{labelText}} :</label>
       <div v-bind:class="'col-sm-' + (12 - (labelColspan !== 12 ? labelColspan : 0))">
         <radio-button
           v-if="inputType === 'radio'"
           :input_setting="input_setting"
           :db_name="dbName"
+          :field_name="field_name"
           >
         </radio-button>
         <check-list
           v-else-if="inputType === 'checklist'"
           :input_setting="input_setting"
           :db_name="dbName"
+          :field_name="field_name"
+
           >
         </check-list>
         <select-input
           v-else-if="inputType === 'select'"
           :input_setting="input_setting"
           :db_name="dbName"
+          :field_name="field_name"
           :form_data="form_data"
           :form_status="form_status"
           v-on:change="valueChanged"
@@ -34,6 +38,7 @@
           v-else-if="inputType === 'single_image'"
           :input_setting="input_setting"
           :db_name="dbName"
+          :field_name="field_name"
           :form_data="form_data"
           :form_status="form_status"
           :form_data_updated="form_data_updated"
@@ -44,13 +49,13 @@
         <textarea-input
           v-else-if="inputType === 'textarea'"
           :input_setting="input_setting"
-          :name="dbName"
           >
         </textarea-input>
         <check-box
           v-else-if="inputType === 'checkbox'"
           :input_setting="input_setting"
           :db_name="dbName"
+          :field_name="field_name"
           :form_data="form_data"
           :form_status="form_status"
           v-on:change="valueChanged"
@@ -59,14 +64,14 @@
         <template v-else>
           <input
             v-if="form_status !== 'view'"
-            v-bind:name="dbName"
+            v-bind:name="db_name"
             v-bind:placeholder="inputPlaceholder"
             v-bind:type="inputType"
             class="form-control"
             v-on:change="valueChanged"
-            v-bind:value="form_data[dbName]"
+            v-bind:value="form_data[db_name]"
             >
-          <span v-else class="form-control">{{form_data[dbName]}}&nbsp;</span>
+          <span v-else class="form-control">{{form_data[db_name]}}&nbsp;</span>
         </template>
         <div v-if="feedbackMessage" class="form-control-feedback">{{feedbackMessage}}</div>
         <small v-if="muted_text" class="form-text text-muted">{{muted_text}}</small>
@@ -92,8 +97,9 @@
       this.initSetting()
     },
     props: {
-      name: String,
+      input_name: String,
       db_name: String,
+      field_name: String,
       label: String,
       label_style: Object,
       label_colspan: Number,
@@ -161,20 +167,20 @@
     },
     methods: {
       initSetting(){
-        this.dbName = this.db_name ? this.db_name : this.StringPhraseToUnderscoreCase(this.name)
-        this.labelText = this.label ? this.label : this.name
+        this.dbName = this.db_name
+        this.labelText = this.label ? this.label : this.input_name
         this.labelStyle = this.label_style
-        this.labelColspan = this.label_colspan ? this.label_colspan : 4
+        this.labelColspan = typeof this.label_colspan !== 'undefined' ? this.label_colspan : 4
         this.inputType = this.input_type ? this.input_type : 'text'
         this.inputStyle = this.input_style
-        this.inputPlaceholder = this.placeholder ? this.placeholder : this.name
+        this.inputPlaceholder = this.placeholder ? this.placeholder : this.input_name
       },
       formDataUpdated(){
       },
-      valueChanged(e){
+      valueChanged(e, customName){
         this.feedbackStatus = 0
         this.feedbackMessage = ''
-        this.$emit('value_changed', e)
+        this.$emit('value_changed', e, customName)
       }
     }
 

@@ -25,7 +25,8 @@
         }
       }
       let columnSetting = {
-        name: {},
+        name: {
+        },
         code: {}
       }
       let tableSetting = {
@@ -39,7 +40,8 @@
             input_type: 'group',
             col: 6,
             inputs: {
-              logo: {
+              logo_file: {
+                label_colspan: 0,
                 input_type: 'single_image',
                 col: 12
               }

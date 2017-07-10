@@ -24,8 +24,6 @@ export default {
     this.user.userID = userID * 1
     this.user.username = username
     this.user.type = type * 1
-
-    console.log(this.user)
   },
   setCompany(companyID, companyBranch){
     if(companyID === null){

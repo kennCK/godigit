@@ -72,7 +72,13 @@
     props: {
       api: String,
       filter_setting: Object,
-      column_setting: Object
+      column_setting: Object,
+      retrieve_parameter: {
+        type: Object,
+        default(){
+          return {}
+        }
+      }
     },
     methods: {
       changeSort(rowIndex, columnIndex){
@@ -83,7 +89,7 @@
         this.retrieveData()
       },
       retrieveData(retrieveType){
-        let requestOption = {}
+        let requestOption = this.retrieve_parameter
         if(this.currentSort && this.currentSort['sort']){
           let orderLookUp = ['', 'asc', 'desc']
           requestOption['sort'] = {}
@@ -106,7 +112,6 @@
 
             }
           }
-          console.log(requestOption.condition)
         }
         this.APIRequest(this.api + '/retrieve', requestOption, (response) => {
           if(response['data']){
