@@ -18,8 +18,8 @@ class CreatePositionsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('company_branch_id');
             $table->string('title',100);
-            $table->boolean('position_status')->default(1);
             $table->longText('description');
+            $table->unsignedInteger('slots')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

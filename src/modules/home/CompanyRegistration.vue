@@ -22,6 +22,16 @@ export default {
   data(){
     return{
       inputs: {
+        business_type_id: {
+          label_colspan: 0,
+          input_type: 'select',
+          input_setting: {
+            options: [{
+              value: 1,
+              label: 'Call Center'
+            }]
+          }
+        },
         name: {
           label_colspan: 0,
           db_name: 'company_branches[name]',
