@@ -25,7 +25,8 @@
         }
       }
       let columnSetting = {
-        name: {},
+        name: {
+        },
         code: {}
       }
       let tableSetting = {

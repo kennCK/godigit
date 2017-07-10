@@ -73,10 +73,8 @@
     },
     watch: {
       form_data_updated(value){
-        // console.log(this.form_data['name'])
         for(let key in this.inputList){
           let fieldName = this.inputList[key]['field_name']
-
           this.formDataChanged(fieldName, this.form_data[this.inputList[key]['db_name']])
         }
 
@@ -99,7 +97,6 @@
 
       },
       formDataChanged(fieldName, value){
-        console.log('here')
         this.$emit('form_data_changed', this.inputList[fieldName]['db_name'], this.dataFormat(fieldName, value))
       },
       initializeInput(){

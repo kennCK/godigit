@@ -5,7 +5,7 @@
         <button @click="createEntry" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Create</button>
       </div>
     </div>
-    <api-table ref="apiTable" v-on:row_clicked="rowClicked" :api="api" :filter_setting="table_setting.filterSetting" :column_setting="table_setting.columnSetting"></api-table>
+    <api-table ref="apiTable" v-on:row_clicked="rowClicked" :api="api" :filter_setting="table_setting.filterSetting" :column_setting="table_setting.columnSetting" :retrieve_parameter="table_setting.retrieveParameter"></api-table>
     <modal :modal_size="modalSize" ref="modal" >
       <div slot="header">
         {{modalTitle}}
@@ -50,6 +50,7 @@
           this.modalTitle = this.form_setting.form_title
         }
         this.modalSize = typeof this.form_setting.modal_size !== 'undefined' ? this.form_setting.modal_size : ''
+
       },
       createEntry(){
         this.currentIndex = -1
