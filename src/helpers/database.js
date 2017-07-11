@@ -7,6 +7,12 @@ import config from '../config'
 Vue.mixin({
   methods: {
     latestData: function(apiLink, latestData){
+      this.APIRequest(apiLink, {}, (response) => {
+        console.log(response)
+        latestData['data'] = response['data']
+        latestData['request_timestamp'] = response['request_timestamp']
+      })
     }
+
   }
 })
