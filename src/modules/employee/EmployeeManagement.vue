@@ -24,7 +24,7 @@ export default{
       },
       employee_id: {},
       first_name: {
-        name: 'Name'
+        input_name: 'Name'
       },
       position: {
         input_type: 'select',
