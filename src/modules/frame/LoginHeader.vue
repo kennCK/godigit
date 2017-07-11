@@ -73,11 +73,6 @@ export default {
 }
 </script>
 <style type="text/css">
-  html, body{
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
   .login-navbar{
     border-bottom:solid 1px #eee;
     height: 50px;
@@ -125,8 +120,10 @@ export default {
 
   */
   .custom-container{
-    height: 80vh;
+    min-height: 80vh;
     margin-top: 50px;
+    width: 100%;
+    float: left;
   }
   .header-title{
     height: 50px;

@@ -11,7 +11,7 @@ export default{
   {
     path: '/employee_management',
     name: 'employee',
-    component: resolve => require(['modules/test/EmployeeManagement.vue'], resolve),
+    component: resolve => require(['modules/employee/EmployeeManagement.vue'], resolve),
     meta: {
       tokenRequired: true
     }
@@ -38,6 +38,14 @@ export default{
     component: resolve => require(['modules/home/RecoverAccount.vue'], resolve),
     meta: {
       tokenRequired: false
+    }
+  },
+  {
+    path: '/my_profile',
+    name: 'myProfile',
+    component: resolve => require(['modules/portal/MyProfile.vue'], resolve),
+    meta: {
+      tokenRequired: true
     }
   }
   ]

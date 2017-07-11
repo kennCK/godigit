@@ -15,7 +15,7 @@ class CompanyController extends APIController
       "company_branches.address"   => "required", 
       "company_branches.contact_number" => "required",
       "company_branches.email"  => "unique:company_branches" ,
-      "company_branches.*company_id" => "required"
+      "company_branches.*.company_id" => "required"
     );
 
     $this->notRequired = array(

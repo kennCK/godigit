@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     register(){
-      this.APIRequest('company/create', this.inputs).then(response => {
+      this.APIFormRequest('company/create', this.form).then(response => {
         console.log(response.data)
       })
     },
