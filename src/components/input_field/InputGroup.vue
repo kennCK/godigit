@@ -14,6 +14,7 @@
           </input-group-recursive>
         </div>
         <div v-else v-bind:class="[input['input_type'] === 'hidden' ? 'hidden' : '', 'col-sm-' + input['col']]" >
+
           <input-cell
             :input_name="input['input_name']"
             :field_name="input['field_name']"
@@ -61,7 +62,8 @@
         inputList: {},
         valueFunctionList: {},
         valueChangedList: {},
-        inputInitialized: false
+        inputInitialized: false,
+        fieldNameList: {}
       }
     },
     props: {
@@ -85,19 +87,20 @@
         this.$emit('form_data_changed', fieldname, value)
       },
       valueChanged(e, customName){
-        let fieldName = typeof customName !== 'undefined' ? customName : $(e.target).attr('name')
-        if(typeof this.valueChangedList[fieldName] !== 'undefined'){
-          let newFormData = this.valueChangedList[fieldName](this.formData)
+        let dbName = typeof customName !== 'undefined' ? customName : $(e.target).attr('name')
+        if(typeof this.valueChangedList[dbName] !== 'undefined'){
+          let newFormData = this.valueChangedList[dbName](this.formData)
           for(let formKey in newFormData){
-            this.formDataChanged(formKey, newFormData[formKey])
+            this.formDataChanged(this.fieldNameList[formKey], newFormData[formKey])
           }
         }else{
-          this.formDataChanged(fieldName, $(e.target).val())
+
+          this.formDataChanged(this.fieldNameList[dbName], $(e.target).val())
         }
 
       },
       formDataChanged(fieldName, value){
-        this.$emit('form_data_changed', this.inputList[fieldName]['db_name'], this.dataFormat(fieldName, value))
+        this.$emit('form_data_changed', fieldName, this.dataFormat(fieldName, value))
       },
       initializeInput(){
         this.inputList = {}
@@ -138,6 +141,7 @@
           if(typeof this.inputList[key]['value_changed'] !== 'undefined'){
             this.valueChangedList[key] = this.inputList[key]
           }
+          Vue.set(this.fieldNameList, this.inputList[key]['db_name'], this.inputList[key]['field_name'])
         }
         this.inputInitialized = true
       },
