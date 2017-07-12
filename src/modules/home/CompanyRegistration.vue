@@ -1,12 +1,17 @@
 <template>
-    <div class="col-sm-4 offset-sm-4 custom-container">
+    <div class="col-lg-4 offset-lg-4 custom-container">
       <div class="header-title">
         <i class="fa fa-home" aria-hidden="true" v-on:click="redirect()"></i>
         <span>Company Registration</span>
       </div>
+      <span class="text-danger error-holder text-center" v-if="errorStatus !== ''">
+        <label>{{errorStatus}}</label>
+      </span>
+       <form ref="registration">
         <input-group
           :inputs="inputs" :form_status="'create'" :error_list="errorList"
         ></input-group>
+      </form>
         <button class="btn btn-primary pull-right" v-on:click="register()">Register</button>
     </div>
 </template>
@@ -63,13 +68,19 @@ export default {
           placeholder: 'Company Fax Number'
         }
       },
-      errorList: {}
+      errorList: {},
+      errorStatus: ''
     }
   },
   methods: {
     register(){
-      this.APIFormRequest('company/create', this.form).then(response => {
-        console.log(response.data)
+      this.APIFormRequest('company/create', this.$refs.registration, response => {
+        if(response.error.status === 100){
+          this.errorStatus = ('company_branches.email' in response.error.message && !('company_branches.name' in response.error.message)) ? 'Email Address already taken.' : 'Please fill up the required informations.'
+          console.log(response.error.message['company_branches.name'])
+        }else if(response.error.status !== 'undefined'){
+          this.redirect()
+        }
       })
     },
     redirect(){
@@ -78,4 +89,8 @@ export default {
   }
 }
 </script>
+<style>
+  .error-holder label{
+    padding: 5px 0 5px 0;
+  }
 </style>

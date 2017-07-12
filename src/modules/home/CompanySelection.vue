@@ -3,7 +3,7 @@
       <br>
       <br>
       <div class="row">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-lg-6 offset-lg-3">
           <h4></h4>
           <p><b>Hi {{user.username}}</b>!
 

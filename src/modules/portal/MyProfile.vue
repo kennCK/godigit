@@ -1,7 +1,7 @@
 <template>
   <div>
      <div class="personal-info profile-cover text-center">
-        <img src="../../assets/img/sample.jpg" height="150" width="150" class="profile-picture rounded-circle ">
+        <img src="../../assets/img/sample.jpg" height="150" width="150" class="profile-picture rounded-circle">
         <h4>{{userInfo[0].first_name + ' ' + userInfo[0].last_name}}</h4>
       </div>
       <div class="personal-info common">
@@ -11,28 +11,29 @@
             <i class="fa fa-pencil pull-right" aria-hidden="true"></i>
           </span>
         </span>
-        <span class="content" v-for="(item,index) in userInfoTitle">
-          <label class="title">{{item}}</label>
-          <label class="value">{{userInfoValue[index]}}</label>
+        <span class="content row" v-for="(item,index) in userInfoTitle">
+          <label class="title col-xs-6 col-sm-3">{{item}}</label>
+          <label class="value col-xs-6 col-sm-9">{{userInfoValue[index]}}</label>
         </span>
       </div>
       <div class="personal-info common">
         <span class="header">
           Work
         </span>
-        <span class="content">
-          <span v-for="item in userCompany">
-            <h6>{{item.company_branches.name}}</h6>
+        <span class="row company-info" v-for="item in userCompany">
+          <span class="col-sm-12 col-md-3 text-center">
+            <img src="../../assets/img/sample.jpg" height="80" width="80" class="company-logo rounded">
+          </span>
+          <span class="col-sm-12 col-md-9">
+            <span class="company-more-info">
+              <i class="fa fa-info-circle pull-right"></i>
+            </span>
+            <label>{{item.company_branches.name}}</label>
+            <p>Employee ID: {{item.employee_id}} <br />
+            Date Started: {{item.created_at}}</p>
           </span>
         </span>
-      </div>
-      <div class="personal-info common">
-        <span class="header">
-          Education
-        </span>
         <span class="content">
-          <span>
-          </span>
         </span>
       </div>
       <div class="personal-info common">
@@ -42,9 +43,9 @@
             <i class="fa fa-pencil pull-right" aria-hidden="true"></i>
           </span>
         </span>
-        <span class="content" v-for="(item,index) in accountInfoTitle">
-          <label class="title">{{item}}</label>
-          <label class="value">{{accountInfoValue[index]}}</label>
+        <span class="content row" v-for="(item,index) in accountInfoTitle">
+          <label class="title col-xs-6 col-sm-3">{{item}}</label>
+          <label class="value col-xs-6 col-sm-9">{{accountInfoValue[index]}}</label>
         </span>
       </div>
     </div>
@@ -148,7 +149,8 @@ export default{
   float: left;
   width: 100%;
 }
-.common .content{
+
+.common .content, .company-info{
   float: left;
   width: 90%;
   margin:0 5% 0 5%;
@@ -157,16 +159,22 @@ export default{
   border-bottom: solid 1px #ddd;
 }
 .content label{
-  padding: 15px 0 10px 5%;
+  padding: 15px 0 10px 0;
   vertical-align: middle;
   float: left;
 }
 .content .title{
-  width: 40%;
   color: #777;
 }
 .content .value{
-  width: 60%;
   font-weight: 400;
+}
+.company-more-info i{
+  font-size: 24px;
+  color: #006600;
+}
+.company-more-info i:hover{
+  cursor: pointer;
+  color: #009900;
 }
 </style>
