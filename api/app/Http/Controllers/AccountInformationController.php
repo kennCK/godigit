@@ -11,10 +11,6 @@ class AccountInformationController extends APIController
      function __construct(){  
         $this->model = new AccountInformation();
 
-        $this->validation = array(
-          'account_id'  => "unique:acount_informations"
-        );
-
         $this->foreignTable = array(
           'accounts'
         );

@@ -21,7 +21,13 @@ class CreateAccountInformationsTable extends Migration
             $table->string('first_name',100)->nullable();
             $table->string('middle_name',100)->nullable();
             $table->string('last_name',100)->nullable();
-            $table->string('contact_number',20)->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('sex',20)->nullable();
+            $table->string('marital_status', 20)->nullable();
+            $table->string('telephone_number',20)->nullable();
+            $table->string('cellular_number',20)->nullable();
+            $table->string('current_address')->nullable();
+            $table->string('home_address')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid container-login" v-if="!tokenData.verifyingToken && !tokenData.token">
+  <div class="container-fluid custom-container" v-if="!tokenData.verifyingToken && !tokenData.token">
     <div class="row">
       <div class="col-sm-12 col-md-8 hide-this">
         <div class="container-fluid banner">
@@ -130,13 +130,6 @@ body{
   font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight: 400;
 }
-.container-login{
-  min-height: 87.5vh;
-}
-.login-wrapper, .banner, .app-logo{
-  margin-top: 30px;
-}/*-- login-wrapper --*/
-
 .app-img{
   float: left;
   width: 30%;
