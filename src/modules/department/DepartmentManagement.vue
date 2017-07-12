@@ -18,6 +18,7 @@
     data(){
       let filterSetting = {
         parent_id: {
+          default_value: 2
         },
         name: {
         },
@@ -42,8 +43,12 @@
             inputs: {
               logo_file: {
                 label_colspan: 0,
-                input_type: 'single_image',
-                col: 12
+                input_type: 'single_image'
+              },
+              department_head: {
+                input_name: 'Department Head',
+                input_type: 'select2',
+                label_colspan: 12
               }
             }
           },
@@ -52,7 +57,7 @@
             col: 6,
             inputs: {
               company_branch_id: {
-                default_value: 1
+                default_value: 2
               },
               name: {
                 colspan: 6

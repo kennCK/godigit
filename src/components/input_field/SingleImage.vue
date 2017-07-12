@@ -38,7 +38,6 @@
       form_data_updated(value){
         let fileName = (this.db_name).replace('_file', '')
         if(this.form_data[fileName]){
-          console.log('Image: ' + this.form_data[this.db_name])
           this.imageSrc = CONFIG.IMAGE_URL + 'department_logo/' + this.form_data[fileName]
         }else{
           this.imageSrc = this.defaultImageSrc

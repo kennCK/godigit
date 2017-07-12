@@ -3,7 +3,7 @@
     <input v-if="inputType === 'hidden'" type="text"
     v-bind:name="dbName"
     v-on:change="valueChanged"
-    v-bind:value="value"
+    v-bind:value="form_data[db_name] ? form_data[db_name] : default_value"
     >
     <template v-else>
       <label v-if="labelColspan" class="col-form-label" v-bind:class="'col-sm-' + labelColspan">{{labelText}} :</label>
@@ -13,6 +13,7 @@
           :input_setting="input_setting"
           :db_name="dbName"
           :field_name="field_name"
+          :default_value="default_value"
           >
         </radio-button>
         <check-list
@@ -30,6 +31,7 @@
           :field_name="field_name"
           :form_data="form_data"
           :form_status="form_status"
+          :default_value="default_value"
           v-on:change="valueChanged"
 
           >
@@ -58,9 +60,21 @@
           :field_name="field_name"
           :form_data="form_data"
           :form_status="form_status"
+          :default_value="default_value"
           v-on:change="valueChanged"
           >
         </check-box>
+        <select2
+          v-else-if="inputType === 'select2'"
+          :input_setting="input_setting"
+          :db_name="dbName"
+          :field_name="field_name"
+          :form_data="form_data"
+          :form_status="form_status"
+          :default_value="default_value"
+          v-on:change="valueChanged"
+          >
+        </select2>
         <template v-else>
           <input
             v-if="form_status !== 'view'"
@@ -69,7 +83,7 @@
             v-bind:type="inputType"
             class="form-control"
             v-on:change="valueChanged"
-            v-bind:value="form_data[db_name]"
+            v-bind:value="form_data[db_name] ? form_data[db_name] : default_value"
             >
           <span v-else class="form-control">{{form_data[db_name]}}&nbsp;</span>
         </template>
@@ -87,6 +101,7 @@
       'check-box': require('./Checkbox.vue'),
       'check-list': require('./CheckList.vue'),
       'select-input': require('./Select.vue'),
+      'select2': require('./Select2.vue'),
       'textarea-input': require('./Textarea.vue'),
       'single-image': require('./SingleImage.vue')
     },
