@@ -28,7 +28,7 @@
             <span class="company-more-info">
               <i class="fa fa-info-circle pull-right"></i>
             </span>
-            <label>{{item.company_branches.name}}</label>
+            <label>{{item.company_branch.name}}</label>
             <p>Employee ID: {{item.employee_id}} <br />
             Date Started: {{item.created_at}}</p>
           </span>
@@ -86,7 +86,7 @@ export default{
           'clause': '='
         }],
         'with_foreign_table': [
-          'accounts'
+          'account'
         ]
       }
       this.APIRequest('account_information/retrieve', parameter).then(response => {
@@ -103,7 +103,7 @@ export default{
           'clause': '='
         }],
         'with_foreign_table': [
-          'company_branches'
+          'company_branch'
         ]
       }
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
@@ -116,7 +116,7 @@ export default{
       let name = data[0].first_name + ' ' + data[0].middle_name + ' ' + data[0].last_name
       this.userInfoValue.push(name, data[0].birth_date, data[0].sex, data[0].marital_status, data[0].telephone_number, data[0].cellular_number, data[0].current_address, data[0].home_address)
       this.accountInfoTitle.push('Username', 'Email Address', 'Date Started')
-      this.accountInfoValue.push(data[0].accounts.username, data[0].accounts.email, data[0].created_at)
+      this.accountInfoValue.push(data[0].account.username, data[0].account.email, data[0].created_at)
     }
   }
 }

@@ -99,13 +99,13 @@ export default {
           'clause': '='
         }],
         'with_foreign_table': [
-          'company_branches'
+          'company_branch'
         ]
       }
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
         let route = (response.data.length > 1) ? 'company_selection' : '/'
         if(response.data.length === 1){
-          AUTH.setCompany(response.data[0].company_branches.company_id, response.data[0].company_branch_id)
+          AUTH.setCompany(response.data[0].company_branch.company_id, response.data[0].company_branch_id)
         }
         ROUTER.push(route)
       })
