@@ -21,14 +21,13 @@
         },
         status: {
         },
-        slot: {
+        slots: {
         }
       }
       let columnSetting = {
         title: {},
-        position_status: {},
         description: {},
-        slot: {}
+        slots: {}
       }
       let tableSetting = {
         filterSetting: filterSetting,
@@ -37,9 +36,8 @@
       let formSetting = {
         inputs: {
           title: {},
-          position_status: {},
           description: {},
-          slot: {}
+          slots: {}
         }
       }
       return {
