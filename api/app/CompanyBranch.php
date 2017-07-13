@@ -13,12 +13,12 @@ class CompanyBranch extends APIModel
     return $this->belongsTo('App\Company', 'id');
   } 
 
-  public function company_branch_employees(){
+  public function company_branch_employee(){
     return $this->hasMany('App\CompanyBranchEmployee');
   }
 
   public function positions(){
-    return $this->hasMany('App\Positions');
+    return $this->hasMany('App\Position');
   }
 
   public function schedules(){

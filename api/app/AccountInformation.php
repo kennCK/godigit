@@ -7,18 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AccountInformation extends APIModel
 {
-
-  protected $fillable = ['account_type_id'];
-  protected $table = "account_informations";  
   public function  account_type(){
     return $this->belongsTo('App\AccountType','id');
   }
 
-  public function accounts(){
-    return $this->belongsTo('App\Account', 'id');
+  public function account(){
+    return $this->belongsTo('App\Account','id');
   }
 
-  public function company_branch_employees(){
+  public function company_branch_employee(){
     return $this->hasMany('App\CompanyBranchEmployee');
   }
 }

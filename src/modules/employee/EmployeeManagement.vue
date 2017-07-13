@@ -55,9 +55,12 @@ export default{
     let tableSetting = {
       filterSetting: filterSetting,
       columnSetting: columnSetting,
-      retrieveParameter: [
-        'positions'
-      ]
+      retrieveParameter: {
+        with_foreign_table: [
+          'account_information',
+          'company_branch'
+        ]
+      }
     }
     let formSetting = {
       inputs: {

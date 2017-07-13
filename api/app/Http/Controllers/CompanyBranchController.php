@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\CompanyBranch;
 use Illuminate\Http\Request;
-use DB;
 
 class CompanyBranchController extends APIController
 {
