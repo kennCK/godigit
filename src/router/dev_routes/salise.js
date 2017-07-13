@@ -15,6 +15,13 @@ export default{
     meta: {
       tokenRequired: false
     }
-  }
-  ]
+  },
+  {
+    path: '/latest_data',
+    name: 'latestData',
+    component: resolve => require(['modules/test/LatestData.vue'], resolve),
+    meta: {
+      tokenRequired: false
+    }
+  }]
 }
