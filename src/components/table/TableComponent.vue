@@ -163,7 +163,17 @@
         typeof column['type'] === 'undefined' ? Vue.set(column, 'type', 'text') : null
         typeof column['sort'] === 'undefined' ? Vue.set(column, 'sort', 0) : null
         typeof column['value_function'] === 'undefined' ? Vue.set(column, 'value_function', (row, dbName) => {
-          return row[dbName]
+          let dbNameSegment = dbName.split('.')
+          let value
+          if(dbNameSegment.length > 1){
+            value = row
+            for(let x = 0; x < dbNameSegment.length; x++){
+              value = value[dbNameSegment[x]]
+            }
+          }else{
+            value = row[dbName]
+          }
+          return value
         }) : null
         typeof column['sub_columns'] === 'undefined' ? Vue.set(column, 'sub_columns', null) : null
       }
