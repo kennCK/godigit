@@ -11,7 +11,7 @@ class AccountInformationController extends APIController
         $this->model = new AccountInformation();
 
         $this->foreignTable = array(
-          'accounts'
+          'account'
         );
     }
 }

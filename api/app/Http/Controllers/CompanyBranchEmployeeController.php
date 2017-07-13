@@ -11,7 +11,8 @@ class CompanyBranchEmployeeController extends APIController
         $this->model = new CompanyBranchEmployee();
         $this->foreignTable = array(
           'account_information',
-          'company_branch' 
+          'company_branch',
+          'company_branches' 
         );
     }
 }
