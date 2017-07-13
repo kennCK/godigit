@@ -11,17 +11,16 @@ class AccountController extends APIController
      function __construct(){  
         $this->model = new Account();
         $this->validation = array(  
-          "email" => "unique:accounts",
-          "username"  => "unique:accounts",
-          "account_informations.*account_id" => "unique:account_informations",
-          "account_informations.first_name" => "required",
-          "account_informations.last_name" => "required" 
+          "email" => "unique:account",
+          "username"  => "unique:account",
+          "account_information.first_name" => "required",
+          "account_information.last_name" => "required" 
         );
         $this->editableForeignTable = array(
-          'account_informations'
+          'account_information'
         );
         $this->foreignTable = array(
-          'account_informations'
+          'account_information'
         );
     } 
 

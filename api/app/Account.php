@@ -9,7 +9,7 @@ class Account extends APIModel
 {
     protected $hidden = array('password');
 
-    public function account_informations(){
+    public function account_information(){
       return $this->hasOne('App\AccountInformation');
     }
 

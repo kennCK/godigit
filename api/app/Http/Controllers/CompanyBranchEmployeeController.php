@@ -10,7 +10,8 @@ class CompanyBranchEmployeeController extends APIController
     function __construct(){
         $this->model = new CompanyBranchEmployee();
         $this->foreignTable = array(
-          'account_informations',
+          'account_information',
+          'company_branch',
           'company_branches' 
         );
     }

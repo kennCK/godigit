@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\AccountInformation;
 use Illuminate\Http\Request;
-use DB;
 
 class AccountInformationController extends APIController
 {
@@ -12,7 +11,7 @@ class AccountInformationController extends APIController
         $this->model = new AccountInformation();
 
         $this->foreignTable = array(
-          'accounts'
+          'account'
         );
     }
 }

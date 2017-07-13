@@ -3,7 +3,7 @@
       <br>
       <br>
       <div class="row">
-        <div class="col-sm-6 offset-sm-3">
+        <div class="col-lg-6 offset-lg-3">
           <h4></h4>
           <p><b>Hi {{user.username}}</b>!
 
@@ -22,7 +22,7 @@
               <div class="input-group">
                 <select class="form-control" v-model="selectedBranch">
                   <option value='' selected hidden>Select a Company or Branches</option>
-                  <option v-for="(item, index) in branches" v-bind:value="item.company_branch_id">{{item.company_branches.name}}</option>
+                  <option v-for="(item, index) in branches" v-bind:value="item.company_branch_id">{{item.company_branch.name}}</option>
                 </select>
               </div>
               <br>
@@ -59,7 +59,7 @@ export default {
           'clause': '='
         }],
         'with_foreign_table': [
-          'company_branches'
+          'company_branch'
         ]
       }
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {

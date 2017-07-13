@@ -19,31 +19,30 @@ export default{
   data(){
     let filterSetting = {
       company_branch_id: {
-        input_type: 'hidden',
         default_value: AUTH.user.company_branch_id
       },
       employee_id: {},
       first_name: {
         input_name: 'Name'
-      },
-      position: {
-        input_type: 'select',
-        input_setting: {
-          options: [{
-            value: '1',
-            label: 'General Manager'
-          }]
-        }
-      },
-      department: {
-        input_type: 'select',
-        input_setting: {
-          options: [{
-            value: '1',
-            label: 'Software Development'
-          }]
-        }
       }
+      // position: {
+      //   input_type: 'select',
+      //   input_setting: {
+      //     options: [{
+      //       value: '1',
+      //       label: 'General Manager'
+      //     }]
+      //   }
+      // },
+      // department: {
+      //   input_type: 'select',
+      //   input_setting: {
+      //     options: [{
+      //       value: '1',
+      //       label: 'Software Development'
+      //     }]
+      //   }
+      // }
     }
     let columnSetting = {
       employee_id: {},
@@ -55,7 +54,13 @@ export default{
     }
     let tableSetting = {
       filterSetting: filterSetting,
-      columnSetting: columnSetting
+      columnSetting: columnSetting,
+      retrieveParameter: {
+        with_foreign_table: [
+          'account_information',
+          'company_branch'
+        ]
+      }
     }
     let formSetting = {
       inputs: {
