@@ -26,7 +26,7 @@
         <span></span>
         <span v-for="item in branches" v-on:click="loadBranch()">
           <img src="../../assets/img/godigit.png" height="40" width="40">
-          {{item.company_branches.code}}
+          {{item.company_branch.code}}
         </span>
       </div>
 
@@ -37,7 +37,7 @@
       <div id="myMessages" class="popover-menu collapse">
         <span v-for="item in branches" v-on:click="loadBranch()">
           <img src="../../assets/img/godigit.png" height="40" width="40">
-          {{item.company_branches.code}}
+          {{item.company_branch.code}}
         </span>
       </div>
 
@@ -48,7 +48,7 @@
       <div id="myNotifications" class="popover-menu collapse">
         <span v-for="item in branches" v-on:click="loadBranch()">
           <img src="../../assets/img/godigit.png" height="40" width="40">
-          {{item.company_branches.code}}
+          {{item.company_branch.code}}
         </span>
       </div>
       <!--- 
@@ -146,7 +146,7 @@ export default {
           'clause': '='
         }],
         'with_foreign_table': [
-          'company_branches'
+          'company_branch'
         ]
       }
       this.APIRequest('company_branch_employee/retrieve', parameter).then(response => {
