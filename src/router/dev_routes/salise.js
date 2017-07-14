@@ -11,7 +11,7 @@ export default{
   {
     path: '/position_management',
     name: 'positionManagement',
-    component: resolve => require(['modules/test/PositionManagement.vue'], resolve),
+    component: resolve => require(['modules/position/PositionManagement.vue'], resolve),
     meta: {
       tokenRequired: false
     }
