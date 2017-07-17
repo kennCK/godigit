@@ -15,7 +15,4 @@ class Position extends APIModel
     return $this->hasMany('App\AccountPosition');
   }
 
-  public function schedule(){
-    return $this->hasOne('App\Schedule');
-  }
 }

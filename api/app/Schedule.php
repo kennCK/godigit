@@ -11,10 +11,6 @@ class Schedule extends APIModel
       return $this->belongsTo('App\CompanyBranch', 'id');
     }
 
-    public function position(){
-      return $this->belongsTo('App\Position', 'id');
-    }
-
     public function account_schedules(){
       return $this->hasMany('App\AccountSchedule');
     }
