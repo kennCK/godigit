@@ -47,6 +47,30 @@ export default{
     meta: {
       tokenRequired: true
     }
+  },
+  {
+    path: '/schedule_management',
+    name: 'scheduleManagement',
+    component: resolve => require(['modules/schedule/ScheduleManagement.vue'], resolve),
+    meta: {
+      tokenRequired: true
+    }
+  },
+  {
+    path: '/company_schedule',
+    name: 'companySchedule',
+    component: resolve => require(['modules/schedule/CompanySchedule.vue'], resolve),
+    meta: {
+      tokenRequired: true
+    }
+  },
+  {
+    path: '/employee_schedule',
+    name: 'employeeSchedule',
+    component: resolve => require(['modules/schedule/EmployeeSchedule.vue'], resolve),
+    meta: {
+      tokenRequired: true
+    }
   }
   ]
 }

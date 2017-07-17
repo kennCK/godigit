@@ -19,6 +19,7 @@ export default{
   data(){
     let filterSetting = {
       company_branch_id: {
+        input_type: 'hidden',
         default_value: AUTH.user.company_branch_id
       },
       employee_id: {},
@@ -50,6 +51,7 @@ export default{
       last_name: {},
       middle_name: {},
       contact_number: {},
+      position: {},
       department: {}
     }
     let tableSetting = {

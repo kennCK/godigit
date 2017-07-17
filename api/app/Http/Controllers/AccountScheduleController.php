@@ -9,5 +9,8 @@ class AccountScheduleController extends APIController
 {
     function __construct(){
         $this->model = new AccountSchedule();
+        $this->foreignTable = array(
+          'schedule'
+        );
     }
 }

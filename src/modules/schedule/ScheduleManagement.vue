@@ -1,91 +1,59 @@
 <template>
-  <div>
-    <module :api="api" :table_setting="table_setting" :form_setting="form_setting"></module>
-  </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="menu-holder col-sm-12 col-md-4 col-lg-3" v-on:click="push('company_schedule')">
+          <div class="header text-center">
+           Company Schedule
+          </div>
+          <div class="content">
+          </div>
+        </div>
+        <div class="menu-holder col-sm-12 col-md-4 col-lg-3 offset-1" v-on:click="push('employee_schedule')">
+          <div class="header text-center">
+           Employee Schedule
+          </div>
+          <div class="content">
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 <script>
-import AUTH from '../../services/auth'
-export default{
-  name: '',
-  components: {
-    'module': require('components/common_module/CommonModule.vue')
-  },
-  create(){
-
-  },
+import ROUTER from '../../router'
+export default {
   mounted(){
-
   },
   data(){
-    let filterSetting = {
-      company_branch_id: {
-        default_value: AUTH.user.company_branch_id
-      },
-      employee_id: {},
-      first_name: {
-        input_name: 'Name'
-      }
-      // position: {
-      //   input_type: 'select',
-      //   input_setting: {
-      //     options: [{
-      //       value: '1',
-      //       label: 'General Manager'
-      //     }]
-      //   }
-      // },
-      // department: {
-      //   input_type: 'select',
-      //   input_setting: {
-      //     options: [{
-      //       value: '1',
-      //       label: 'Software Development'
-      //     }]
-      //   }
-      // }
+    return{
     }
-    let columnSetting = {
-      employee_id: {},
-      first_name: {},
-      last_name: {},
-      middle_name: {},
-      contact_number: {},
-      department: {}
-    }
-    let tableSetting = {
-      filterSetting: filterSetting,
-      columnSetting: columnSetting,
-      retrieveParameter: {
-        with_foreign_table: [
-          'account_information',
-          'company_branch'
-        ]
-      }
-    }
-    let formSetting = {
-      inputs: {
-        account: {
-          name: 'Have an Account already?',
-          input_type: 'checkbox'
-        },
-        username: {},
-        email: {},
-        first_name: {},
-        last_name: {}
-      }
-    }
-    return {
-      api: 'company_branch_employee',
-      table_setting: tableSetting,
-      form_setting: formSetting
-    }
-  },
-  props: {
   },
   methods: {
+    push(url){
+      ROUTER.push(url)
+    }
   }
 }
 </script>
 <style scoped>
-
+  .menu-holder{
+    height: 350px;
+    background: #006600;
+    color: #fff;
+    float: left;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .menu-holder:hover{
+    cursor: pointer;
+    background: #009900;
+  }
+  .menu-holder .header{
+    height: 50px;
+    font-weight: 400px;
+    padding: 15px 0 15px 0;
+  }
+  .menu-holder .content{
+    height: 300px;
+    border-top: solid 1px #fff;
+  }
 </style>
