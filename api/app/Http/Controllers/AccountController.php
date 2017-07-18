@@ -11,8 +11,8 @@ class AccountController extends APIController
      function __construct(){  
         $this->model = new Account();
         $this->validation = array(  
-          "email" => "unique:account",
-          "username"  => "unique:account",
+          "email" => "unique:accounts",
+          "username"  => "unique:accounts",
           "account_information.first_name" => "required",
           "account_information.last_name" => "required" 
         );
@@ -20,12 +20,16 @@ class AccountController extends APIController
           'account_information'
         );
         $this->foreignTable = array(
-          'account_information'
+          'account_information',
+          'company_branch_employees'
         );
     } 
 
     public function create(Request $request){
-     $this->createEntry($this->hashPassword($request));
+     $request = $request->all();
+     $request['username'] = $request['email'];
+     $request['password'] = Hash::make($request['email']);
+     $this->createEntry($request);
      return $this->output();
     }
 

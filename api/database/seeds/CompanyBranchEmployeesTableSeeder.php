@@ -15,19 +15,19 @@ class CompanyBranchEmployeesTableSeeder extends Seeder
           array(
             "id"    => "1",
             "company_branch_id" => "1",
-            "account_information_id" => '1',
+            "account_id" => '1',
             'employee_id' => '0000-0001'
           ),
           array(
             "id"    => "2",
             "company_branch_id" => "2",
-            "account_information_id" => '1',
+            "account_id" => '1',
             'employee_id' => '0000-0001'
           ),
           array(
             "id"    => "3",
             "company_branch_id" => "3",
-            "account_information_id" => '1',
+            "account_id" => '1',
             'employee_id' => '0000-0001'
           ),
         ));

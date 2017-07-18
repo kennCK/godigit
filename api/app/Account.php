@@ -28,4 +28,8 @@ class Account extends APIModel
     public function account_schedules(){
         return $this->hasOne('App\AccountSchedule');
     }
+    
+    public function company_branch_employees(){
+      return $this->hasMany('App\CompanyBranchEmployee');
+    }
 }

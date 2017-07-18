@@ -94,7 +94,7 @@ export default {
     checkBranch(){
       let parameter = {
         'condition': [{
-          'column': 'account_information_id',
+          'column': 'account_id',
           'value': this.user.userID,
           'clause': '='
         }],
