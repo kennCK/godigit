@@ -7,22 +7,22 @@
      <div class="main-sidebar navbar-collapse sidebar-collapse" v-bind:class="hide + ' ' + toggleOnClick" id="godigitSidebar" >
       <div class="sidebar">
         <ul class="sidebar-menu">
-            <li class="header"><label v-bind:class="hide">MAIN TASKS</label>
+            <li class="header"><label v-bind:class="hide"><input type="text" class="form-control" placeholder="Search Module" v-model="search"></label>
                 <span class="pull-right">
                   <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
                 </span>
             </li>
-            <li v-for="(item,index) in menu" v-if="item.parent_id === 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
-                <a v-on:click="navigateTo(item.path, (item.id === menu[index+1].parent_id) ? false : true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
-                  <i class="fa fa-chevron-down" v-if="item.id === menu[index+1].parent_id"></i>
+            <li v-for="(item,index) in filteredModules" v-if="item.parent_id === 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
+                <a v-on:click="navigateTo(item.path, (item.id === filteredModules[index+1].parent_id) ? false : true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
+                  <i class="fa fa-chevron-down" v-if="item.id === filteredModules[index+1].parent_id"></i>
                   <span v-bind:class="'sm-title'" >{{item.description}}
                   </span>
                   <span v-bind:class="'pull-right-container'">  
                     <i v-bind:class="item.icon + ' pull-right'"></i>
                   </span>
                 </a>
-                <ul class="collapse" v-if="item.id === menu[index+1].parent_id" :id="item.id">
-                  <li v-for="subItem in menu" v-if="subItem.parent_id !== 0 && item.id === subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
+                <ul class="collapse" v-if="item.id === filteredModules[index+1].parent_id" :id="item.id">
+                  <li v-for="subItem in filteredModules" v-if="subItem.parent_id !== 0 && item.id === subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
                     <a v-on:click="navigateTo(subItem.path, true)" v-bind:class="hide">
                       <span v-bind:class="'pull-right-container'">
                         <i v-bind:class="subItem.icon  + ' pull-right'"></i>
@@ -57,17 +57,18 @@ export default {
       toggleSidebarFlag: true,
       hide: '',
       toggleOnClick: '',
-      alignAtHide: 'pull-right'
+      alignAtHide: 'pull-right',
+      search: ''
     }
   },
   methods: {
     getMenu (){
-      var conditionEntry = {
+      var parameter = {
         'sort': {
           'id': 'asc'
         }
       }
-      this.APIRequest('modules/retrieve', conditionEntry).then(response => {
+      this.APIRequest('modules/retrieve', parameter).then(response => {
         this.menu = response.data
       })
     },
@@ -97,6 +98,13 @@ export default {
       this.alignAtHide = (this.toggleSidebarFlag === false) ? 'text-center' : 'pull-right'
       var icon = (this.toggleSidebarFlag === true) ? 'on' : 'off'
       this.toggleSidebar = 'fa fa-toggle-' + icon
+    }
+  },
+  computed: {
+    filteredModules: function(){
+      return this.menu.filter((menu) => {
+        return menu.description.match(this.search)
+      })
     }
   }
 }
