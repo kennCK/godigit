@@ -10,7 +10,7 @@ class CompanyBranchEmployee extends APIModel
   public function company_branch(){
     return $this->belongsTo('App\CompanyBranch', 'id');
   }
-  public function account_information(){
-    return $this->belongsTo('App\AccountInformation', 'id');
+  public function account(){
+    return $this->belongsTo('App\account', 'id');
   }
 }

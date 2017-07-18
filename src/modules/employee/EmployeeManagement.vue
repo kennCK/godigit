@@ -14,7 +14,6 @@ export default{
 
   },
   mounted(){
-    console.log(AUTH.user.company_branch_id)
   },
   data(){
     let filterSetting = {
@@ -35,19 +34,14 @@ export default{
       }
     }
     let columnSetting = {
-      employee_id: {},
-      'company_branch.name': {
+      username: {},
+      email: {},
+      'account_information.first_name': {
         name: 'First Name'
       },
-      'company_branch.code': {
+      'account_information.last_name': {
         name: 'Last Name'
-      },
-      'account_information.middle_name': {
-        name: 'Middle Name'
-      },
-      contact_number: {},
-      position: {},
-      department: {}
+      }
     }
     let tableSetting = {
       filterSetting: filterSetting,
@@ -55,24 +49,30 @@ export default{
       retrieveParameter: {
         'with_foreign_table': [
           'account_information',
-          'company_branch'
-        ]
+          'company_branch_employees'
+        ],
+        'condition': [{
+          'column': 'company_branch_employees.company_branch_id',
+          'value': AUTH.user.company_branch_id,
+          'clause': '='
+        }]
       }
     }
     let formSetting = {
       inputs: {
-        account: {
-          name: 'Have an Account already?',
-          input_type: 'checkbox'
-        },
-        username: {},
         email: {},
-        first_name: {},
-        last_name: {}
+        first_name: {
+          input_name: 'First Name',
+          db_name: 'account_information[first_name]'
+        },
+        last_name: {
+          input_name: 'Last Name',
+          db_name: 'account_information[last_name]'
+        }
       }
     }
     return {
-      api: 'company_branch_employee',
+      api: 'account',
       table_setting: tableSetting,
       form_setting: formSetting
     }

@@ -17,7 +17,7 @@ class CreateCompanyBranchEmployeesTable extends Migration
         Schema::create('company_branch_employees', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('company_branch_id');
-            $table->unsignedInteger('account_information_id');
+            $table->unsignedInteger('account_id');
             $table->string('employee_id');
             $table->timestamps();
             $table->softDeletes();

@@ -141,7 +141,7 @@ export default {
     getBranches(){
       let parameter = {
         'condition': [{
-          'column': 'account_information_id',
+          'column': 'account_id',
           'value': this.user.userID,
           'clause': '='
         }],
