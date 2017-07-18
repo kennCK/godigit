@@ -14,7 +14,7 @@ export default{
 
   },
   mounted(){
-    console.log(AUTH.user.company_branch_id)
+
   },
   data(){
     let filterSetting = {
@@ -23,56 +23,42 @@ export default{
         default_value: AUTH.user.company_branch_id
       },
       employee_id: {},
-      first_name: {
+      employee: {
         input_name: 'Name',
-        input_type: 'select2'
-      },
-      position: {
-        input_type: 'select2'
-      },
-      department: {
         input_type: 'select2'
       }
     }
     let columnSetting = {
       employee_id: {},
-      'company_branch.name': {
-        name: 'First Name'
-      },
-      'company_branch.code': {
-        name: 'Last Name'
-      },
-      'account_information.middle_name': {
-        name: 'Middle Name'
-      },
-      contact_number: {},
-      position: {},
-      department: {}
+      first_name: {},
+      last_name: {},
+      days: {},
+      time_start: {},
+      time_end: {}
     }
     let tableSetting = {
       filterSetting: filterSetting,
       columnSetting: columnSetting,
       retrieveParameter: {
-        'with_foreign_table': [
-          'account_information',
-          'company_branch'
+        with_foreign_table: [
+          'schedule'
         ]
       }
     }
     let formSetting = {
       inputs: {
-        account: {
-          name: 'Have an Account already?',
-          input_type: 'checkbox'
+        name: {
+          input_name: 'Employee Name',
+          input_type: 'select2'
         },
-        username: {},
-        email: {},
-        first_name: {},
-        last_name: {}
+        description: {
+          input_name: 'Schedule Description',
+          input_type: 'select2'
+        }
       }
     }
     return {
-      api: 'company_branch_employee',
+      api: 'account_schedule',
       table_setting: tableSetting,
       form_setting: formSetting
     }
