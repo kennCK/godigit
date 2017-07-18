@@ -96,7 +96,7 @@
           requestOption['sort'][this.currentSort['db_name']] = orderLookUp[this.currentSort['sort']]
         }
         if(retrieveType === 'filter'){
-          requestOption.condition = []
+          typeof requestOption.condition === 'undefined' ? requestOption.condition = [] : null
           let formInputs = $(this.$refs.tableFilter.$refs.form).serializeArray()
           for(let x in formInputs){
             if(formInputs[x]['value'] !== ''){
