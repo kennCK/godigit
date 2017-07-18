@@ -24,30 +24,21 @@ export default{
       },
       employee_id: {},
       first_name: {
-        input_name: 'Name'
+        input_name: 'Name',
+        input_type: 'select2'
+      },
+      position: {
+        input_type: 'select2'
+      },
+      department: {
+        input_type: 'select2'
       }
-      // position: {
-      //   input_type: 'select',
-      //   input_setting: {
-      //     options: [{
-      //       value: '1',
-      //       label: 'General Manager'
-      //     }]
-      //   }
-      // },
-      // department: {
-      //   input_type: 'select',
-      //   input_setting: {
-      //     options: [{
-      //       value: '1',
-      //       label: 'Software Development'
-      //     }]
-      //   }
-      // }
     }
     let columnSetting = {
       employee_id: {},
-      first_name: {},
+      'account_information[first_name]  ': {
+        name: 'First Name'
+      },
       last_name: {},
       middle_name: {},
       contact_number: {},
