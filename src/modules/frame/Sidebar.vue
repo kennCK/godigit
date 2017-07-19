@@ -34,6 +34,7 @@
               </li>
               <li v-for="(item,index) in filteredModules" v-if="search !== ''" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
                 <a v-on:click="navigateTo(item.path, true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
+                  <i></i>
                   <span v-bind:class="'sm-title'" >{{item.description}}
                   </span>
                   <span v-bind:class="'pull-right-container'">  
