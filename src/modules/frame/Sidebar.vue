@@ -21,7 +21,7 @@
                     <i v-bind:class="item.icon + ' pull-right'"></i>
                   </span>
                 </a>
-                <ul v-bind:class="collapse" v-if="item.id === filteredModules[index+1].parent_id" :id="item.id">
+                <ul class="collapse" v-if="item.id === filteredModules[index+1].parent_id" :id="item.id">
                   <li v-for="subItem in filteredModules" v-if="subItem.parent_id !== 0 && item.id === subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
                     <a v-on:click="navigateTo(subItem.path, true)" v-bind:class="hide">
                       <span v-bind:class="'pull-right-container'">
@@ -72,8 +72,7 @@ export default {
       hide: '',
       toggleOnClick: '',
       alignAtHide: 'pull-right',
-      search: '',
-      collapse: 'collapse'
+      search: ''
     }
   },
   methods: {
@@ -117,13 +116,10 @@ export default {
   },
   computed: {
     filteredModules: function(){
-      let regex = new RegExp(this.search)
+      let regex = new RegExp(this.search.toLowerCase())
       return this.menu.filter((menu) => {
-        return menu.description.match(regex)
+        return menu.description.toLowerCase().match(regex)
       })
-    },
-    collapse: function(){
-      return (this.search !== '') ? 'collapse show' : 'collapse'
     }
   }
 }
