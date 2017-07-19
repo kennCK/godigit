@@ -12,7 +12,7 @@
                   <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
                 </span>
             </li>
-            <li v-for="(item,index) in filteredModules" v-if="item.parent_id === 0" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
+            <li v-for="(item,index) in filteredModules" v-if="item.parent_id === 0 && search === ''" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
                 <a v-on:click="navigateTo(item.path, (item.id === filteredModules[index+1].parent_id) ? false : true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
                   <i class="fa fa-chevron-down" v-if="item.id === filteredModules[index+1].parent_id"></i>
                   <span v-bind:class="'sm-title'" >{{item.description}}
@@ -21,7 +21,7 @@
                     <i v-bind:class="item.icon + ' pull-right'"></i>
                   </span>
                 </a>
-                <ul class="collapse" v-if="item.id === filteredModules[index+1].parent_id" :id="item.id">
+                <ul v-bind:class="collapse" v-if="item.id === filteredModules[index+1].parent_id" :id="item.id">
                   <li v-for="subItem in filteredModules" v-if="subItem.parent_id !== 0 && item.id === subItem.parent_id"  v-bind:class="{ appSubActive: isSubActive(subItem.id) }" v-on:click="setSubActive(subItem.id)">
                     <a v-on:click="navigateTo(subItem.path, true)" v-bind:class="hide">
                       <span v-bind:class="'pull-right-container'">
@@ -31,6 +31,20 @@
                     </a>
                   </li>
                 </ul>
+              </li>
+              <li v-for="(item,index) in filteredModules" v-if="search !== ''" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
+                <a v-on:click="navigateTo(item.path, true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
+                  <span v-bind:class="'sm-title'" >{{item.description}}
+                  </span>
+                  <span v-bind:class="'pull-right-container'">  
+                    <i v-bind:class="item.icon + ' pull-right'"></i>
+                  </span>
+                </a>
+              </li>
+              <li v-if="filteredModules.length === 0" class="text-center">
+                <a>
+                  <span class="text-danger">Opps! Module <b>{{search}}</b> was not found. :'( </span>
+                </a>
               </li>
           </ul>
         </div>
@@ -58,7 +72,8 @@ export default {
       hide: '',
       toggleOnClick: '',
       alignAtHide: 'pull-right',
-      search: ''
+      search: '',
+      collapse: 'collapse'
     }
   },
   methods: {
@@ -102,9 +117,13 @@ export default {
   },
   computed: {
     filteredModules: function(){
+      let regex = new RegExp(this.search)
       return this.menu.filter((menu) => {
-        return menu.description.match(this.search)
+        return menu.description.match(regex)
       })
+    },
+    collapse: function(){
+      return (this.search !== '') ? 'collapse show' : 'collapse'
     }
   }
 }
@@ -282,6 +301,7 @@ export default {
   }
 }
 @media (max-width: 239px){
+
   .main-sidebar{
     width: 100%;
   }
