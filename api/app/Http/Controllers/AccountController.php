@@ -14,10 +14,13 @@ class AccountController extends APIController
           "email" => "unique:accounts",
           "username"  => "unique:accounts",
           "account_information.first_name" => "required",
-          "account_information.last_name" => "required" 
+          "account_information.last_name" => "required" ,
+          "company_branch_employees.identification_number" => "required",
+          "company_branch_employees.company_branch_id" => "required"
         );
         $this->editableForeignTable = array(
-          'account_information'
+          'account_information',
+          'company_branch_employees',
         );
         $this->foreignTable = array(
           'account_information',

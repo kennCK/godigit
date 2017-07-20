@@ -34,7 +34,7 @@
               </li>
               <li v-for="(item,index) in filteredModules" v-if="search !== ''" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
                 <a v-on:click="navigateTo(item.path, true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
-                  <i></i>
+                  <i></i> 
                   <span v-bind:class="'sm-title'" >{{item.description}}
                   </span>
                   <span v-bind:class="'pull-right-container'">  
@@ -257,6 +257,10 @@ export default {
   .main-sidebar{
     width: 100%;
   }
+  .content-holder{
+    width: 96%;
+    margin: 20px 2% 0 2%;
+  }
   .sm-title{
     text-align: center;
   }
@@ -266,10 +270,7 @@ export default {
   .sidebar-menu .header span{
     display: none;
   }
-  .content-holder{
-    width: 96%;
-    margin: 20px 2% 0 2%;
-  }
+  
   .main-sidebar.hidden{
     margin-left: 0%;
   }
@@ -278,7 +279,13 @@ export default {
 /*-------------- Extra Small Screen for Mobile Phones --------------*/
 @media (max-width: 767px){
   .main-sidebar{
-    width: 100%;
+    width: 70%;
+  }
+  .content-holder{
+    width: 10px;
+    min-width: 26%;
+    overflow-y: hidden;
+    margin: 20px 2% 0 2%;
   }
    .sm-title{
     text-align: center;
@@ -289,10 +296,6 @@ export default {
   .sidebar-menu .header span{
     display: none;
   }
-  .content-holder{
-    width: 96%;
-    margin: 20px 2% 0 2%;
-  }
   .main-sidebar.hidden{
     margin-left: 0%;
   }
@@ -300,7 +303,7 @@ export default {
 @media (max-width: 239px){
 
   .main-sidebar{
-    width: 100%;
+    width: 70%;
   }
   .sm-title,.header{
     display: none;
@@ -317,7 +320,8 @@ export default {
     display: none;
   }
   .content-holder{
-    width: 96%;
+    width: 26%;
+    overflow: hidden;
     margin: 20px 2% 0 2%;
   }
   .main-sidebar.hidden{

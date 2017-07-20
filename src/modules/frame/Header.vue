@@ -1,56 +1,57 @@
  <template>
   <div>
-    <nav class="header-navbar">
       <!--- 
 
               Header Brand 
 
       -->
-      <div class="header-navbar-brand">
-        <a class="navbar-brand" href="#">
-          <img src="../../assets/img/godigit-white.png" height="40" width="40">
-          <label class="navbar-brand">Go<b>Digit</b></label>
-        </a>
-      </div>
+    <div class="system-header">
+      <a class="navbar-brand" href="#">
+        <img src="../../assets/img/godigit-white.png" height="40" width="40">
+        <label class="navbar-brand">Go<b>Digit</b></label>
+      </a>
+    </div>
+    <nav class="header-navbar">
+      <span class="navbar-menu-toggler-md" data-toggle="collapse" data-target="#godigitSidebar" aria-controls="godigitSidebar" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </span>
       <!--- 
 
               Header icons 
 
       -->
-      <span class="header-navbar-icons" title="Company Branches" data-toggle="popover" data-placement="bottom" data-popover-content='#myBranches' v-on:click="fetchBranches(0)">
-        <i class="fa fa-th-large" aria-hidden="true"></i>
+      <span class="margin-in-full"></span>
+      <span class="nav-item dropdown">
+        <span data-toggle="dropdown" id="#myBranches" v-on:click="fetchBranches()">
+          <i class="fa fa-th-large"></i>
+          <span class="label">{{branches.length}}</span>
+        </span>
+        <span class="dropdown-menu" id="myBranches">
+          <span class="dropdown-item" v-for="item in branches">
+              <img src="../../assets/img/godigit.png" height="20" width="20">
+              {{item.company_branch.name}}
+          </span>
+        </span>
+      </span>
+      <span class="nav-item dropdown">
+        <span data-toggle="dropdown" id="#messages">
+          <i class="fa fa-envelope-o"></i>
+          <span class="label">4</span>
+        </span>
+        <span class="dropdown-menu" id="messages">
+          <span class="dropdown-item"></span>
+        </span>
+      </span>
+      <span class="nav-item dropdown">
+        <span data-toggle="dropdown" id="#notifications">
+          <i class="fa fa-bell-o"></i>
+          <span class="label">4</span>
+        </span>
+        <span class="dropdown-menu" id="notifications">
+          <span class="dropdown-item"></span>
+        </span>
       </span>
 
-      <div id="myBranches" class="popover-menu collapse">
-        <span></span>
-        <span></span>
-        <span v-for="item in branches" v-on:click="loadBranch()">
-          <img src="../../assets/img/godigit.png" height="40" width="40">
-          {{item.company_branch.code}}
-        </span>
-      </div>
-
-      <span class="header-navbar-icons" title="Messages" data-toggle="popover"data-placement="bottom" data-popover-content='#myMessages' v-on:click="fetchBranches(1)">
-        <i class="fa fa-envelope-o" aria-hidden="true"></i>
-      </span>
-
-      <div id="myMessages" class="popover-menu collapse">
-        <span v-for="item in branches" v-on:click="loadBranch()">
-          <img src="../../assets/img/godigit.png" height="40" width="40">
-          {{item.company_branch.code}}
-        </span>
-      </div>
-
-      <span class="header-navbar-icons" title="Notifications" data-toggle="popover" data-placement="bottom" data-popover-content='#myNotifications' v-on:click="fetchBranches(2)">
-        <i class="fa fa-bell-o" aria-hidden="true"></i>
-      </span>
-
-      <div id="myNotifications" class="popover-menu collapse">
-        <span v-for="item in branches" v-on:click="loadBranch()">
-          <img src="../../assets/img/godigit.png" height="40" width="40">
-          {{item.company_branch.code}}
-        </span>
-      </div>
       <!--- 
 
               Header Profile 
@@ -67,9 +68,6 @@
               Header Menu Toggler 
 
       -->
-      <span class="navbar-menu-toggler-md" data-toggle="collapse" data-target="#godigitSidebar" aria-controls="godigitSidebar" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-      </span>
     </nav>
    <!--- 
 
@@ -122,7 +120,7 @@ export default {
       AUTH.deaunthenticate()
       ROUTER.push('/')
     },
-    fetchBranches(icons){
+    fetchBranches(){
       this.getBranches()
       /*
       */
@@ -157,18 +155,21 @@ export default {
 }
 </script>
 <style type="text/css">
- .header-navbar{
-    background: #006600;
-    height: 50px;
-  }/*-- navbar --*/
-  .header-navbar-brand{
+  .system-header{
     float: left;
     height: 50px;
-    margin-left: 1%;
     font-size: 24px;
-    width: 72%;
+    width: 18%;
+    background: #006600;
+    text-align: center;
   }
-  .header-navbar .navbar-brand{
+  .header-navbar{
+    background: #009900;
+    height: 50px;
+    float: left;
+    width: 82%;
+  }/*-- navbar --*/
+  .system-header .navbar-brand{
     color: #fff;
   }
   
@@ -178,18 +179,23 @@ export default {
           *Branch Switcher
           *Messages
 -----------------------------------------------*/
+  .margin-in-full{
+    width: 65%;
+    float: left;
+    height: 50px;
+  }
   .header-navbar-icons{
     height: 50px;
     float: left;
     text-align: center;
     font-size: 16px; 
-    width: 4%;
+    width: 5%;
     color: #fff;
     padding: 10px 0 15px 0;
   }
   .header-navbar-icons:hover{
     cursor: pointer;
-    background: #009900;
+    background: #006600;
   }
 
 /*---------------------------------------------
@@ -203,7 +209,7 @@ export default {
       height: 50px;
       float: left;
       color: #fff;
-      width: 15%;
+      width: 20%;
   }
   .header-navbar-nav label{
     font-size: 13px;
@@ -218,7 +224,7 @@ export default {
 
   .header-navbar-nav:hover{
     cursor: pointer;
-    background: #009900;
+    background: #006600;
   }
 /*---------------------------------------------
  
@@ -238,48 +244,61 @@ export default {
   }
   .navbar-menu-toggler-md:hover{
     cursor: pointer;
-    background: #009900;
+    background: #006600;
   }
 
 /*---------------------------------------------
  
  
-        HEADER POPOVER
+        HEADER NAVBAR MENU
 
 
 -----------------------------------------------*/
-.popover{
-  background: #fff;
-  max-width: 275px;
-}
-.popover-content{
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 270px;
-  max-height: 200px;
-  overflow-y: scroll;
-}
-.popover-title{
-  color:#006600;
-}
-.popover-menu{
-  width: 100%;
-  background: #fff;
-}
-.popover-menu span{
-  width: 100%;
-  float: left;
+
+.nav-item{
+  width: 5%;
   height: 50px;
+  text-align: center;
+  float: left;
+  color: #fff;
+  display: inline;
 }
-.popover-menu img{
-  height: 40px;
-  width: 40px;
-  margin: 5px 5% 5px 5%;
+
+.nav-item span i{
+  padding: 15px 0 15px 0;
+  font-size: 16px;
 }
-.popover-menu span:hover{
-  background: #eee;
+
+.nav-item .label{
+  z-index: 1000;
+  background: #ff0000;
+  padding: 5px;
+  font-size: 8px;
+  margin: -10px 0 0 -10px;
+  border-radius: 2px;
+  border-color: solid 1px #ff0000;
+}
+
+.nav-item:hover{
+  background: #006600;
   cursor: pointer;
 }
+
+.dropdown-menu{
+  min-height: 300px;
+  overflow: hidden;
+  width: 250px;
+  margin-top: -1px;
+  border-radius: 0px !important;
+}
+.dropdown-item{
+  width: 100%;
+  height: 40px;
+  float: left;
+  background: #fff;
+}
+
+
 
 
 
@@ -291,10 +310,13 @@ export default {
 /*-------------- Medium and Large Screens for Tablets and Desktop --------------*/
 
  @media screen (min-width: 992px), screen and (max-width: 1199px){
-    .header-navbar-brand{
-      width: 69%;
+    .system-header{
+      width: 23%;
     }
-    .header-navbar-icons{
+    .header-navbar{
+      width: 77%;
+    }
+    .nav-item{
       width: 5%
     }
     .header-navbar-nav{
@@ -306,10 +328,16 @@ export default {
   }
 
 @media screen (min-width: 768px), screen and (max-width: 991px){
-   .header-navbar-brand{
-      width: 55%;
+   .system-header{
+      width: 100%;
     }
-    .header-navbar-icons{
+    .header-navbar{
+      width: 100%;
+    }
+   .margin-in-full{
+      display: none;
+   }
+    .nav-item{
       width: 6%
     }
     .header-navbar-nav{
@@ -324,22 +352,21 @@ export default {
 
 /*-------------- Small Screen for Mobile Phones --------------*/
  @media (max-width: 767px){
-    .header-navbar-nav span label, .header-navbar-brand img{
+    .system-header{
+      width: 100%;
+    }
+    .header-navbar{
+      width: 100%;
+    }
+    .margin-in-full{
       display: none;
-    }
-    .header-navbar-brand{
-      width: 49%;
-    }
-    .header-navbar-icons, .header-navbar-nav{
-      width: 10%
+   }
+    .nav-item,.navbar-menu-toggler-md{
+      width: 15%
     }
     .header-navbar-nav{
       text-align: center;
-    }
-    .navbar-menu-toggler-md{
-      width: 10%;
-      text-align: center;
-      display: block;
+      width: 40%;
     }
   }
 </style>

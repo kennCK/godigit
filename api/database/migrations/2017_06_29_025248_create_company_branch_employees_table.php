@@ -18,7 +18,7 @@ class CreateCompanyBranchEmployeesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('company_branch_id');
             $table->unsignedInteger('account_id');
-            $table->string('employee_id');
+            $table->string('identification_number');
             $table->timestamps();
             $table->softDeletes();
         });

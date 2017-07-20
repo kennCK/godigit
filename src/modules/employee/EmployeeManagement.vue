@@ -48,18 +48,26 @@ export default{
       columnSetting: columnSetting,
       retrieveParameter: {
         'with_foreign_table': [
-          'account_information',
-          'company_branch_employees'
-        ],
-        'condition': [{
-          'column': 'company_branch_employees.company_branch_id',
-          'value': AUTH.user.company_branch_id,
-          'clause': '='
-        }]
+          'account_information'
+        ]
+        // 'condition': [{
+        //   'column': 'company_branch_employees.company_branch_id',
+        //   'value': AUTH.user.company_branch_id,
+        //   'clause': '='
+        // }]
       }
     }
     let formSetting = {
       inputs: {
+        company_branch_id: {
+          db_name: 'company_branch_employees[company_branch_id]',
+          default_value: AUTH.user.company_branch_id,
+          input_type: 'hidden'
+        },
+        identification_number: {
+          input_name: 'Employee ID',
+          db_name: 'company_branch_employees[identification_number]'
+        },
         email: {},
         first_name: {
           input_name: 'First Name',
