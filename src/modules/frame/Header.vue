@@ -40,6 +40,7 @@
           <span class="label">4</span>
         </span>
         <span class="dropdown-menu" id="messages">
+          <span class="dropdown-header">Messages</span>
           <span class="dropdown-item"></span>
         </span>
       </span>
@@ -48,7 +49,8 @@
           <i class="fa fa-bell-o"></i>
           <span class="label">4</span>
         </span>
-        <span class="dropdown-menu" id="notifications">
+        <span class="dropdown-menu" id="notifications"> 
+          <span class="dropdown-header">Notifications</span>
           <span class="dropdown-item"></span>
         </span>
       </span>
