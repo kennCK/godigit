@@ -22,12 +22,13 @@
       -->
       <span class="margin-in-full"></span>
       <span class="nav-item dropdown">
-        <span data-toggle="dropdown" id="#myBranches" v-on:click="fetchBranches()">
+        <span data-toggle="dropdown" id="#myBranches" v-on:click="getBranches()">
           <i class="fa fa-th-large"></i>
           <span class="label">{{branches.length}}</span>
         </span>
         <span class="dropdown-menu" id="myBranches">
-          <span class="dropdown-item" v-for="item in branches">
+          <span class="dropdown-header">Work In</span>
+          <span class="dropdown-item" v-for="(item,index) in branches" v-on:click="loadBranch(index)">
               <img src="../../assets/img/godigit.png" height="20" width="20">
               {{item.company_branch.name}}
           </span>
@@ -99,8 +100,8 @@
 import ROUTER from '../../router'
 import AUTH from '../../services/auth'
 export default {
-  mounted(){
-    this.fetchBranches()
+  created(){
+    this.getBranches()
   },
   data(){
     return{
@@ -120,21 +121,9 @@ export default {
       AUTH.deaunthenticate()
       ROUTER.push('/')
     },
-    fetchBranches(){
-      this.getBranches()
-      /*
-      */
-      $('[data-toggle="popover"]').popover({
-        html: true,
-        container: 'body',
-        content: function () {
-          let clone = $($(this).data('popover-content')).clone(true).removeClass('collapse')
-          return clone
-        }
-      })
-    },
-    loadBranch(){
-      alert('hello')
+    loadBranch(index){
+      AUTH.setCompany(this.branches[index].company_branch.company_id, this.branches[index].company_branch_id)
+      ROUTER.push('/')
     },
     getBranches(){
       let parameter = {
@@ -285,7 +274,7 @@ export default {
 }
 
 .dropdown-menu{
-  min-height: 300px;
+  min-height: 250px;
   overflow: hidden;
   width: 250px;
   margin-top: -1px;
@@ -296,6 +285,12 @@ export default {
   height: 40px;
   float: left;
   background: #fff;
+}
+.dropdown-header{
+  padding: 5px 0 10px 0;
+  width: 100%;
+  text-align: center;
+  border-bottom: solid 1px #ccc;
 }
 
 
