@@ -7,10 +7,15 @@
      <div class="main-sidebar navbar-collapse sidebar-collapse" v-bind:class="hide + ' ' + toggleOnClick" id="godigitSidebar" >
       <div class="sidebar">
         <ul class="sidebar-menu">
-            <li class="header"><label v-bind:class="hide"><input type="text" class="form-control" placeholder="Search Module" v-model="search"></label>
-                <span class="pull-right">
-                  <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
-                </span>
+            <li class="header">
+              <label class="sr-only " v-bind:class="hide" for="search">Search Module</label>
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" id="search"  v-model="search" placeholder="Search Module">
+              </div>
+              <span class="pull-right switch">
+                <i v-bind:class="toggleSidebar" aria-hidden="true" v-on:click="changeToggleSidebarIcon()"></i>
+              </span>
             </li>
             <li v-for="(item,index) in filteredModules" v-if="item.parent_id === 0 && search === ''" v-bind:class="{ appActive: isActive(item.id) }" v-on:click="setActive(item.id)">
                 <a v-on:click="navigateTo(item.path, (item.id === filteredModules[index+1].parent_id) ? false : true)" data-toggle="collapse" :data-target="'#'+item.id" v-bind:class="hide">
@@ -148,6 +153,26 @@ export default {
   margin: 0;
   padding: 0;
   color: #000;
+}
+.header .input-group{
+  width: 80%;
+  float: left;
+}
+.header .input-group div{
+  width: 15%;
+  float: left;
+  font-size: 10px;
+  padding: 0;
+  background: #fff !important;
+}
+
+.header .input-group div i{
+  padding: 0;
+  font-size: 12px;
+}
+.header .switch{
+  float: left;
+  width: 20%;
 }
 .header i{
   font-size: 24px;
@@ -301,6 +326,10 @@ export default {
   .main-sidebar.hidden{
     margin-left: 0%;
   }
+  .header .input-group{
+    width: 90%;
+    margin: 0 5% 0 5%;
+  }
 }
 @media (max-width: 239px){
 
@@ -328,6 +357,10 @@ export default {
   }
   .main-sidebar.hidden{
     margin-left: 0%;
+  }
+  .header .input-group{
+    width: 90%;
+    margin: 0 5% 0 5%;
   }
 }
 </style>

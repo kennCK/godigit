@@ -254,7 +254,7 @@ export default {
 }
 
 .nav-item span i{
-  padding: 15px 0 15px 0;
+  padding: 12px 0 15px 0;
   font-size: 16px;
 }
 
